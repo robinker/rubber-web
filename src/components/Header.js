@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Container } from 'reactstrap';
-import HeaderPage from './HeaderPage'
 import LoginForm from './LonginForm'
 export default class AppNavbar extends Component {
     state = {
         isOpen: false,
-        role: 'admin',
-        isLogin: true
     }
+
+    isLogin = false
 
     toggle = () => {
         this.setState({
@@ -29,10 +28,10 @@ export default class AppNavbar extends Component {
             return (
                 <>
                     <NavItem>
-                        <NavLink href="">หน้าหลัก</NavLink>
+                        <NavLink href="/">หน้าหลัก</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="">ข้อมูลส่วนตัว</NavLink>
+                        <NavLink href="/profile">ข้อมูลส่วนตัว</NavLink>
                     </NavItem>
                 </>
             )
@@ -105,27 +104,33 @@ export default class AppNavbar extends Component {
 
         let navItem
         
-        if(this.state.role === 'admin'){
+        if(this.props.role === 'admin'){
             navItem = adminLoggedIn()
+            this.isLogin = true
         }
-        else if(this.state.role === 'gardener'){
+        else if(this.props.role === 'gardener'){
             navItem = gardenerLoggedIn()
+            this.isLogin = true
         }
-        else if(this.state.role === 'middleman'){
+        else if(this.props.role === 'middleman'){
             navItem = middlemanLoggedIn()
+            this.isLogin = true
+
         }
 
         return (
             <div className = "container-fluid" style={{background: "green"}} >
-                {/* <HeaderPage></HeaderPage> */}
                 <Navbar dark expand="md" >
                     <NavbarBrand disabled style={{fontSize: '2em'}}> Rubber Info </NavbarBrand>
                     <Container>
                         <NavbarToggler onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="ml-auto" navbar>
-                                { !this.state.isLogin ? notLoggedIn() : loggedIn()}
+                                { !this.isLogin ? notLoggedIn() : loggedIn()}
                                 { navItem }
+                                <NavItem hidden={!this.isLogin}>
+                                    <NavLink href="">Logout</NavLink>
+                                </NavItem>
                             </Nav>
                         </Collapse>
                     </Container>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink, NavItem } from 'reactstrap';
-import axios from 'axios';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink, NavItem } from 'reactstrap'
+import axios from 'axios'
 
 export default class LonginForm extends Component {
    
@@ -23,23 +23,23 @@ export default class LonginForm extends Component {
 
     handleSubmit = (event) => {
         const { username, password } = this.state
-        axios.get('http//localhost:5000/users/',
-            // {
-            //     username: username,
-            //     password: password
-            // },
-            // { withCredentials: true }
+        axios.post('http://localhost:5000/users/login',
+            {
+                username: username,
+                password: password
+            },
+            { withCredentials: true }
         )
             .then(res => {
-                // if(res === 'Logged In'){
-                    console.log(res)
-                //     this.toggle()
-                // }
+                if(res.data.message === 'Logged In'){
+                    console.log(res.data.message)
+                    window.location = '/'
+                }
             })
-            // .catch(err => {
-            //     console.log('Error: ', err)
-            // })
-        // event.preventDefault()
+            .catch(err => {
+                console.log('Error: ', err)
+            })
+        event.preventDefault()
     }
 
     render() {
