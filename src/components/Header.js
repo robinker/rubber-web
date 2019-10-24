@@ -41,7 +41,7 @@ export default class AppNavbar extends Component {
             return (
                 <>
                     <NavItem>
-                        <NavLink href="">จัดการข้อมูลสมาชิก</NavLink>
+                        <NavLink href="/management">จัดการข้อมูลสมาชิก</NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink href="">ราคาซื้อขายยางกลาง</NavLink>
@@ -120,20 +120,18 @@ export default class AppNavbar extends Component {
 
         return (
             <div className = "container-fluid" style={{background: "green"}} >
-                <Navbar dark expand="md" >
+                <Navbar dark expand="sm" >
                     <NavbarBrand disabled style={{fontSize: '2em'}}> Rubber Info </NavbarBrand>
-                    <Container>
                         <NavbarToggler onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="ml-auto" navbar>
                                 { !this.isLogin ? notLoggedIn() : loggedIn()}
                                 { navItem }
                                 <NavItem hidden={!this.isLogin}>
-                                    <NavLink href="">Logout</NavLink>
+                                    <NavLink href="">ออกจากระบบ</NavLink>
                                 </NavItem>
                             </Nav>
                         </Collapse>
-                    </Container>
                 </Navbar>
                 <hr></hr>
             </div>

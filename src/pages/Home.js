@@ -6,7 +6,6 @@ export default class Home extends Component {
     render() {
         return (
             <div>
-                <Header role={'admin'}></Header>
                 <div className="container-fluid">
                     <Hightlight></Hightlight>
                     <div>

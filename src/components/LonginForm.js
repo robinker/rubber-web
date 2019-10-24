@@ -1,9 +1,13 @@
-import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink, NavItem } from 'reactstrap'
-import axios from 'axios'
+import React, { Component } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink, NavItem } from 'reactstrap';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { signIn } from '../actions';
+
+// const isLogged = useSelector(state => state.isLogged)
+// const dispatch = dispatch()
 
 export default class LonginForm extends Component {
-   
     state = {
         modal: false,
         username: "",
@@ -32,7 +36,7 @@ export default class LonginForm extends Component {
         )
             .then(res => {
                 if(res.data.message === 'Logged In'){
-                    console.log(res.data.message)
+                    // dispatch(signIn())
                     window.location = '/'
                 }
             })
