@@ -1,10 +1,8 @@
-import loggedReducer from './isLogged'
-import roleReducer from './role'
+import userReducer from './user'
 import { combineReducers } from 'redux'
 
 const reducers = combineReducers({
-    isLogged: loggedReducer,
-    role: roleReducer,
+    user: userReducer,
 })
 
 export default reducers

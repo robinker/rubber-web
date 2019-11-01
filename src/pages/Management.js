@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { Button, Row, Col, InputGroupAddon, Input, InputGroup, ListGroup, ListGroupItem } from 'reactstrap';
+import { Button, Row, Col, InputGroup , DropdownButton, Dropdown, FormControl} from 'react-bootstrap';
 import ListUser from '../components/ListUser';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default class Management extends Component {
 
-    handleClick = () => {
-        return window.location = '/management/profile'
-    }
+
     render() {
         return (
             <div>
@@ -16,12 +14,15 @@ export default class Management extends Component {
                         <Col sm='6'>
                             <h3>จัดการข้อมูลสมาชิก</h3>
                         </Col>
-                        
-                        <Button onClick={this.handleClick} size='sm'>เพิ่มสมาชิก</Button>
+                        <DropdownButton id="dropdown-basic-button" title="เพิ่มสมาชิก">
+                            <Link to='/management/profile/add' class="dropdown-item">เจ้าของสวนยาง</Link>
+                            <Link to='/' class="dropdown-item">พ่อค้าคนกลาง</Link>
+                            <Link to='/' class="dropdown-item">Admin</Link>
+                        </DropdownButton>
                     </Row>
-                    <InputGroup>
-                        <Input placeholder='ค้นหา'/>
-                        <InputGroupAddon addonType="append"><Button>ค้นหา</Button></InputGroupAddon>
+                    <InputGroup className="mb-3">
+                        <FormControl placeholder="ค้นหา"/>
+                        <InputGroup.Append addonType="append"><Button>ค้นหา</Button></InputGroup.Append>
                     </InputGroup>
                     <ListUser></ListUser>
                 </div>

@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink, NavItem } from 'reactstrap';
+import { Nav, Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { signIn } from '../actions';
+import { connect } from 'react-redux';
 
-// const isLogged = useSelector(state => state.isLogged)
-// const dispatch = dispatch()
-
-export default class LonginForm extends Component {
+class LonginForm extends Component {
     state = {
         modal: false,
         username: "",
@@ -36,8 +32,8 @@ export default class LonginForm extends Component {
         )
             .then(res => {
                 if(res.data.message === 'Logged In'){
-                    // dispatch(signIn())
-                    window.location = '/'
+                    this.props.getData(res.data.user)
+                    this.toggle()
                 }
             })
             .catch(err => {
@@ -49,12 +45,12 @@ export default class LonginForm extends Component {
     render() {
         return (
             <>
-                <NavItem> 
-                    <NavLink onClick={this.toggle}>Sign In</NavLink>
-                </NavItem> 
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Login</ModalHeader>
-                    <ModalBody>
+                <Nav.Link onClick={this.toggle}>Sign In</Nav.Link>
+                <Modal show={this.state.modal} onHide={this.toggle}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
                         <div className="login-form container">
                             <div className="form-group">
                                 <input onChange={this.handleChange} placeholder="username" name="username" className="form-control"/>
@@ -63,15 +59,28 @@ export default class LonginForm extends Component {
                                 <input onChange={this.handleChange} type="password" placeholder="password" name="password" className="form-control"/>
                             </div>
                         </div>
-                    </ModalBody>
-                    <ModalFooter>
-                    <Button color="primary" onClick={this.handleSubmit}>Login</Button>
-                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                    </ModalFooter>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.toggle}>
+                            Cancel
+                        </Button>
+                        <Button variant="primary" onClick={this.handleSubmit}>
+                            Login
+                        </Button>
+                    </Modal.Footer>
                 </Modal>
             </>
         )
     }
     
 }
+const mapDispatchtoProps = (dispatch) => ({
+    getData: (data) => {
+        dispatch({
+            type: 'getData', 
+            payload: data
+        })
+    }
+})
 
+export default connect(null,mapDispatchtoProps)(LonginForm)

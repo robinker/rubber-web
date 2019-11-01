@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Col, Row, Button, Form, } from 'react-bootstrap';
 import provinces from '../json/provinces';
 import amphures from '../json/amphures';
 import districts from '../json/districts';
@@ -88,60 +88,60 @@ export default class RegisterForm extends Component {
                 <Form>
                     <Row form>
                         <Col md={6}>
-                        <FormGroup>
-                            <Label for="name">ชื่อ</Label>
-                            <Input name="name" id="name" placeholder="ชื่อจริง" />
-                        </FormGroup>
+                            <Form.Group>
+                                <Form.Label for="name">ชื่อ</Form.Label>
+                                <Form.Control name="name" id="name" placeholder="ชื่อจริง" />
+                            </Form.Group>
                         </Col>
                         <Col md={6}>
-                        <FormGroup>
-                            <Label for="surname">นามสกุล</Label>
-                            <Input name="surname" id="surname" placeholder="นามสกุลจริง" />
-                        </FormGroup>
-                        </Col>
-                    </Row>
-
-                    <Row form>
-                        <Col md={6}>
-                        <FormGroup>
-                            <Label for="citizenID">หมายเลขบัตรประชาชน</Label>
-                            <Input name="citizenID" id="citizenID" placeholder="" />
-                        </FormGroup>
-                        </Col>
-                        <Col md={6}>
-                        <FormGroup>
-                            <Label for="birthDate">วัน/เดือน/ปี เกิด</Label>
-                            <Input type="date" name="password" id="examplePassword" placeholder="password placeholder"/>
-                        </FormGroup>
+                            <Form.Group>
+                                <Form.Label for="surname">นามสกุล</Form.Label>
+                                <Form.Control name="surname" id="surname" placeholder="นามสกุลจริง" />
+                            </Form.Group>
                         </Col>
                     </Row>
 
                     <Row form>
                         <Col md={6}>
-                        <FormGroup>
-                            <Label for="tel">โทรศัพท์มือถือ</Label>
-                            <Input name="tel" id="tel" placeholder="" />
-                        </FormGroup>
+                            <Form.Group>
+                                <Form.Label for="citizenID">หมายเลขบัตรประชาชน</Form.Label>
+                                <Form.Control  name="citizenID" id="citizenID" placeholder="" />
+                            </Form.Group>
                         </Col>
                         <Col md={6}>
-                        <FormGroup>
-                            <Label for="email">อีเมลล์</Label>
-                            <Input type="email" name="email" id="email" placeholder="example@email.com"/>
-                        </FormGroup>
+                            <Form.Group>
+                                <Form.Label for="birthDate">วัน/เดือน/ปี เกิด</Form.Label>
+                                <Form.Control type="date" name="password" id="examplePassword" placeholder="password placeholder"/>
+                            </Form.Group>
                         </Col>
                     </Row>
 
                     <Row form>
                         <Col md={6}>
-                        <FormGroup>
-                            <Label for="address">ที่อยู่</Label>
-                            <Input name="address" id="address" placeholder="บ้านเลขที่, หมู่, ซอย" />
-                        </FormGroup>
+                            <Form.Group>
+                                <Form.Label for="tel">โทรศัพท์มือถือ</Form.Label>
+                                <Form.Control name="tel" id="tel" placeholder="" />
+                            </Form.Group>
                         </Col>
                         <Col md={6}>
-                        <FormGroup>
-                            <Label for="district">แขวง/ตำบล</Label>
-                            <Input type="select" name="district" id="district" onChange={this.handleChange}>
+                            <Form.Group>
+                                <Form.Label for="email">อีเมลล์</Form.Label>
+                                <Form.Control type="email" name="email" id="email" placeholder="example@email.com"/>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+
+                    <Row form>
+                        <Col md={6}>
+                        <Form.Group>
+                            <Form.Label for="address">ที่อยู่</Form.Label>
+                            <Form.Control name="address" id="address" placeholder="บ้านเลขที่, หมู่, ซอย" />
+                        </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                        <Form.Group>
+                            <Form.Label for="district">แขวง/ตำบล</Form.Label>
+                            <Form.Control as="select" name="district" id="district" onChange={this.handleChange}>
                                 {
                                     districts.map((data, index) => {
                                         if(this.state.amphurID === data.amphur_id){
@@ -149,43 +149,47 @@ export default class RegisterForm extends Component {
                                         }
                                     })
                                 }
-                            </Input>
-                        </FormGroup>
+                            </Form.Control>
+                        </Form.Group>
                         </Col>
                     </Row>
 
                     <Row form>
                         <Col md={6}>
-                        <FormGroup>
-                            <Label for="amphure">เขต/อำเภอ</Label>
-                            <Input type="select" name="amphure" id="amphure" onChange={this.handleChangeAmphur}>
-                                {
-                                    amphures.map((data, index) => {
-                                        if(this.state.provinceID === data.province_id){
-                                            return <option key={index} value={data.amphur_id}>{data.amphur_name}</option>
-                                        }
-                                    })
-                                }
-                            </Input>
-                        </FormGroup>
+                            <Form.Group>
+                                <Form.Label for="amphure">เขต/อำเภอ</Form.Label>
+                                <Form.Control as="select" name="amphure" id="amphure" onChange={this.handleChangeAmphur}>
+                                    {
+                                        amphures.map((data, index) => {
+                                            if(this.state.provinceID === data.province_id){
+                                                return <option key={index} value={data.amphur_id}>{data.amphur_name}</option>
+                                            }
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                         <Col md={6}>
-                        <FormGroup>
-                            <Label for="province">จังหวัด</Label>
-                            <Input type="select" name="province" id="province" onChange={this.handleChangeProvince}>
-                                {
-                                    provinces.map((data, index) => {
-                                        return <option key={index} value={data.province_name}>{data.province_name}</option>
-                                    })
-                                }
-                            </Input>
-                        </FormGroup>
+                            <Form.Group>
+                                <Form.Label for="province">จังหวัด</Form.Label>
+                                <Form.Control as="select" name="province" id="province" onChange={this.handleChangeProvince}>
+                                    {
+                                        provinces.map((data, index) => {
+                                            return <option key={index} value={data.province_name}>{data.province_name}</option>
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
-                        <FormGroup>
-                            <Label for="zip">รหัสไปรษณีย์</Label>
-                            <Input type="text" name="zip" id="zip"/>
-                        </FormGroup>  
-                    </Row>
+                        </Row>
+                        <Row>
+                            <Col md={3}> 
+                                <Form.Group>
+                                    <Form.Label for="zip">รหัสไปรษณีย์</Form.Label>
+                                    <Form.Control type="text" name="zip" id="zip"/>
+                                </Form.Group>  
+                            </Col>
+                        </Row>
                     <Button onClick={this.handleSubmit}>ยืนยัน</Button>
                 </Form>
             </div>

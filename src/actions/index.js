@@ -3,3 +3,9 @@ export const signIn = () => {
         type: 'SIGN_IN'
     }
 }
+
+export const getData = () => {
+    return{
+        type: 'getData'
+    }
+}

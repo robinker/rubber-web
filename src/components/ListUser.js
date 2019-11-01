@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { Table } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 export default class ListUser extends Component {
 
@@ -15,7 +16,6 @@ export default class ListUser extends Component {
                     data.push(obj)
                 })
                 this.setState({user: data})
-                console.log(this.state.user)
             })
            
         
@@ -29,13 +29,26 @@ export default class ListUser extends Component {
         
         return (
             <div>
-                <ListGroup>
-                    {
-                        this.state.user.map((user, index) => {
-                            return <ListGroupItem tag="a" href="" key={index} action>{user.username}</ListGroupItem>
-                        })
-                    }
-                </ListGroup>
+                <Table responsive>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>ชื่อ</th>
+                            <th>Infomation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            this.state.user.map((user, index) => {
+                                return  <tr key={index}> 
+                                            <td> {index+1} </td> 
+                                            <td> {user.username} </td> 
+                                            <td> <Link to='#' className='btn btn-light' key={index}>Clcik me</Link> </td>
+                                        </tr>
+                            })
+                        }
+                    </tbody>
+                </Table>
             </div>
         )
     }

@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Container } from 'reactstrap';
+import { Navbar,Nav, Image, Container} from 'react-bootstrap';
+import { NavLink, Link} from 'react-router-dom'
 import LoginForm from './LonginForm'
 export default class AppNavbar extends Component {
     state = {
         isOpen: false,
     }
 
-    isLogin = false
-
     toggle = () => {
         this.setState({
             isOpen: !this.state.isOpen
         })
     }
-
 
     render() {
         const notLoggedIn = () => {
@@ -27,34 +25,36 @@ export default class AppNavbar extends Component {
         const loggedIn = () => {
             return (
                 <>
-                    <NavItem>
-                        <NavLink href="/">หน้าหลัก</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="/profile">ข้อมูลส่วนตัว</NavLink>
-                    </NavItem>
+                    <Nav.Item>
+                        <NavLink exact to="/" className='nav-link'> หน้าหลัก </NavLink>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <NavLink to="/profile" className='nav-link'>ข้อมูลส่วนตัว</NavLink>
+                    </Nav.Item>
                 </>
-            )
+            )   
         }
 
         const adminLoggedIn = () => {
             return (
                 <>
-                    <NavItem>
-                        <NavLink href="/management">จัดการข้อมูลสมาชิก</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="">ราคาซื้อขายยางกลาง</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="">ตรวจสอบใบอนุญาต</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="">รายงานสรุปเนื้อที่สวนยาง</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="">รายงานสรุปการซื้อขาย</NavLink>
-                    </NavItem>
+                <Nav.Item>
+                    <NavLink to="/management" className='nav-link'>จัดการข้อมูลสมาชิก</NavLink>
+                </Nav.Item>
+                <Nav.Item>
+                    <NavLink to="/" className='nav-link'>ราคาซื้อขายยางกลาง</NavLink>
+                </Nav.Item>
+                <Nav.Item>
+                    <NavLink to="/" className='nav-link'>ตรวจสอบใบอนุญาต</NavLink>
+                </Nav.Item>
+                <Nav.Item>
+                    <NavLink to="/" className='nav-link'>รายงานสรุปเนื้อที่สวนยาง</NavLink>
+                </Nav.Item>
+                <Nav.Item>
+                    <NavLink to="/" className='nav-link'>รายงานสรุปการซื้อขาย</NavLink>
+                </Nav.Item>
+
+
                 </>
             )
         }
@@ -62,18 +62,19 @@ export default class AppNavbar extends Component {
         const userLoggedIn = () => {
             return (
                 <>
-                    <NavItem>
-                        <NavLink href="">ราคาซื้อขายยางกลาง</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="">ตรวจสอบใบอนุญาต</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="">รายงานสรุปการซื้อขาย</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="">ติดต่อเรา</NavLink>
-                    </NavItem>
+                    <Nav.Item>
+                        <NavLink to="/" className='nav-link'>ราคาซื้อขายยางกลาง</NavLink>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <NavLink to="/" className='nav-link'>ตรวจสอบใบอนุญาต</NavLink>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <NavLink to="/" className='nav-link'>รายงานสรุปการซื้อขาย</NavLink>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <NavLink to="/" className='nav-link'>ติดต่อเรา</NavLink>
+                    </Nav.Item>
+
                 </>
             )
         }
@@ -81,12 +82,13 @@ export default class AppNavbar extends Component {
         const gardenerLoggedIn = () => {
             return (
                 <>
-                    <NavItem>
-                        <NavLink href="">แจ้งเนื้อที่สวนยาง</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="">แจ้งขายราคายาง</NavLink>
-                    </NavItem>
+                    <Nav.Item>
+                        <NavLink to="/" className='nav-link'>แจ้งเนื้อที่สวนยาง</NavLink>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <NavLink to="/" className='nav-link'>แจ้งขายราคายาง</NavLink>
+                    </Nav.Item>
+
                     {userLoggedIn()}
                 </>
             )
@@ -94,9 +96,10 @@ export default class AppNavbar extends Component {
         const middlemanLoggedIn = () => {
             return (
                 <>
-                    <NavItem>
-                        <NavLink href="">แจ้งซื้อราคายาง</NavLink>
-                    </NavItem>
+                    <Nav.Item>
+                        <NavLink to="/" className='nav-link'>แจ้งซื้อราคายาง</NavLink>
+                    </Nav.Item>
+
                     {userLoggedIn()}
                 </>
             )
@@ -104,34 +107,48 @@ export default class AppNavbar extends Component {
 
         let navItem
         
-        if(this.props.role === 'admin'){
+        if(this.props.role === 'Administrator'){
             navItem = adminLoggedIn()
             this.isLogin = true
         }
-        else if(this.props.role === 'gardener'){
+        else if(this.props.role === 'Gardener'){
             navItem = gardenerLoggedIn()
             this.isLogin = true
         }
-        else if(this.props.role === 'middleman'){
+        else if(this.props.role  === 'Middleman'){
             navItem = middlemanLoggedIn()
             this.isLogin = true
-
         }
 
         return (
             <div className = "container-fluid" style={{background: "green"}} >
-                <Navbar dark expand="sm" >
-                    <NavbarBrand disabled style={{fontSize: '2em'}}> Rubber Info </NavbarBrand>
-                        <NavbarToggler onClick={this.toggle} />
-                        <Collapse isOpen={this.state.isOpen} navbar>
-                            <Nav className="ml-auto" navbar>
-                                { !this.isLogin ? notLoggedIn() : loggedIn()}
+                <Navbar>
+                    <Image
+                        style={{background: 'red'}}
+                        width="50"
+                        height="50"
+                    />
+                    <Navbar.Brand style={{fontSize: '2em'}}> Rubber Info </Navbar.Brand>
+                    <Navbar.Collapse className="justify-content-end">
+                        <Nav>
+                            { !this.isLogin ? notLoggedIn() : null}
+                        </Nav>
+                        <Navbar.Text hidden={!this.isLogin}>
+                            Signed in as: <a href=""> {this.props.name} </a>
+                        </Navbar.Text>
+                    </Navbar.Collapse>
+                </Navbar>
+                <Navbar expand="lg" hidden={!this.props.isLogged}>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Container>
+                            <Nav className="justify-content-end">
+                            { !this.isLogin ? null : loggedIn()}
                                 { navItem }
-                                <NavItem hidden={!this.isLogin}>
-                                    <NavLink href="">ออกจากระบบ</NavLink>
-                                </NavItem>
+                                <NavLink to="/" hidden={!this.props.isLogged} className='nav-link'>ออกจากระบบ</NavLink>
                             </Nav>
-                        </Collapse>
+                        </Container>
+                    </Navbar.Collapse>
                 </Navbar>
                 <hr></hr>
             </div>
