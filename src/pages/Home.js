@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Header from '../components/Header'
 import Hightlight from '../components/Hightlight'
 import News from '../components/News'
 export default class Home extends Component {

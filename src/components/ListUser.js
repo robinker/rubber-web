@@ -13,7 +13,7 @@ export default class ListUser extends Component {
             .then(res => {
                 let data = []
                 res.data.map(obj => {
-                    data.push(obj)
+                    return data.push(obj)
                 })
                 this.setState({user: data})
             })
@@ -34,7 +34,7 @@ export default class ListUser extends Component {
                         <tr>
                             <th>#</th>
                             <th>ชื่อ</th>
-                            <th>Infomation</th>
+                            <th>รายละเอียด</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,7 +43,7 @@ export default class ListUser extends Component {
                                 return  <tr key={index}> 
                                             <td> {index+1} </td> 
                                             <td> {user.username} </td> 
-                                            <td> <Link to='#' className='btn btn-light' key={index}>Clcik me</Link> </td>
+                                            <td> <Link to='#' className='btn btn-light' key={index}>คลิก</Link> </td>
                                         </tr>
                             })
                         }

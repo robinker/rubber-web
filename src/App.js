@@ -3,6 +3,8 @@ import {BrowserRouter, Route} from "react-router-dom"
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Management from './pages/Management'
+import Sale from './pages/Sale'
+import Transaction from './pages/Transaction'
 import Header from './components/Header'
 import RegisterForm from './components/RegisterForm'
 import { connect } from 'react-redux'
@@ -16,6 +18,8 @@ function App(props) {
             <Route path="/profile" exact component={Profile}/>
             <Route path="/management/profile/add" exact component={RegisterForm}/>
             <Route path="/management" exact component={Management}/>
+            <Route path="/sale" exact component={Sale}/>
+            <Route path="/transactions" exact component={Transaction}/>
           </div>
         </BrowserRouter>
   );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Navbar,Nav, Image, Container} from 'react-bootstrap';
-import { NavLink, Link} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import LoginForm from './LonginForm'
 export default class AppNavbar extends Component {
     state = {
@@ -69,7 +69,7 @@ export default class AppNavbar extends Component {
                         <NavLink to="/" className='nav-link'>ตรวจสอบใบอนุญาต</NavLink>
                     </Nav.Item>
                     <Nav.Item>
-                        <NavLink to="/" className='nav-link'>รายงานสรุปการซื้อขาย</NavLink>
+                        <NavLink to="/transactions" className='nav-link'>รายงานสรุปการซื้อขาย</NavLink>
                     </Nav.Item>
                     <Nav.Item>
                         <NavLink to="/" className='nav-link'>ติดต่อเรา</NavLink>
@@ -86,7 +86,7 @@ export default class AppNavbar extends Component {
                         <NavLink to="/" className='nav-link'>แจ้งเนื้อที่สวนยาง</NavLink>
                     </Nav.Item>
                     <Nav.Item>
-                        <NavLink to="/" className='nav-link'>แจ้งขายราคายาง</NavLink>
+                        <NavLink to="/sale" className='nav-link'>แจ้งขายราคายาง</NavLink>    
                     </Nav.Item>
 
                     {userLoggedIn()}
@@ -134,7 +134,7 @@ export default class AppNavbar extends Component {
                             { !this.isLogin ? notLoggedIn() : null}
                         </Nav>
                         <Navbar.Text hidden={!this.isLogin}>
-                            Signed in as: <a href=""> {this.props.name} </a>
+                            Signed in as: <a> {this.props.name} </a> 
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>
