@@ -145,7 +145,8 @@ export default class AppNavbar extends Component {
                             <Nav className="justify-content-end">
                             { !this.isLogin ? null : loggedIn()}
                                 { navItem }
-                                <NavLink to="/" hidden={!this.props.isLogged} className='nav-link'>ออกจากระบบ</NavLink>
+                                {/* <NavLink to="/" hidden={!this.props.isLogged} className='nav-link'>ออกจากระบบ</NavLink> */}
+                                <a href="/" hidden={!this.props.isLogged} className='nav-link'>ออกจากระบบ</a>
                             </Nav>
                         </Container>
                     </Navbar.Collapse>

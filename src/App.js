@@ -15,11 +15,11 @@ function App(props) {
           <Header role={props.user.role} isLogged={props.user.isLogged} name={props.user.username}></Header>
           <div>
             <Route path="/" exact component={Home}/>
-            <Route path="/profile" exact component={Profile}/>
+            <Route path="/profile" exact component={() => <Profile user={props.user}> </Profile> }/>
             <Route path="/management/profile/add" exact component={RegisterForm}/>
             <Route path="/management" exact component={Management}/>
             <Route path="/sale" exact component={Sale}/>
-            <Route path="/transactions" exact component={Transaction}/>
+            <Route path="/transactions" exact component={() => <Transaction firstname={props.user.firstname} lastname= {props.user.lastname}/>}/>
           </div>
         </BrowserRouter>
   );

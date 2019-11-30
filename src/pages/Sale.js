@@ -71,8 +71,8 @@ export default class Sale extends Component {
                     <Form.Check inline type="radio" name='rubberType' value='ยางก้อนถ้วย' label="ยางก้อนถ้วย" checked={this.handleCheck} onChange={this.handleChange}/>
                     <Form.Check inline type="radio" name='rubberType' value='ยางแผ่นดิบ' label="ยางแผ่นดิบ" checked={this.handleCheck} onChange={this.handleChange}/>
                     <Form.Check inline type="radio" name='rubberType' value='ผางแผ่นรบควัน' label="ผางแผ่นรบควัน" checked={this.handleCheck} onChange={this.handleChange}/>
-                    <Form.Check inline type="radio" name='rubberType' value='อื่นๆ' label="อื่นๆ" checked={this.handleCheck} onChange={this.handleChange}/>
-                    <Form.Control hidden={this.state.rubberType !== 'อื่นๆ'} name='others' onChange={this.handleChange}></Form.Control>
+                    <Form.Check inline type="radio" name='rubberType' value='ขี้ยาง/เศษยาง' label="ขี้ยาง/เศษยาง" checked={this.handleCheck} onChange={this.handleChange}/>
+                    <Form.Check inline type="radio" name='rubberType' value='ยางเครฟ' label="ยางเครฟ" checked={this.handleCheck} onChange={this.handleChange}/>
                 </Form>
                 <hr></hr>
                 <Form>

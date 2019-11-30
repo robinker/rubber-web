@@ -22,7 +22,7 @@ export default class Management extends Component {
                     </Row>
                     <InputGroup className="mb-3">
                         <FormControl placeholder="ค้นหา"/>
-                        <InputGroup.Append addonType="append"><Button>ค้นหา</Button></InputGroup.Append>
+                        <InputGroup.Append> <Button>ค้นหา</Button> </InputGroup.Append>
                     </InputGroup>
                     <ListUser></ListUser>
                 </div>

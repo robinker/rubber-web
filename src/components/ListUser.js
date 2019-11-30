@@ -8,7 +8,7 @@ export default class ListUser extends Component {
         user: []
     }
 
-    componentDidMount = () =>{
+    componentDidMount = () => {
         axios.get('http://localhost:5000/users/')
             .then(res => {
                 let data = []
@@ -24,6 +24,10 @@ export default class ListUser extends Component {
             })
     }
     
+    onClickUser = (index) => {
+        console.log(this.state.user[index].username)
+        console.log(this.state.user[index]._id)
+    }
 
     render() {
         
@@ -43,7 +47,7 @@ export default class ListUser extends Component {
                                 return  <tr key={index}> 
                                             <td> {index+1} </td> 
                                             <td> {user.username} </td> 
-                                            <td> <Link to='#' className='btn btn-light' key={index}>คลิก</Link> </td>
+                                            <td> <Link to='#' className='btn btn-light' key={index} onClick={() => this.onClickUser(index)}>คลิก</Link> </td>
                                         </tr>
                             })
                         }
