@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
-import {Form, Row, Col, Button } from 'react-bootstrap'
+import {Form, Col, Button, Alert } from 'react-bootstrap'
+import axios from 'axios'
+
 export default class Sale extends Component {
     state = {
         rubberType: 'น้ำยางสด',
-        others: '',
         volume: 0,
         price: 0,
         volumeError: '',
         priceError: '',
+        destError: '',
         validate: false,
+        destination: '',
         
     }
 
@@ -22,6 +25,7 @@ export default class Sale extends Component {
     validate = () => {
         let volumeError = ''
         let priceError = ''
+        let destError = ''
 
         if(this.state.volume <= 0){
             volumeError = 'ปริมาณผิดพลาด'
@@ -31,10 +35,15 @@ export default class Sale extends Component {
             priceError = 'จำนวนเงินผิดพลาด'
         }
 
-        if(volumeError || priceError){
+        if(this.state.destination === ''){
+            destError = 'กรุณากรอกชื่อผู้ซื้อ'
+        }
+
+        if(volumeError || priceError || destError){
             this.setState({
                 volumeError,
-                priceError
+                priceError,
+                destError
             })
             return false
         }
@@ -51,10 +60,26 @@ export default class Sale extends Component {
         }
 
         else {
-            this.setState({
-                validate: true
+            this.setState({ validate: true })
+            axios.post('http://localhost:5000/sale/add',{
+                source: this.props.source,
+                rubberType: this.state.rubberType,
+                volume: this.state.volume,
+                price: this.state.price,
+                destination: this.state.destination
             })
-            console.log('submit: ' + this.state.price + this.state.volume)
+            .then(res => {
+                if(res.data === 'Transaction added!'){
+                    alert('บันทึกข้อมูลสำเร็จ')
+                    this.setState({
+                        volumeError: '',
+                        priceError: '',
+                    })
+                }
+            })
+            .catch(err => {
+                alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+            })
         }
         
     }
@@ -92,6 +117,14 @@ export default class Sale extends Component {
                             (<Form.Control type='number' name='price' onChange={this.handleChange}></Form.Control>)
                         }
                         <Form.Control.Feedback type='invalid'> {this.state.priceError} </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group as={Col} sm='5'>
+                        <Form.Label>ชื่อผู้ซื้อ (ชื่อ-นามสกุล)</Form.Label>
+                        { this.state.destError ? 
+                            (<Form.Control name='destination' onChange={this.handleChange} isInvalid></Form.Control>) :
+                            (<Form.Control name='destination' onChange={this.handleChange} placeholder="กอไก่ ใจดี"></Form.Control>)
+                        }
+                        <Form.Control.Feedback type='invalid'> {this.state.destError} </Form.Control.Feedback>
                     </Form.Group>
                 </Form>
                 <Button onClick={this.handleSubmit}>ยืนยัน</Button>
