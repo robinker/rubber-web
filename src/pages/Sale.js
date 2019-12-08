@@ -88,19 +88,22 @@ export default class Sale extends Component {
 
         return (
             <div className='container'>
-                <h1>แจ้งราคาขายยาง</h1>
-                <h3>รหัสการซื้อขาย :</h3>
-                <h3>ประเภทยาง : {this.state.rubberType} {this.state.others}</h3>
-                <Form inline>
-                    <Form.Check inline type="radio" name='rubberType' value='น้ำยางสด' label="น้ำยางสด"  checked={this.handleCheck} onChange={this.handleChange} defaultChecked/>
-                    <Form.Check inline type="radio" name='rubberType' value='ยางก้อนถ้วย' label="ยางก้อนถ้วย" checked={this.handleCheck} onChange={this.handleChange}/>
-                    <Form.Check inline type="radio" name='rubberType' value='ยางแผ่นดิบ' label="ยางแผ่นดิบ" checked={this.handleCheck} onChange={this.handleChange}/>
-                    <Form.Check inline type="radio" name='rubberType' value='ผางแผ่นรบควัน' label="ผางแผ่นรบควัน" checked={this.handleCheck} onChange={this.handleChange}/>
-                    <Form.Check inline type="radio" name='rubberType' value='ขี้ยาง/เศษยาง' label="ขี้ยาง/เศษยาง" checked={this.handleCheck} onChange={this.handleChange}/>
-                    <Form.Check inline type="radio" name='rubberType' value='ยางเครฟ' label="ยางเครฟ" checked={this.handleCheck} onChange={this.handleChange}/>
-                </Form>
-                <hr></hr>
                 <Form>
+                    <Form.Group as={Col}>
+                        <h2>แจ้งราคาขายยาง</h2>
+                        <br></br>
+                        <Form.Label>รหัสการซื้อขาย :</Form.Label>
+                        <br></br>
+                        <Form.Label>ประเภทยาง : {this.state.rubberType} {this.state.others}</Form.Label>
+                        <Form inline>
+                            <Form.Check inline type="radio" name='rubberType' value='น้ำยางสด' label="น้ำยางสด"  checked={this.handleCheck} onChange={this.handleChange} defaultChecked/>
+                            <Form.Check inline type="radio" name='rubberType' value='ยางก้อนถ้วย' label="ยางก้อนถ้วย" checked={this.handleCheck} onChange={this.handleChange}/>
+                            <Form.Check inline type="radio" name='rubberType' value='ยางแผ่นดิบ' label="ยางแผ่นดิบ" checked={this.handleCheck} onChange={this.handleChange}/>
+                            <Form.Check inline type="radio" name='rubberType' value='ผางแผ่นรบควัน' label="ผางแผ่นรบควัน" checked={this.handleCheck} onChange={this.handleChange}/>
+                            <Form.Check inline type="radio" name='rubberType' value='ขี้ยาง/เศษยาง' label="ขี้ยาง/เศษยาง" checked={this.handleCheck} onChange={this.handleChange}/>
+                            <Form.Check inline type="radio" name='rubberType' value='ยางเครฟ' label="ยางเครฟ" checked={this.handleCheck} onChange={this.handleChange}/>
+                        </Form>
+                    </Form.Group>
                     <Form.Group as={Col} sm='5'>
                         <Form.Label>ปริมาณยางที่ขาย (กิโลกรัม)</Form.Label>
                         { this.state.volumeError ? 
@@ -126,8 +129,11 @@ export default class Sale extends Component {
                         }
                         <Form.Control.Feedback type='invalid'> {this.state.destError} </Form.Control.Feedback>
                     </Form.Group>
+                    <Form.Group as={Col}>
+                        <br></br>
+                        <Button onClick={this.handleSubmit}>ยืนยัน</Button>
+                    </Form.Group>
                 </Form>
-                <Button onClick={this.handleSubmit}>ยืนยัน</Button>
             </div>
         )
     }

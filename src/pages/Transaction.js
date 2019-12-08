@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import {Accordion, Card, Col, Row} from 'react-bootstrap'
+import {Accordion, Card, Col, Row, Image} from 'react-bootstrap'
 import axios from 'axios'
+import block from '../assets/block.png'
+import chainOfBlock from '../assets/chain.png'
 
 class Transaction extends Component {
     state = {
@@ -24,8 +26,8 @@ class Transaction extends Component {
     render() {
         return (
             <div className='container'>
-                <h1>รายงานสุปการซื้อขาย</h1>
-                
+                <h2>รายงานสุปการซื้อขาย</h2>
+                <br></br>
                 <Accordion defaultActiveKey="0">
                     {
                         this.state.transactions.map((chain, index) => {
@@ -42,15 +44,29 @@ class Transaction extends Component {
                                                 chain.map((obj, i) => {
                                                     const date = new Date(obj.createdAt)
                                                     return  <Col key={i}>
-                                                                <div> {obj.source} </div> 
-                                                                <div> 
-                                                                    <p> 
+                                                                <Image
+                                                                    src = {block}
+                                                                    style={{marginLeft: "5%"}}
+                                                                    width="50"
+                                                                    height="50"
+                                                                    
+                                                                /> 
+                                                                <Image
+                                                                    src = {chainOfBlock}
+                                                                    style={{marginLeft: "40%"}}
+                                                                    width="40"
+                                                                    height="15"
+                                                                />
+                                                                <div style={{fontSize: "12px"}}>
+                                                                    <br></br>
+                                                                    <div style={{fontSize: "15px", fontWeight: "bold"}}> {obj.source} </div> 
+                                                                    <label> 
                                                                         ประเภทยาง:  {obj.rubberType} <br/>
                                                                         ปริมาณยาง:  {obj.volume} <br/>
                                                                         ราคา:  {obj.price} <br/>
                                                                         { date.getUTCDate() + "/" + date.getMonth() + "/" + (date.getUTCFullYear()+543) } <br/>
                                                                         { date.getHours() + ":" + date.getMinutes() + " น."}
-                                                                    </p>
+                                                                    </label>
                                                                 </div> 
                                                             </Col>    
                                                 })
@@ -58,11 +74,18 @@ class Transaction extends Component {
 
                                             {
                                                 <Col>
-                                                    <div> {chain[chain.length-1].destination} </div> 
-                                                    <div> 
-                                                        <p> 
+                                                    <Image
+                                                        src = {block}
+                                                        style={{marginLeft: "5%"}}
+                                                        width="50"  
+                                                        height="50"                     
+                                                    /> 
+                                                    <div style={{fontSize: "12px"}}>
+                                                        <br></br>
+                                                        <div style={{fontSize: "15px", fontWeight: "bold"}}> {chain[chain.length-1].destination} </div> 
+                                                        <label> 
                                                             present holder
-                                                        </p>
+                                                        </label>
                                                     </div> 
                                                 </Col>    
                                             }

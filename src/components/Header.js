@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Navbar,Nav, Image, Container} from 'react-bootstrap';
 import { NavLink } from 'react-router-dom'
 import LoginForm from './LonginForm'
+import logo from '../assets/rubberLogo.png'
 export default class AppNavbar extends Component {
     state = {
         isOpen: false,
@@ -121,12 +122,12 @@ export default class AppNavbar extends Component {
         }
 
         return (
-            <div className = "container-fluid" style={{background: "green"}} >
+            <div className = "container-fluid" style={{background: "#F5F5F5"}} >
                 <Navbar>
                     <Image
-                        style={{background: 'red'}}
-                        width="50"
-                        height="50"
+                        src={logo}
+                        width="240"
+                        height="60"
                     />
                     <Navbar.Brand style={{fontSize: '2em'}}> Rubber Info </Navbar.Brand>
                     <Navbar.Collapse className="justify-content-end">
