@@ -52,6 +52,8 @@ export default class RegisterForm extends Component {
         amphurID: '',
         districtCode: '',
         zipcode: '',
+        username: '',
+        password: '',
     }
 
     componentDidMount() {
@@ -73,52 +75,6 @@ export default class RegisterForm extends Component {
         
     }
     
-    // handleChangeProvince = (event) => {
-    //     const provinceName = event.target.value
-    //     const p = provinces.find(province => province.province_name === provinceName)
-    //     const a = amphures.find(amphur => amphur.province_id === p.province_id)
-    //     const d = districts.find(district => district.amphur_id === a.amphur_id)
-    //     const z = zipcodes.find(zipcode => d.district_code === zipcode.district_code)
-
-    //     this.setState({
-    //         province: p.province_name,
-    //         provinceID: p.province_id,
-    //         amphure: a.amphur_name,
-    //         amphurID: a.amphur_id,
-    //         district: d.district_name,
-    //         districtCode: d.district_code,
-    //         zipcode: z.zipcode_name
-    //     })
-    // }
-
-    // handleChangeAmphur = (event) => {
-    //     const amphurID = event.target.value
-    //     const a = amphures.find(amphur => amphur.province_id === this.state.provinceID && amphur.amphur_id === amphurID)
-    //     const d = districts.find(district => district.amphur_id === amphurID)
-    //     const z = zipcodes.find(zipcode => d.district_code === zipcode.district_code)
-    //     console.log(d)
-
-    //     this.setState({
-    //         amphure: a.amphur_name,
-    //         amphurID: amphurID,
-    //         district: d.district_name,
-    //         districtCode: d.district_code,
-    //         zipcode: z.zipcode_name
-    //     })
-    // }
-
-    // hadleChangeDistrict = (event) => {
-    //     const districtID = event.target.value
-    //     const d = districts.find(district => district.district_id === districtID)
-    //     const z = zipcodes.find(zipcode => d.district_code === zipcode.district_code)
-    //     console.log(d)
-    //     this.setState({
-    //         district: d.district_name,
-    //         districtCode: d.district_code,
-    //         zipcode: z.zipcode_name
-    //     })
-    // }
-
 
     handleSubmit = (event) => {
         const { amphure, amphurID } = this.state
@@ -147,6 +103,8 @@ export default class RegisterForm extends Component {
     render() {
         return (
             <div className='container'>
+                <h2>ข้อมูลสมาชิก</h2>
+                <br></br>
                 <Formik validationSchema={RegisterSchema}
                     initialValues={{ //กำหนด initialValues
                         firstname: '',
@@ -269,6 +227,22 @@ export default class RegisterForm extends Component {
                                     </Form.Group>  
                                 </Col>
                             </Row>
+                            <hr></hr>
+                            <h2>ข้อมูลสำหรับผู้ใช้เพื่อเข้าใช้งาน</h2>
+                            <br></br>
+                            <Form.Group>
+                                <Form.Label>Username :</Form.Label>
+                                <Form.Control onChange={this.handleChange}/>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Password :</Form.Label>
+                                <Form.Control type="password" onChange={this.handleChange}/>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Confirm-password :</Form.Label>
+                                <Form.Control type="password" onChange={this.handleChange}/>
+                            </Form.Group>
+
                             <Button type="submit">ยืนยัน</Button>
                         </FormIK>
                     )}

@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 function App(props) {
   return (
         <BrowserRouter>
-          <Header role={props.user.role} isLogged={props.user.isLogged} name={props.user.username}></Header>
+          <Header role={props.user.role} isLogged={props.user.isLogged} name={props.user.firstname + " " + props.user.lastname}></Header>
           <div>
             <Route path="/" exact component={Home}/>
             <Route path="/profile" exact component={() => <Profile user={props.user}> </Profile> }/>

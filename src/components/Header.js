@@ -87,7 +87,7 @@ export default class AppNavbar extends Component {
                         <NavLink to="/" className='nav-link'>แจ้งเนื้อที่สวนยาง</NavLink>
                     </Nav.Item>
                     <Nav.Item>
-                        <NavLink to="/sale" className='nav-link'>แจ้งขายราคายาง</NavLink>    
+                        <NavLink to="/sale" className='nav-link'>หน้าซื้อขาย</NavLink>    
                     </Nav.Item>
 
                     {userLoggedIn()}
@@ -98,7 +98,7 @@ export default class AppNavbar extends Component {
             return (
                 <>
                     <Nav.Item>
-                        <NavLink to="/" className='nav-link'>แจ้งซื้อราคายาง</NavLink>
+                        <NavLink to="/sale" className='nav-link'>หน้าซื้อขาย</NavLink>
                     </Nav.Item>
 
                     {userLoggedIn()}
@@ -124,12 +124,9 @@ export default class AppNavbar extends Component {
         return (
             <div className = "container-fluid" style={{background: "#F5F5F5"}} >
                 <Navbar>
-                    <Image
-                        src={logo}
-                        width="240"
-                        height="60"
-                    />
-                    <Navbar.Brand style={{fontSize: '2em'}}> Rubber Info </Navbar.Brand>
+                    <Navbar.Brand>  
+                        <Image src={logo} width="240" height="60"/>
+                    </Navbar.Brand>
                     <Navbar.Collapse className="justify-content-end">
                         <Nav>
                             { !this.isLogin ? notLoggedIn() : null}

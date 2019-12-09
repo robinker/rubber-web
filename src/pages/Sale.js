@@ -90,10 +90,10 @@ export default class Sale extends Component {
             <div className='container'>
                 <Form>
                     <Form.Group as={Col}>
-                        <h2>แจ้งราคาขายยาง</h2>
+                        <h2>ซื้อ-ขายยาง</h2>
                         <br></br>
-                        <Form.Label>รหัสการซื้อขาย :</Form.Label>
-                        <br></br>
+                        {/* <Form.Label>รหัสการซื้อขาย :</Form.Label> */}
+                        {/* <br></br> */}
                         <Form.Label>ประเภทยาง : {this.state.rubberType} {this.state.others}</Form.Label>
                         <Form inline>
                             <Form.Check inline type="radio" name='rubberType' value='น้ำยางสด' label="น้ำยางสด"  checked={this.handleCheck} onChange={this.handleChange} defaultChecked/>
