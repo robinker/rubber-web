@@ -18,7 +18,7 @@ function App(props) {
             <Route path="/profile" exact component={() => <Profile user={props.user}> </Profile> }/>
             <Route path="/management/profile/add" exact component={RegisterForm}/>
             <Route path="/management" exact component={Management}/>
-            <Route path="/sale" exact component={() => <Sale source={props.user.firstname + " " + props.user.lastname} />} />
+            <Route path="/sale" exact component={() => <Sale source={props.user.firstname + " " + props.user.lastname} userId={props.user._id} />} />
             <Route path="/transactions" exact component={() => <Transaction firstname={props.user.firstname} lastname= {props.user.lastname}/>} />
           </div>
         </BrowserRouter>

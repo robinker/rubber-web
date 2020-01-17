@@ -63,18 +63,18 @@ export default class AppNavbar extends Component {
         const userLoggedIn = () => {
             return (
                 <>
-                    <Nav.Item>
+                    {/* <Nav.Item>
                         <NavLink to="/" className='nav-link'>ราคาซื้อขายยางกลาง</NavLink>
                     </Nav.Item>
                     <Nav.Item>
                         <NavLink to="/" className='nav-link'>ตรวจสอบใบอนุญาต</NavLink>
-                    </Nav.Item>
+                    </Nav.Item> */}
                     <Nav.Item>
                         <NavLink to="/transactions" className='nav-link'>รายงานสรุปการซื้อขาย</NavLink>
                     </Nav.Item>
-                    <Nav.Item>
+                    {/* <Nav.Item>
                         <NavLink to="/" className='nav-link'>ติดต่อเรา</NavLink>
-                    </Nav.Item>
+                    </Nav.Item> */}
 
                 </>
             )
@@ -84,12 +84,12 @@ export default class AppNavbar extends Component {
             return (
                 <>
                     <Nav.Item>
+                        <NavLink to="/sale" className='nav-link'>ขายยาง</NavLink>    
+                    </Nav.Item>
+                    {loggedIn()}
+                    {/* <Nav.Item>
                         <NavLink to="/" className='nav-link'>แจ้งเนื้อที่สวนยาง</NavLink>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <NavLink to="/sale" className='nav-link'>หน้าซื้อขาย</NavLink>    
-                    </Nav.Item>
-
+                    </Nav.Item> */}
                     {userLoggedIn()}
                 </>
             )
@@ -98,8 +98,9 @@ export default class AppNavbar extends Component {
             return (
                 <>
                     <Nav.Item>
-                        <NavLink to="/sale" className='nav-link'>หน้าซื้อขาย</NavLink>
+                        <NavLink to="/sale" className='nav-link'>ซื้อยาง</NavLink>
                     </Nav.Item>
+                    {loggedIn()}
 
                     {userLoggedIn()}
                 </>
@@ -140,8 +141,8 @@ export default class AppNavbar extends Component {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Container>
-                            <Nav className="justify-content-end">
-                            { !this.isLogin ? null : loggedIn()}
+                            <Nav className="justify-content-center">
+                            {/* { !this.isLogin ? null : loggedIn()} */}
                                 { navItem }
                                 {/* <NavLink to="/" hidden={!this.props.isLogged} className='nav-link'>ออกจากระบบ</NavLink> */}
                                 <a href="/" hidden={!this.props.isLogged} className='nav-link'>ออกจากระบบ</a>

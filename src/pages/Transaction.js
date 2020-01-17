@@ -10,7 +10,7 @@ class Transaction extends Component {
     }
 
     componentDidMount = () => {
-        axios.get('http://localhost:5000/sale/transactions/' + this.props.firstname + '/' +  this.props.lastname)
+        axios.get('https://rubber-backend.herokuapp.com/sale/transactions/' + this.props.firstname + '/' +  this.props.lastname)
             .then(res => {
                 let data = []
                 res.data.map(obj => {

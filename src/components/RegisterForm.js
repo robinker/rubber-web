@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Col, Row, Button, Form } from 'react-bootstrap'
 import provinces from '../json/provinces'
-import months from '../json/months'
+import amphures from '../json/amphures'
+import districts from '../json/districts'
+import zipcodes from '../json/zipcodes'
 import { Formik, Form as FormIK, Field } from 'formik'
 import * as Yup from 'yup'
 
@@ -18,13 +20,11 @@ const RegisterSchema = Yup.object().shape({
         .min(13, 'Too Short!')
         .max(13, 'Too Long!')
         .required('Required'),
-    // email: Yup.string()
-    //     .email('Invalid email')
-    //     .required('Email is Required'),
-    // username: Yup.string()
-    //     .min(3, 'Too Short!')
-    //     .max(50, 'Too Long!')
-    //     .required('Required'),
+    birthdate: Yup.date()
+        .required('Required'),
+    email: Yup.string()
+        .email('Invalid email')
+        .required('Email is Required'),
     // password: Yup.string()
     //     .min(3, 'Please Enter less then 3 letters')
     //     .required('Password is Required'),
@@ -46,27 +46,25 @@ export default class RegisterForm extends Component {
         birthdate: '',
         loading: false,
         province: '',
-        date: '',
-        month: '',
-        month_days: [],
-        year_list: [],
-        year: '',
+        amphure: '',
+        district: '',
+        provinceID: '',
+        amphurID: '',
+        districtCode: '',
+        zipcode: '',
         username: '',
         password: '',
     }
 
     componentDidMount() {
-        let date = new Date()
-        const year = date.getFullYear() + 543
-        let year_list = []
-        for (let i = year; i >= year - 120; i--){
-            year_list.push(i)
-        }
         this.setState({
             province: provinces[0].province_name,
-            month: months[0].month_name,
-            month_days: months[0].month_days,
-            year_list
+            provinceID: provinces[0].province_id,
+            amphure: amphures[0].amphur_name,
+            amphurID: amphures[0].amphur_id,
+            district: districts[0].district_name,
+            districtCode: districts[0].district_code,
+            zipcode: zipcodes[0].zipcode_name,
         })
     }
 
@@ -74,16 +72,13 @@ export default class RegisterForm extends Component {
         this.setState({
             [event.target.name] : event.target.value
         })
+        
     }
+    
 
-    handleChangeMonth = (event) => {
-        this.setState({
-            month: months[event.target.value-1].month_name,
-            month_days: months[event.target.value-1].month_days,
-        })
-    }
-
-    handleSubmit = () => {
+    handleSubmit = (event) => {
+        const { amphure, amphurID } = this.state
+        console.log(amphure, amphurID)
         // axios.post('http://localhost:5000/users/login',
         //     {
         //         username: username,
@@ -100,8 +95,10 @@ export default class RegisterForm extends Component {
         //     .catch(err => {
         //         console.log('Error: ', err)
         //     })
-        // event.preventDefault()
+        event.preventDefault()
     }
+
+    
 
     render() {
         return (
@@ -115,13 +112,12 @@ export default class RegisterForm extends Component {
                         citizenID: '',
                         birthdate: '',
                         amphure: '',
-                        district: '',   
+                        district: '',
                         zipcode: '',
                     }}
-                    onSubmit={this.handleSubmit}
                 >
                     {({ errors, touched}) => (
-                        <FormIK >
+                        <FormIK>
                             <Row>
                                 <Col>
                                     <Form.Group>
@@ -149,41 +145,9 @@ export default class RegisterForm extends Component {
                                 </Col>
                                 <Col>
                                     <Form.Group>
-                                    <Form.Label>วัน/เดือน/ปี เกิด {this.state.date + '/' + this.state.month + '/' + this.state.year}</Form.Label>
-                                        <Row>
-                                            <Col>
-                                                <Form.Control as="select" name="date" id="date" onChange={this.handleChange}>
-                                                    <option defaultValue="">--</option>
-                                                    {
-                                                        this.state.month_days.map((day, index) => {
-                                                            return <option key={index} devalue={day}>{day}</option>
-                                                        })
-                                                    }
-                                                </Form.Control>
-                                            </Col>
-                                            
-                                            <Col>
-                                                <Form.Control as="select" name="month" id="month" onChange={this.handleChangeMonth}>
-                                                    { 
-                                                        months.map((month, index) => {
-                                                            return <option key={index} value={month.month_id}>{month.month_name}</option>
-                                                        })
-                                                    }
-                                                </Form.Control>
-                                            </Col>
-                                            
-                                            <Col>
-                                                <Form.Control as="select" name="year" id="year" onChange={this.handleChange}>
-                                                    { 
-                                                        this.state.year_list.map((year, index) => {
-                                                            return <option key={index} value={year}>{year}</option>
-                                                        })
-                                                    }
-                                                </Form.Control>
-                                            </Col>
-
-                                            <Form.Control.Feedback type="invalid"> {errors.birthdate} </Form.Control.Feedback>
-                                        </Row>
+                                        <Form.Label>วัน/เดือน/ปี เกิด</Form.Label>
+                                        <Field type="date" name="password" id="examplePassword" placeholder="password placeholder" className={`form-control ${touched.birthdate ? errors.birthdate ? 'is-invalid' : 'is-valid' : ''}`} />
+                                        <Form.Control.Feedback type="invalid"> {errors.birthdate} </Form.Control.Feedback>
                                     </Form.Group>
                                 </Col>
                             </Row>
@@ -198,7 +162,7 @@ export default class RegisterForm extends Component {
                                 <Col>
                                     <Form.Group>
                                         <Form.Label>อีเมลล์</Form.Label>
-                                        <Form.Control type="email" name="email" id="email" placeholder="example@email.com"/>
+                                        <Field type="email" name="email" id="email" placeholder="example@email.com" className={`form-control ${touched.email ? errors.email ? 'is-invalid' : 'is-valid' : ''}`}/>
                                         <Form.Control.Feedback type="invalid"> {errors.email} </Form.Control.Feedback>
                                     </Form.Group>
                                 </Col>
@@ -215,6 +179,13 @@ export default class RegisterForm extends Component {
                                     <Form.Group>
                                         <Form.Label>แขวง/ตำบล</Form.Label>
                                         <Form.Control name="district" id="district" onChange={this.handleChange}>
+                                            {/* {
+                                                districts.map((data, index) => {
+                                                    if(this.state.amphurID === data.amphur_id){
+                                                        return <option key={index} value={data.district_id}>{data.district_name}</option>
+                                                    }
+                                                })
+                                            } */}
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>
@@ -225,6 +196,13 @@ export default class RegisterForm extends Component {
                                     <Form.Group>
                                         <Form.Label>เขต/อำเภอ</Form.Label>
                                         <Form.Control name="amphure" id="amphure" onChange={this.handleChange}>
+                                            {/* {
+                                                amphures.map((data, index) => {
+                                                    if(this.state.provinceID === data.province_id){
+                                                        return <option key={index} value={data.amphur_id}>{data.amphur_name}</option>
+                                                    }
+                                                })
+                                            } */}
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>
@@ -249,6 +227,22 @@ export default class RegisterForm extends Component {
                                     </Form.Group>  
                                 </Col>
                             </Row>
+                            <hr></hr>
+                            <h2>ข้อมูลสำหรับผู้ใช้เพื่อเข้าใช้งาน</h2>
+                            <br></br>
+                            <Form.Group>
+                                <Form.Label>Username :</Form.Label>
+                                <Form.Control onChange={this.handleChange}/>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Password :</Form.Label>
+                                <Form.Control type="password" onChange={this.handleChange}/>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Confirm-password :</Form.Label>
+                                <Form.Control type="password" onChange={this.handleChange}/>
+                            </Form.Group>
+
                             <Button type="submit">ยืนยัน</Button>
                         </FormIK>
                     )}

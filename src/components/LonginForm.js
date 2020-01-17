@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav, Modal, Button } from 'react-bootstrap';
+import { Nav, Modal, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
@@ -8,11 +8,15 @@ class LonginForm extends Component {
         modal: false,
         username: "",
         password: "",
+        isValid: false
     }
 
     toggle = () => {
         this.setState({
             modal: !this.state.modal,
+            username: "",
+            password: "",
+            isValid: false
         })
     }
     handleChange = (event) =>{
@@ -23,7 +27,7 @@ class LonginForm extends Component {
 
     handleSubmit = (event) => {
         const { username, password } = this.state
-        axios.post('http://localhost:5000/users/login',
+        axios.post('https://rubber-backend.herokuapp.com/users/login',
             {
                 username: username,
                 password: password
@@ -34,10 +38,12 @@ class LonginForm extends Component {
                 if(res.data.message === 'Logged In'){
                     this.props.getData(res.data.user)
                     this.toggle()
+                } else {
+                    this.setState({ isValid: true })
                 }
             })
             .catch(err => {
-                console.log('Error: ', err)
+                this.setState({ isValid: true })
             })
         event.preventDefault()
     }
@@ -48,8 +54,9 @@ class LonginForm extends Component {
                 <Nav.Link onClick={this.toggle}>Sign In</Nav.Link>
                 <Modal show={this.state.modal} onHide={this.toggle}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Modal heading</Modal.Title>
+                        <Modal.Title>เข้าสู่ระบบ</Modal.Title>
                     </Modal.Header>
+                    <Alert variant="danger" hidden={!this.state.isValid} style={{textAlign: "center"}}> กรุณาตรวจสอบบัญชีผู้ใช้ และรหัสผ่านใหม่อีกครั้ง </Alert>
                     <Modal.Body>
                         <div className="login-form container">
                             <div className="form-group">

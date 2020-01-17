@@ -9,7 +9,7 @@ export default class ListUser extends Component {
     }
 
     componentDidMount = () => {
-        axios.get('http://localhost:5000/users/')
+        axios.get('https://rubber-backend.herokuapp.com/users/')
             .then(res => {
                 let data = []
                 res.data.map(obj => {

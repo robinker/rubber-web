@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
-import {Form, Col, Button, Alert } from 'react-bootstrap'
+import {Form, Col, Button, InputGroup } from 'react-bootstrap'
+import AddFreind from '../components/AddFriend'
 import axios from 'axios'
 
-export default class Sale extends Component {
+class Sale extends Component {
     state = {
         rubberType: 'น้ำยางสด',
         volume: 0,
         price: 0,
         volumeError: '',
         priceError: '',
-        destError: '',
         validate: false,
         destination: '',
+        friendlist: [],
         
     }
 
@@ -35,9 +36,9 @@ export default class Sale extends Component {
             priceError = 'จำนวนเงินผิดพลาด'
         }
 
-        if(this.state.destination === ''){
-            destError = 'กรุณากรอกชื่อผู้ซื้อ'
-        }
+        // if(this.state.destination === ''){
+        //     destError = 'กรุณากรอกชื่อผู้ซื้อ'
+        // }
 
         if(volumeError || priceError || destError){
             this.setState({
@@ -61,7 +62,7 @@ export default class Sale extends Component {
 
         else {
             this.setState({ validate: true })
-            axios.post('http://localhost:5000/sale/add',{
+            axios.post('https://rubber-backend.herokuapp.com/sale/add',{
                 source: this.props.source,
                 rubberType: this.state.rubberType,
                 volume: this.state.volume,
@@ -84,57 +85,99 @@ export default class Sale extends Component {
         
     }
 
+    componentDidMount = () => {
+        axios.get('https://rubber-backend.herokuapp.com/users/getFriends/' + this.props.userId)
+            .then(res => {
+                let list = [...res.data]
+                this.setState({
+                    friendlist: list,
+                    destination: list[list.length-1],
+                })
+            }).catch(err => {
+                console.log('Error: ', err)
+            })
+    }
+
+    componentDidUpdate = () => {
+        axios.get('https://rubber-backend.herokuapp.com/users/getFriends/' + this.props.userId)
+            .then(res => {
+                let list = [...res.data]
+                if(list.length !== this.state.friendlist.length){
+                    this.setState({
+                        friendlist: list,
+                        destination: list[list.length-1]
+                    })
+                } else {
+                    this.setState({
+                        friendlist: list,
+                    })  
+                }
+            }).catch(err => {
+                console.log('Error: ', err)
+            })
+    }
+
     render() {
 
         return (
             <div className='container'>
-                <Form>
-                    <Form.Group as={Col}>
-                        <h2>ซื้อ-ขายยาง</h2>
-                        <br></br>
-                        {/* <Form.Label>รหัสการซื้อขาย :</Form.Label> */}
-                        {/* <br></br> */}
-                        <Form.Label>ประเภทยาง : {this.state.rubberType} {this.state.others}</Form.Label>
-                        <Form inline>
-                            <Form.Check inline type="radio" name='rubberType' value='น้ำยางสด' label="น้ำยางสด"  checked={this.handleCheck} onChange={this.handleChange} defaultChecked/>
-                            <Form.Check inline type="radio" name='rubberType' value='ยางก้อนถ้วย' label="ยางก้อนถ้วย" checked={this.handleCheck} onChange={this.handleChange}/>
-                            <Form.Check inline type="radio" name='rubberType' value='ยางแผ่นดิบ' label="ยางแผ่นดิบ" checked={this.handleCheck} onChange={this.handleChange}/>
-                            <Form.Check inline type="radio" name='rubberType' value='ผางแผ่นรบควัน' label="ผางแผ่นรบควัน" checked={this.handleCheck} onChange={this.handleChange}/>
-                            <Form.Check inline type="radio" name='rubberType' value='ขี้ยาง/เศษยาง' label="ขี้ยาง/เศษยาง" checked={this.handleCheck} onChange={this.handleChange}/>
-                            <Form.Check inline type="radio" name='rubberType' value='ยางเครฟ' label="ยางเครฟ" checked={this.handleCheck} onChange={this.handleChange}/>
-                        </Form>
-                    </Form.Group>
-                    <Form.Group as={Col} sm='5'>
-                        <Form.Label>ปริมาณยางที่ขาย (กิโลกรัม)</Form.Label>
-                        { this.state.volumeError ? 
-                            (<Form.Control type='number' name='volume' onChange={this.handleChange} isInvalid></Form.Control>) :
-                            (<Form.Control type='number' name='volume' onChange={this.handleChange}></Form.Control>) 
-                        }
-                        
-                        <Form.Control.Feedback type='invalid'> {this.state.volumeError} </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group as={Col} sm='5'>
-                        <Form.Label>ราคายางที่ขาย (บาท)</Form.Label>
-                        { this.state.priceError ? 
-                            (<Form.Control type='number' name='price' onChange={this.handleChange} isInvalid></Form.Control>) :
-                            (<Form.Control type='number' name='price' onChange={this.handleChange}></Form.Control>)
-                        }
-                        <Form.Control.Feedback type='invalid'> {this.state.priceError} </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group as={Col} sm='5'>
-                        <Form.Label>ชื่อผู้ซื้อ (ชื่อ-นามสกุล)</Form.Label>
-                        { this.state.destError ? 
-                            (<Form.Control name='destination' onChange={this.handleChange} isInvalid></Form.Control>) :
-                            (<Form.Control name='destination' onChange={this.handleChange} placeholder="กอไก่ ใจดี"></Form.Control>)
-                        }
-                        <Form.Control.Feedback type='invalid'> {this.state.destError} </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                        <br></br>
-                        <Button onClick={this.handleSubmit}>ยืนยัน</Button>
-                    </Form.Group>
-                </Form>
+                <Form.Group as={Col}>
+                    <h2>ซื้อ-ขายยาง</h2>
+                    <br></br>
+                    {/* <Form.Label>รหัสการซื้อขาย :</Form.Label> */}
+                    {/* <br></br> */}
+                    <Form.Label>ประเภทยาง : {this.state.rubberType} {this.state.others}</Form.Label>
+                    <Form inline>
+                        <Form.Check inline type="radio" name='rubberType' value='น้ำยางสด' label="น้ำยางสด"  checked={this.handleCheck} onChange={this.handleChange} defaultChecked/>
+                        <Form.Check inline type="radio" name='rubberType' value='ยางก้อนถ้วย' label="ยางก้อนถ้วย" checked={this.handleCheck} onChange={this.handleChange}/>
+                        <Form.Check inline type="radio" name='rubberType' value='ยางแผ่นดิบ' label="ยางแผ่นดิบ" checked={this.handleCheck} onChange={this.handleChange}/>
+                        <Form.Check inline type="radio" name='rubberType' value='ผางแผ่นรบควัน' label="ผางแผ่นรบควัน" checked={this.handleCheck} onChange={this.handleChange}/>
+                        <Form.Check inline type="radio" name='rubberType' value='ขี้ยาง/เศษยาง' label="ขี้ยาง/เศษยาง" checked={this.handleCheck} onChange={this.handleChange}/>
+                        <Form.Check inline type="radio" name='rubberType' value='ยางเครฟ' label="ยางเครฟ" checked={this.handleCheck} onChange={this.handleChange}/>
+                    </Form>
+                </Form.Group>
+                <Form.Group as={Col} sm='5'>
+                    <Form.Label>ปริมาณยางที่ขาย (กิโลกรัม)</Form.Label>
+                    { this.state.volumeError ? 
+                        (<Form.Control type='number' name='volume' onChange={this.handleChange} isInvalid></Form.Control>) :
+                        (<Form.Control type='number' name='volume' onChange={this.handleChange}></Form.Control>) 
+                    }
+                    
+                    <Form.Control.Feedback type='invalid'> {this.state.volumeError} </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} sm='5'>
+                <Form.Label> ราคาสุทธิของยางที่ขาย (บาท) </Form.Label>
+                    { this.state.priceError ? 
+                        (<Form.Control type='number' name='price' onChange={this.handleChange} isInvalid></Form.Control>) :
+                        (<Form.Control type='number' name='price' onChange={this.handleChange}></Form.Control>)
+                    }
+                    <Form.Control.Feedback type='invalid'> {this.state.priceError} </Form.Control.Feedback>
+                </Form.Group>
+                
+                <Form.Group as={Col} sm='5'>
+                    <Form.Label>ชื่อผู้ซื้อ (ชื่อ-นามสกุล)</Form.Label>
+                    <InputGroup>
+                        <Form.Control as='select' name='destination' onChange={this.handleChange} >
+                            {
+                                this.state.friendlist.map((friend, index) => {
+                                    return <option key={index} value={friend} selected> {friend} </option>
+                                })
+                            }
+                        </Form.Control>
+                        <InputGroup.Append>
+                            <AddFreind userId={this.props.userId}></AddFreind>
+                        </InputGroup.Append>
+                    </InputGroup>
+                    <Form.Control.Feedback type='invalid'> {this.state.destError} </Form.Control.Feedback>
+                </Form.Group>
+                
+                <Form.Group as={Col}>
+                    <br></br>
+                    <Button onClick={this.handleSubmit}>ยืนยัน</Button>
+                </Form.Group>
             </div>
         )
     }
 }
+
+export default Sale
