@@ -5,16 +5,11 @@ export default function Profile(props) {
         <div className="container">
             <h3>ข้อมูลส่วนตัว</h3>
             <div>
-            <h4>ชื่อ นามสกุล: {props.user.firstname + " " + props.user.lastname}</h4>
+            <h4>ชื่อ นามสกุล: {props.user.firstname + " " + props.user.lastname} ({props.user.role})</h4>
                 <p>หมายเลขบัตรประชาชน: 1234567891234</p>
-                <nav>หมายเลขใบอนุญาติ: 
-                    <ol>
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                        <li>4</li>
-                    </ol>
-                </nav>
+                { 
+                    props.user.role === 'ผู้ดูแลระบบ' ? null : <p>หมายเลขใบอนุญาติ: {props.user.cert_1} </p>
+                }
                 <p>อีเมลล์: example@email.com</p>
             </div>
         </div>

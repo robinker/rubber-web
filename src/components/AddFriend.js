@@ -52,7 +52,7 @@ export class AddFriend extends Component {
                         <Modal.Title>เพิ่มเพื่อน</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form.Label>ชื่อ-นามสกุล</Form.Label>
+                        <Form.Label>ชื่อบัญชีผู้ใช้</Form.Label>
                         { this.state.error ? 
                             (<Form.Control name='user' onChange={this.handleChange} isInvalid></Form.Control>) :
                             (<Form.Control name='user' onChange={this.handleChange}></Form.Control>)

@@ -62,8 +62,11 @@ class Sale extends Component {
 
         else {
             this.setState({ validate: true })
-            axios.post('https://rubber-backend.herokuapp.com/sale/add',{
-                source: this.props.source,
+            axios.post('https://rubber-backend.herokuapp.com/transactions/add',{
+                source: {
+                    name: this.props.source, 
+                    certification: this.props.cert
+                },
                 rubberType: this.state.rubberType,
                 volume: this.state.volume,
                 price: this.state.price,
@@ -122,7 +125,7 @@ class Sale extends Component {
         return (
             <div className='container'>
                 <Form.Group as={Col}>
-                    <h2>ซื้อ-ขายยาง</h2>
+                    { this.props.role === 'เกษตรกร' ? <h2>ขายยาง</h2> : <h2>ซื้อยาง</h2> }
                     <br></br>
                     {/* <Form.Label>รหัสการซื้อขาย :</Form.Label> */}
                     {/* <br></br> */}
@@ -137,7 +140,7 @@ class Sale extends Component {
                     </Form>
                 </Form.Group>
                 <Form.Group as={Col} sm='5'>
-                    <Form.Label>ปริมาณยางที่ขาย (กิโลกรัม)</Form.Label>
+                    { this.props.role === 'เกษตรกร' ? <Form.Label>ปริมาณยางที่ขาย (กิโลกรัม)</Form.Label> : <Form.Label>ปริมาณยางที่ซื้อ (กิโลกรัม)</Form.Label> }
                     { this.state.volumeError ? 
                         (<Form.Control type='number' name='volume' onChange={this.handleChange} isInvalid></Form.Control>) :
                         (<Form.Control type='number' name='volume' onChange={this.handleChange}></Form.Control>) 
@@ -146,7 +149,7 @@ class Sale extends Component {
                     <Form.Control.Feedback type='invalid'> {this.state.volumeError} </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} sm='5'>
-                <Form.Label> ราคาสุทธิของยางที่ขาย (บาท) </Form.Label>
+                { this.props.role === 'เกษตรกร' ? <Form.Label> ราคาสุทธิของยางที่ขาย (บาท) </Form.Label> : <Form.Label>ราคาสุทธิของยางที่ซื้อ (บาท)</Form.Label> }
                     { this.state.priceError ? 
                         (<Form.Control type='number' name='price' onChange={this.handleChange} isInvalid></Form.Control>) :
                         (<Form.Control type='number' name='price' onChange={this.handleChange}></Form.Control>)
@@ -155,12 +158,12 @@ class Sale extends Component {
                 </Form.Group>
                 
                 <Form.Group as={Col} sm='5'>
-                    <Form.Label>ชื่อผู้ซื้อ (ชื่อ-นามสกุล)</Form.Label>
+                { this.props.role === 'เกษตรกร' ? <Form.Label>ชื่อผู้ซื้อ (ชื่อ-นามสกุล)</Form.Label> : <Form.Label>ชื่อผู้ขาย (ชื่อ-นามสกุล)</Form.Label> }
                     <InputGroup>
                         <Form.Control as='select' name='destination' onChange={this.handleChange} >
                             {
                                 this.state.friendlist.map((friend, index) => {
-                                    return <option key={index} value={friend} selected> {friend} </option>
+                                    return <option key={index} value={friend} selected > {friend} </option>
                                 })
                             }
                         </Form.Control>

@@ -15,13 +15,6 @@ export default class AppNavbar extends Component {
     }
 
     render() {
-        const notLoggedIn = () => {
-            return (
-                <>
-                    <LoginForm></LoginForm>
-                </>
-            )
-        }
 
         const loggedIn = () => {
             return (
@@ -52,7 +45,7 @@ export default class AppNavbar extends Component {
                     <NavLink to="/" className='nav-link'>รายงานสรุปเนื้อที่สวนยาง</NavLink>
                 </Nav.Item>
                 <Nav.Item>
-                    <NavLink to="/" className='nav-link'>รายงานสรุปการซื้อขาย</NavLink>
+                    <NavLink to="/transactions" className='nav-link'>รายงานสรุปการซื้อขาย</NavLink>
                 </Nav.Item>
 
 
@@ -109,15 +102,15 @@ export default class AppNavbar extends Component {
 
         let navItem
         
-        if(this.props.role === 'Administrator'){
+        if(this.props.role === 'ผู้ดูแลระบบ'){
             navItem = adminLoggedIn()
             this.isLogin = true
         }
-        else if(this.props.role === 'Gardener'){
+        else if(this.props.role === 'เกษตรกร'){
             navItem = gardenerLoggedIn()
             this.isLogin = true
         }
-        else if(this.props.role  === 'Middleman'){
+        else if(this.props.role  === 'พ่อค้าคนกลาง'){
             navItem = middlemanLoggedIn()
             this.isLogin = true
         }
@@ -130,10 +123,10 @@ export default class AppNavbar extends Component {
                     </Navbar.Brand>
                     <Navbar.Collapse className="justify-content-end">
                         <Nav>
-                            { !this.isLogin ? notLoggedIn() : null}
+                            { !this.isLogin ? <LoginForm></LoginForm> : null}
                         </Nav>
                         <Navbar.Text hidden={!this.isLogin}>
-                            Signed in as: <a> {this.props.name} </a> 
+                            Signed in as: <u style={{color: "black"}}> {this.props.name} </u> 
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>
