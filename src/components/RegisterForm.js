@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Col, Row, Button, Form } from 'react-bootstrap'
 import provinces from '../json/provinces'
-import amphures from '../json/amphures'
-import districts from '../json/districts'
-import zipcodes from '../json/zipcodes'
+// import amphures from '../json/amphures'
+// import districts from '../json/districts'
+// import zipcodes from '../json/zipcodes'
 import { Formik, Form as FormIK, Field } from 'formik'
 import * as Yup from 'yup'
 
@@ -21,14 +21,15 @@ const RegisterSchema = Yup.object().shape({
         .max(13, 'Too Long!')
         .required('Required'),
     birthdate: Yup.date()
-        .required('Required'),
+        .default(() => new Date())
+        .max(new Date(), 'date errors'),
     email: Yup.string()
         .email('Invalid email')
         .required('Email is Required'),
     // password: Yup.string()
     //     .min(3, 'Please Enter less then 3 letters')
     //     .required('Password is Required'),
-    // confirmpassword: Yup.string()
+    // confirmPassword: Yup.string()
     //     .min(3, 'Please Enter less then 3 letters')
     //     .required('Password is Required')
     //     //check password match
@@ -39,34 +40,17 @@ const RegisterSchema = Yup.object().shape({
 
 export default class RegisterForm extends Component {
 
-    state = {
-        firstname: '',
-        lastname: '',
-        citizenID: '',
-        birthdate: '',
-        loading: false,
-        province: '',
-        amphure: '',
-        district: '',
-        provinceID: '',
-        amphurID: '',
-        districtCode: '',
-        zipcode: '',
-        username: '',
-        password: '',
-    }
-
-    componentDidMount() {
-        this.setState({
-            province: provinces[0].province_name,
-            provinceID: provinces[0].province_id,
-            amphure: amphures[0].amphur_name,
-            amphurID: amphures[0].amphur_id,
-            district: districts[0].district_name,
-            districtCode: districts[0].district_code,
-            zipcode: zipcodes[0].zipcode_name,
-        })
-    }
+    // componentDidMount() {
+    //     this.setState({
+    //         province: provinces[0].province_name,
+    //         provinceID: provinces[0].province_id,
+    //         // amphure: amphures[0].amphur_name,
+    //         // amphurID: amphures[0].amphur_id,
+    //         // district: districts[0].district_name,
+    //         // districtCode: districts[0].district_code,
+    //         // zipcode: zipcodes[0].zipcode_name,
+    //     })
+    // }
 
     handleChange = (event) => {
         this.setState({
@@ -75,31 +59,6 @@ export default class RegisterForm extends Component {
         
     }
     
-
-    handleSubmit = (event) => {
-        const { amphure, amphurID } = this.state
-        console.log(amphure, amphurID)
-        // axios.post('http://localhost:5000/users/login',
-        //     {
-        //         username: username,
-        //         password: password
-        //     },
-        //     { withCredentials: true }
-        // )
-        //     .then(res => {
-        //         if(res.data.message === 'Logged In'){
-        //             // dispatch(signIn())
-        //             window.location = '/'
-        //         }
-        //     })
-        //     .catch(err => {
-        //         console.log('Error: ', err)
-        //     })
-        event.preventDefault()
-    }
-
-    
-
     render() {
         return (
             <div className='container'>
@@ -110,10 +69,18 @@ export default class RegisterForm extends Component {
                         firstname: '',
                         lastname: '',
                         citizenID: '',
-                        birthdate: '',
+                        email: '',
+                        birthdate: new Date(),
+                        province: provinces[0].province_name,
                         amphure: '',
                         district: '',
                         zipcode: '',
+                        username: '',
+                        password: '',
+                    }}
+                    onSubmit={values => {
+                        // same shape as initial values 
+                        console.log(values);
                     }}
                 >
                     {({ errors, touched}) => (
@@ -121,7 +88,7 @@ export default class RegisterForm extends Component {
                             <Row>
                                 <Col>
                                     <Form.Group>
-                                        <Form.Label>ชื่อ</Form.Label>
+                                    <Form.Label>ชื่อ</Form.Label>
                                         <Field name="firstname" id="name" placeholder="ชื่อจริง"  className={`form-control ${touched.firstname ? errors.firstname ? 'is-invalid' : 'is-valid' : ''}`} />
                                         <Form.Control.Feedback type="invalid"> {errors.firstname} </Form.Control.Feedback>
                                     </Form.Group>
@@ -139,15 +106,15 @@ export default class RegisterForm extends Component {
                                 <Col>
                                     <Form.Group>
                                         <Form.Label>หมายเลขบัตรประชาชน</Form.Label>
-                                        <Field  name="citizenID" id="citizenID" className={`form-control ${touched.citizenID ? errors.citizenID ? 'is-invalid' : 'is-valid' : ''}`} />
+                                        <Field name="citizenID" id="citizenID" className={`form-control ${touched.citizenID ? errors.citizenID ? 'is-invalid' : 'is-valid' : ''}`} />
                                         <Form.Control.Feedback type="invalid"> {errors.citizenID} </Form.Control.Feedback>
                                     </Form.Group>
                                 </Col>
                                 <Col>
                                     <Form.Group>
-                                        <Form.Label>วัน/เดือน/ปี เกิด</Form.Label>
-                                        <Field type="date" name="password" id="examplePassword" placeholder="password placeholder" className={`form-control ${touched.birthdate ? errors.birthdate ? 'is-invalid' : 'is-valid' : ''}`} />
-                                        <Form.Control.Feedback type="invalid"> {errors.birthdate} </Form.Control.Feedback>
+                                    <Form.Label>วัน/เดือน/ปี เกิด</Form.Label>
+                                        <Field type="date" format="dd/mm/yyyy" name="birthdate" id="birthdate" className={`form-control ${touched.birthdate ? errors.birthdate ? 'is-invalid' : 'is-valid' : ''}`} />
+                                        <Form.Control.Feedback type="invalid"> {errors.birthdate === 'date errors' ? 'Date is invalid' : 'กรุณาใส่วัน/เดือน/ปี เกิด'} </Form.Control.Feedback>
                                     </Form.Group>
                                 </Col>
                             </Row>
@@ -209,13 +176,13 @@ export default class RegisterForm extends Component {
                                 <Col>
                                     <Form.Group>
                                         <Form.Label>จังหวัด</Form.Label>
-                                        <Form.Control as="select" name="province" id="province" onChange={this.handleChangeProvince}>
+                                        <Field as="select" className="form-control" name="province" id="province">
                                             {
                                                 provinces.map((data, index) => {
                                                     return <option key={index} value={data.province_name}>{data.province_name}</option>
                                                 })
                                             }
-                                        </Form.Control>
+                                        </Field>
                                     </Form.Group>
                                 </Col>
                             </Row>

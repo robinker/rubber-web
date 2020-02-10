@@ -5,7 +5,7 @@ import Block from './Block'
 
 function TransactionList(props) {
     return (
-        <Accordion defaultActiveKey="0">
+        <Accordion defaultActiveKey="0" hidden={props.hidden}>
             {
                 props.transactions.map((chain, index) => {
                     return (

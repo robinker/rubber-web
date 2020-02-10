@@ -6,7 +6,7 @@ function TransactionTable(props) {
     let totalPrice = 0
     let equal = false
     return (
-        <Table responsive striped bordered>
+        <Table responsive striped bordered hidden={props.hidden}>
             <thead>
                 <tr>
                     <th rowSpan='2'>#</th>  
@@ -44,7 +44,7 @@ function TransactionTable(props) {
                                 totalPrice += props.transactions[index+1].price
                             }
                         }
-                        return <tr>
+                        return <tr key={index}>
                             <td> {index + 1} </td>
                             <td> {date.getUTCDate()}/{date.getUTCMonth() + 1}/{date.getFullYear() + 543} </td>
                             {
@@ -57,7 +57,7 @@ function TransactionTable(props) {
                             }
                             <td> {transaction.rubberType} </td>
                             <td> {transaction.volume} </td>
-                            <td> {transaction.price / transaction.volume} </td>
+                            <td> {(transaction.price / transaction.volume).toFixed(2) } </td>
                             <td> { equal ? '' : sum} </td>
                             <td> {equal ? '' : totalPrice} </td>
                         </tr>

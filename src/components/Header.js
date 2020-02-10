@@ -32,21 +32,22 @@ export default class AppNavbar extends Component {
         const adminLoggedIn = () => {
             return (
                 <>
-                <Nav.Item>
-                    <NavLink to="/management" className='nav-link'>จัดการข้อมูลสมาชิก</NavLink>
-                </Nav.Item>
-                <Nav.Item>
-                    <NavLink to="/" className='nav-link'>ราคาซื้อขายยางกลาง</NavLink>
-                </Nav.Item>
-                <Nav.Item>
-                    <NavLink to="/" className='nav-link'>ตรวจสอบใบอนุญาต</NavLink>
-                </Nav.Item>
-                <Nav.Item>
-                    <NavLink to="/" className='nav-link'>รายงานสรุปเนื้อที่สวนยาง</NavLink>
-                </Nav.Item>
-                <Nav.Item>
-                    <NavLink to="/transactions" className='nav-link'>รายงานสรุปการซื้อขาย</NavLink>
-                </Nav.Item>
+                    {loggedIn()}
+                    <Nav.Item>
+                        <NavLink to="/management" className='nav-link'>จัดการข้อมูลสมาชิก</NavLink>
+                    </Nav.Item>
+                    {/* <Nav.Item>
+                        <NavLink to="/" className='nav-link'>ราคาซื้อขายยางกลาง</NavLink>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <NavLink to="/" className='nav-link'>ตรวจสอบใบอนุญาต</NavLink>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <NavLink to="/" className='nav-link'>รายงานสรุปเนื้อที่สวนยาง</NavLink>
+                    </Nav.Item> */}
+                    <Nav.Item>
+                        <NavLink to="/transactions" className='nav-link'>รายงานสรุปการซื้อขาย</NavLink>
+                    </Nav.Item>
 
 
                 </>
