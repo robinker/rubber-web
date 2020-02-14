@@ -1,6 +1,7 @@
 const initialState = {
     isLogged: false,
     role: '',
+    token: null,
 }
 
 const userReducer = (state = initialState, action) => {

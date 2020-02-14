@@ -11,31 +11,33 @@ const RegisterSchema = Yup.object().shape({
     firstname: Yup.string()
         .min(2, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('Required'),
+        .required('กรุณากรอกชื่อ'),
     lastname: Yup.string()
         .min(2, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('Required'),  
+        .required('กรุณากรอกนามสกุล'),  
     citizenID: Yup.string()
         .min(13, 'Too Short!')
         .max(13, 'Too Long!')
-        .required('Required'),
+        .required('กรุณากรอกรหัสบัตรประชาชน'),
     birthdate: Yup.date()
         .default(() => new Date())
         .max(new Date(), 'date errors'),
     email: Yup.string()
-        .email('Invalid email')
-        .required('Email is Required'),
-    // password: Yup.string()
-    //     .min(3, 'Please Enter less then 3 letters')
-    //     .required('Password is Required'),
-    // confirmPassword: Yup.string()
-    //     .min(3, 'Please Enter less then 3 letters')
-    //     .required('Password is Required')
-    //     //check password match
-    //     .test('passwords-match', 'Passwords must match ya fool', function (value) {
-    //         return this.parent.password === value;
-    //     }),
+        .email('อีเมลล์ไม่ถูกต้อง')
+        .required('กรุณากรอกอีเมลล์'),
+    username: Yup.string()
+        .min(4, 'กรุณากรอกอย่างน้อย 4 ตัวอักษร')
+        .required('กรุณากรอกชื่อบัญชีผู้ใช้'),
+    password: Yup.string()
+        .min(4, 'รหัสผ่านต้องมีอย่างน้อย 4 ตัว')
+        .required('กรุณากรอกรหัสผ่าน'),
+    confirmPassword: Yup.string()
+        .required('กรุณากรอกรหัสผ่านยืนยัน')
+        //check password match
+        .test('passwords-match', 'รหัสผ่านไม่ตรงกัน', function (value) {
+            return this.parent.password === value;
+        }),
   });
 
 export default class RegisterForm extends Component {
@@ -56,7 +58,6 @@ export default class RegisterForm extends Component {
         this.setState({
             [event.target.name] : event.target.value
         })
-        
     }
     
     render() {
@@ -139,7 +140,7 @@ export default class RegisterForm extends Component {
                                 <Col>
                                     <Form.Group>
                                         <Form.Label>ที่อยู่</Form.Label>
-                                        <Form.Control name="address" id="address" placeholder="บ้านเลขที่, หมู่, ซอย" />
+                                        <Form.Control name="address" id="address" placeholder="บ้านเลขที่ หมู่ ซอย" />
                                     </Form.Group>
                                 </Col>
                                 <Col>
@@ -195,19 +196,21 @@ export default class RegisterForm extends Component {
                                 </Col>
                             </Row>
                             <hr></hr>
-                            <h2>ข้อมูลสำหรับผู้ใช้เพื่อเข้าใช้งาน</h2>
+                            <h2>บัญชีผู้ใช้</h2>
                             <br></br>
                             <Form.Group>
-                                <Form.Label>Username :</Form.Label>
+                                <Form.Label>ชื่อบัญชีผู้ใช้ :</Form.Label>
                                 <Form.Control onChange={this.handleChange}/>
                             </Form.Group>
                             <Form.Group>
-                                <Form.Label>Password :</Form.Label>
-                                <Form.Control type="password" onChange={this.handleChange}/>
+                                <Form.Label>รหัสผ่าน :</Form.Label>
+                                <Field type="password" name="password" id="password" className={`form-control ${touched.password ? errors.password ? 'is-invalid' : 'is-valid' : ''}`}/>
+                                <Form.Control.Feedback type="invalid"> {errors.password} </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group>
-                                <Form.Label>Confirm-password :</Form.Label>
-                                <Form.Control type="password" onChange={this.handleChange}/>
+                                <Form.Label>ยืนยันรหัสผ่าน :</Form.Label>
+                                <Field type="password" name="confirmPassword" id="confirmPassword" className={`form-control ${touched.confirmPassword ? errors.confirmPassword ? 'is-invalid' : 'is-valid' : ''}`}/>
+                                <Form.Control.Feedback type="invalid"> {errors.confirmPassword} </Form.Control.Feedback>
                             </Form.Group>
 
                             <Button type="submit">ยืนยัน</Button>

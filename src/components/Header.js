@@ -123,8 +123,8 @@ export default class AppNavbar extends Component {
                         <Image src={logo} width="240" height="60"/>
                     </Navbar.Brand>
                     <Navbar.Collapse className="justify-content-end">
-                        <Nav>
-                            { !this.isLogin ? <LoginForm></LoginForm> : null}
+                        <Nav hidden={this.isLogin}>
+                            <LoginForm></LoginForm>
                         </Nav>
                         <Navbar.Text hidden={!this.isLogin}>
                             Signed in as: <u style={{color: "black"}}> {this.props.name} </u> 
@@ -136,7 +136,6 @@ export default class AppNavbar extends Component {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Container>
                             <Nav className="justify-content-center">
-                            {/* { !this.isLogin ? null : loggedIn()} */}
                                 { navItem }
                                 {/* <NavLink to="/" hidden={!this.props.isLogged} className='nav-link'>ออกจากระบบ</NavLink> */}
                                 <a href="/" hidden={!this.props.isLogged} className='nav-link'>ออกจากระบบ</a>

@@ -36,8 +36,8 @@ function TotalTable(props) {
                         return <tr key={index}>
                             <td> {index + 1} </td>
                             <td> {date.getUTCDate()}/{date.getUTCMonth() + 1}/{date.getFullYear() + 543} </td>
-                            <td> 0 </td>
-                            <td colSpan='3'> {transaction.volume} </td>
+                            <td> {transaction.volume} </td>
+                            <td colSpan='3'> - </td>
                             <td> { equal ? '' : sum} </td>
                         </tr>
                     })

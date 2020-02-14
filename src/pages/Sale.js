@@ -89,7 +89,11 @@ class Sale extends Component {
     }
 
     componentDidMount = () => {
-        axios.get('https://rubber-backend.herokuapp.com/users/getFriends/' + this.props.userId)
+        axios.get('https://rubber-backend.herokuapp.com/users/getFriends/' + this.props.userId, {
+            headers: {
+                "Authorization": "Bearer " + this.props.token
+            }
+        })
             .then(res => {
                 let list = [...res.data]
                 this.setState({
@@ -102,7 +106,12 @@ class Sale extends Component {
     }
 
     componentDidUpdate = () => {
-        axios.get('https://rubber-backend.herokuapp.com/users/getFriends/' + this.props.userId)
+        
+        axios.get('https://rubber-backend.herokuapp.com/users/getFriends/' + this.props.userId, {
+            headers: {
+                "Authorization": "Bearer " + this.props.token
+            }
+        })
             .then(res => {
                 let list = [...res.data]
                 if(list.length !== this.state.friendlist.length){

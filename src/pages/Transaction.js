@@ -160,7 +160,12 @@ class Transaction extends Component {
                     <Blocks transactions={this.state.blocks} hidden={!this.state.showBlock}></Blocks> 
                     </> : null
                 }
-                <TotalTable transactions={this.state.transactions.sale}></TotalTable>
+                <br></br>
+                {
+                    this.props.role !== 'ผู้ดูแลระบบ' ? <>
+                    <TotalTable transactions={this.state.transactions.sale}></TotalTable>
+                    </> : null
+                }
             </div>
         )
     }
