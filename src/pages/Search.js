@@ -17,9 +17,9 @@ function Search() {
         })
         .then(res => {
             if(res.data === 'OK') {
-                setFeedback('พบใบอณุญาติ')
+                setFeedback('พบใบอณุญาต')
             } else {
-                setFeedback('ไม่พบใบอณุญาติ')
+                setFeedback('ไม่พบใบอณุญาต')
             }
         })
     }
@@ -32,7 +32,7 @@ function Search() {
                         <Button variant="outline-secondary" onClick={handleSubmit}>ค้นหา</Button>
                     </InputGroup.Append>
                 </InputGroup>
-                <Alert variant={feedback === 'พบใบอณุญาติ' ? "success" : "danger"} hidden={feedback === '' ? true : false} >{feedback}</Alert>
+                <Alert variant={feedback === 'พบใบอณุญาต' ? "success" : "danger"} hidden={feedback === '' ? true : false} >{feedback}</Alert>
         </Container>
     )
 }
