@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Management from './pages/Management'
 import Sale from './pages/Sale'
+import Search from './pages/Search'
 import Transaction from './pages/Transaction'
 import Header from './components/Header'
 import RegisterForm from './components/RegisterForm'
@@ -17,6 +18,7 @@ function App(props) {
       {
         props.user.token === null ? <Redirect to="/"></Redirect> : <>
         <Route path="/profile" exact component={() => <Profile user={props.user}> </Profile> }/>
+        <Route path="/search" exact component={() => <Search></Search> }/>
         <Route path="/management/profile/add" exact component={RegisterForm}/>
         <Route path="/management" exact component={Management}/>
         <Route path="/sale" exact component={() => <Sale source={props.user.firstname + " " + props.user.lastname} userId={props.user._id} cert={props.user.cert_1} role={props.user.role} token={props.user.token}/>} />

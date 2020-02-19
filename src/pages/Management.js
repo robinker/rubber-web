@@ -15,9 +15,9 @@ export default class Management extends Component {
                             <h3>จัดการข้อมูลสมาชิก</h3>
                         </Col>
                         <DropdownButton id="dropdown-basic-button" title="เพิ่มสมาชิก">
-                            <Link to='/management/profile/add' class="dropdown-item">เจ้าของสวนยาง</Link>
-                            <Link to='/' class="dropdown-item">พ่อค้าคนกลาง</Link>
-                            <Link to='/' class="dropdown-item">Admin</Link>
+                            <Link to='/management/profile/add' className="dropdown-item">เจ้าของสวนยาง</Link>
+                            <Link to='/' className="dropdown-item">พ่อค้าคนกลาง</Link>
+                            <Link to='/' className="dropdown-item">Admin</Link>
                         </DropdownButton>
                     </Row>
                     <InputGroup className="mb-3">

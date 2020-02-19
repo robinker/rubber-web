@@ -19,9 +19,7 @@ function TransactionList(props) {
                                     {
                                         chain.map((obj, index) => {
                                             const date = new Date(obj.createdAt)
-                                            return  <>
-                                                <Block obj={obj} date={date} isHidden={false} key={index}></Block>
-                                            </>  
+                                            return  <Block obj={obj} date={date} isHidden={false} key={index}></Block>
                                         })
                                     }
 

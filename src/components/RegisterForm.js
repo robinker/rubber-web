@@ -19,9 +19,13 @@ const RegisterSchema = Yup.object().shape({
     citizenID: Yup.string()
         .min(13, 'Too Short!')
         .max(13, 'Too Long!')
-        .required('กรุณากรอกรหัสบัตรประชาชน'),
+        .required('กรุณากรอกรหัสบัตรประชาชน')
+        .test('', 'กรุณาใส่ตัวเลข', function(value) {
+            //check citizenId pattern
+            return /\d+/.test(value)
+        }),
     birthdate: Yup.date()
-        .default(() => new Date())
+        .default(() => new Date())  
         .max(new Date(), 'date errors'),
     email: Yup.string()
         .email('อีเมลล์ไม่ถูกต้อง')
@@ -89,7 +93,7 @@ export default class RegisterForm extends Component {
                             <Row>
                                 <Col>
                                     <Form.Group>
-                                    <Form.Label>ชื่อ</Form.Label>
+                                        <Form.Label>ชื่อ</Form.Label>
                                         <Field name="firstname" id="name" placeholder="ชื่อจริง"  className={`form-control ${touched.firstname ? errors.firstname ? 'is-invalid' : 'is-valid' : ''}`} />
                                         <Form.Control.Feedback type="invalid"> {errors.firstname} </Form.Control.Feedback>
                                     </Form.Group>
@@ -114,7 +118,7 @@ export default class RegisterForm extends Component {
                                 <Col>
                                     <Form.Group>
                                     <Form.Label>วัน/เดือน/ปี เกิด</Form.Label>
-                                        <Field type="date" format="dd/mm/yyyy" name="birthdate" id="birthdate" className={`form-control ${touched.birthdate ? errors.birthdate ? 'is-invalid' : 'is-valid' : ''}`} />
+                                        <Field type="date" name="birthdate" id="birthdate" className={`form-control ${touched.birthdate ? errors.birthdate ? 'is-invalid' : 'is-valid' : ''}`} />
                                         <Form.Control.Feedback type="invalid"> {errors.birthdate === 'date errors' ? 'Date is invalid' : 'กรุณาใส่วัน/เดือน/ปี เกิด'} </Form.Control.Feedback>
                                     </Form.Group>
                                 </Col>
@@ -200,7 +204,8 @@ export default class RegisterForm extends Component {
                             <br></br>
                             <Form.Group>
                                 <Form.Label>ชื่อบัญชีผู้ใช้ :</Form.Label>
-                                <Form.Control onChange={this.handleChange}/>
+                                <Field type="username" name="username" id="username" className={`form-control ${touched.username ? errors.username ? 'is-invalid' : 'is-valid' : ''}`}/>
+                                <Form.Control.Feedback type="invalid"> {errors.username} </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>รหัสผ่าน :</Form.Label>

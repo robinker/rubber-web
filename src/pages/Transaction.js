@@ -67,7 +67,6 @@ class Transaction extends Component {
     }
 
     toggleBlock = () => {
-        console.log("toggle")
         this.setState({showBlock: !this.state.showBlock})
     }
 

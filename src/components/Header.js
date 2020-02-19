@@ -38,11 +38,11 @@ export default class AppNavbar extends Component {
                     </Nav.Item>
                     {/* <Nav.Item>
                         <NavLink to="/" className='nav-link'>ราคาซื้อขายยางกลาง</NavLink>
-                    </Nav.Item>
+                    </Nav.Item> */}
                     <Nav.Item>
-                        <NavLink to="/" className='nav-link'>ตรวจสอบใบอนุญาต</NavLink>
+                        <NavLink to="/search" className='nav-link'>ตรวจสอบใบอนุญาต</NavLink>
                     </Nav.Item>
-                    <Nav.Item>
+                    {/* <Nav.Item>
                         <NavLink to="/" className='nav-link'>รายงานสรุปเนื้อที่สวนยาง</NavLink>
                     </Nav.Item> */}
                     <Nav.Item>
@@ -59,10 +59,10 @@ export default class AppNavbar extends Component {
                 <>
                     {/* <Nav.Item>
                         <NavLink to="/" className='nav-link'>ราคาซื้อขายยางกลาง</NavLink>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <NavLink to="/" className='nav-link'>ตรวจสอบใบอนุญาต</NavLink>
                     </Nav.Item> */}
+                    <Nav.Item>
+                        <NavLink to="/search" className='nav-link'>ตรวจสอบใบอนุญาต</NavLink>
+                    </Nav.Item>
                     <Nav.Item>
                         <NavLink to="/transactions" className='nav-link'>รายงานสรุปการซื้อขาย</NavLink>
                     </Nav.Item>
