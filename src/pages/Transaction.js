@@ -36,6 +36,14 @@ class Transaction extends Component {
                 .catch(err => {
                     console.log('Error: ', err)
                 })
+            axios.get('https://rubber-backend.herokuapp.com/transactions/')
+                .then(res => {
+                    this.setState({
+                        transactions: {
+                            sale: res.data
+                        }
+                    })
+                })
         } else if(this.props.role === 'เกษตรกร' || this.props.role === 'พ่อค้าคนกลาง') {
             axios.get('https://rubber-backend.herokuapp.com/transactions/' + this.props.firstname + '/' +  this.props.lastname)
             .then(res => {
