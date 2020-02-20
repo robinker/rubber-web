@@ -143,7 +143,7 @@ class Sale extends Component {
                         <Form.Check inline type="radio" name='rubberType' value='น้ำยางสด' label="น้ำยางสด"  checked={this.handleCheck} onChange={this.handleChange} defaultChecked/>
                         <Form.Check inline type="radio" name='rubberType' value='ยางก้อนถ้วย' label="ยางก้อนถ้วย" checked={this.handleCheck} onChange={this.handleChange}/>
                         <Form.Check inline type="radio" name='rubberType' value='ยางแผ่นดิบ' label="ยางแผ่นดิบ" checked={this.handleCheck} onChange={this.handleChange}/>
-                        <Form.Check inline type="radio" name='rubberType' value='ผางแผ่นรบควัน' label="ผางแผ่นรบควัน" checked={this.handleCheck} onChange={this.handleChange}/>
+                        <Form.Check inline type="radio" name='rubberType' value='ยางแผ่นรมควัน' label="ยางแผ่นรมควัน" checked={this.handleCheck} onChange={this.handleChange}/>
                         <Form.Check inline type="radio" name='rubberType' value='ขี้ยาง/เศษยาง' label="ขี้ยาง/เศษยาง" checked={this.handleCheck} onChange={this.handleChange}/>
                         <Form.Check inline type="radio" name='rubberType' value='ยางเครฟ' label="ยางเครฟ" checked={this.handleCheck} onChange={this.handleChange}/>
                     </Form>
@@ -177,7 +177,7 @@ class Sale extends Component {
                             }
                         </Form.Control>
                         <InputGroup.Append>
-                            <AddFreind userId={this.props.userId}></AddFreind>
+                            <AddFreind userId={this.props.userId} token={this.props.token}></AddFreind>
                         </InputGroup.Append>
                     </InputGroup>
                     <Form.Control.Feedback type='invalid'> {this.state.destError} </Form.Control.Feedback>

@@ -23,12 +23,15 @@ export class AddFriend extends Component {
         })
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = () => {
         axios.post('https://rubber-backend.herokuapp.com/users/addFriend/' + this.props.userId ,
-            {
-                username: this.state.user
-            },
-            { withCredentials: true }
+        {
+            username: this.state.user  
+        }, {
+            headers: {
+                "Authorization": "Bearer " + this.props.token
+            }
+        }
         ).then(res => {
             if(res.data.message === 'Friend Added'){
                 alert('เพิ่มเพื่อนสำเร็จ')

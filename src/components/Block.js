@@ -27,7 +27,7 @@ function Block(props) {
                     ประเภทยาง:  {props.obj.rubberType} <br/>
                     ปริมาณยาง:  {props.obj.volume} <br/>
                     ราคา:  {props.obj.price} <br/>
-                    { props.date.getUTCDate() + "/" + props.date.getUTCMonth()+1 + "/" + (props.date.getUTCFullYear()+543) } <br/>
+                    { props.date.getUTCDate() + "/" + (props.date.getUTCMonth()+1) + "/" + (props.date.getUTCFullYear()+543) } <br/>
                     { props.date.getHours() + ":" + props.date.getMinutes() + " น."}
                 </label>
             </div> 

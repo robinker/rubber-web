@@ -77,9 +77,9 @@ export default class AppNavbar extends Component {
         const gardenerLoggedIn = () => {
             return (
                 <>
-                    <Nav.Item>
+                    {/* <Nav.Item>
                         <NavLink to="/sale" className='nav-link'>ขายยาง</NavLink>    
-                    </Nav.Item>
+                    </Nav.Item> */}
                     {loggedIn()}
                     {/* <Nav.Item>
                         <NavLink to="/" className='nav-link'>แจ้งเนื้อที่สวนยาง</NavLink>
