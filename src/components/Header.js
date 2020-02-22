@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Navbar,Nav, Image, Container} from 'react-bootstrap';
 import { NavLink } from 'react-router-dom'
-import LoginForm from './LonginForm'
+import LoginForm from './LoginForm'
 import logo from '../assets/rubberLogo.png'
 export default class AppNavbar extends Component {
     state = {

@@ -21,7 +21,7 @@ function App(props) {
         <Route path="/search" exact component={() => <Search></Search> }/>
         <Route path="/management/profile/add" exact component={RegisterForm}/>
         <Route path="/management" exact component={Management}/>
-        <Route path="/sale" exact component={() => <Sale source={props.user.firstname + " " + props.user.lastname} userId={props.user._id} cert={props.user.cert_1} role={props.user.role} token={props.user.token}/>} />
+        <Route path="/sale" exact component={() => <Sale source={props.user.firstname + " " + props.user.lastname} userId={props.user._id}/>} />
         <Route path="/transactions" exact component={() => <Transaction firstname={props.user.firstname} lastname= {props.user.lastname} role={props.user.role} />} />
       </>
     }

@@ -1,79 +1,73 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
+import { getFriend } from '../actions'
 import axios from 'axios'
 
-export class AddFriend extends Component {
-    state = {
-        show: false,
-        user: '',
-        error: '',
-    }
-    
-    toggle = () => {
-        this.setState({
-            show: !this.state.show,
-            user: '',
-            error: '',
-        })    
-    }
-    
-    handleChange = (event) => {
-        this.setState({
-            [event.target.name] : event.target.value
-        })
+function AddFriend(props) {
+    const [show, setModal] = useState(false)
+    const [user, setUser] = useState('')
+    const [error, setError] = useState('')
+
+    const dispatch = useDispatch()
+
+    function toggle() {
+        setModal(!show)
+        setError('')
     }
 
-    handleSubmit = () => {
-        axios.post('https://rubber-backend.herokuapp.com/users/addFriend/' + this.props.userId ,
+    function handleChange(event) {
+        setUser(event.target.value)
+    }
+
+    function handleSubmit() {
+        axios.post('https://rubber-backend.herokuapp.com/users/addFriend/' + props.userId ,
         {
-            username: this.state.user  
+            username: user  
         }, {
             headers: {
-                "Authorization": "Bearer " + this.props.token
+                "Authorization": "Bearer " + props.user.token
             }
         }
         ).then(res => {
             if(res.data.message === 'Friend Added'){
+                dispatch(getFriend(props.user.friendlist))
                 alert('เพิ่มเพื่อนสำเร็จ')
-                this.toggle()
+                toggle()
             } else {
                 alert('ไม่สามารถเพิ่มเพื่อนซ้ำได้')
             }
         }).catch(() => {
-            this.setState({
-                error: 'ไม่พบบัญชีผู้ใช้'
-            })
-        })
+            setError('ไม่พบบัญชีผู้ใช้')
+        })   
     }
 
-    render() {
-        return (
-            <>
-                <Button variant="outline-secondary" onClick={this.toggle}>เพิ่มเพื่อน</Button>
-                <Modal show={this.state.show} onHide={this.toggle}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>เพิ่มเพื่อน</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form.Label>ชื่อบัญชีผู้ใช้</Form.Label>
-                        { this.state.error ? 
-                            (<Form.Control name='user' onChange={this.handleChange} isInvalid></Form.Control>) :
-                            (<Form.Control name='user' onChange={this.handleChange}></Form.Control>)
-                        }
-                        <Form.Control.Feedback type='invalid'>{this.state.error}</Form.Control.Feedback>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.toggle}>
-                            ยกเลิก
-                        </Button>
-                        <Button variant="primary" onClick={this.handleSubmit}>
-                            เพิ่มเพื่อน
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            </>
-        )
-    }
+    return (
+        <>
+            <Button variant="outline-secondary" onClick={toggle}>เพิ่มรายชื่อ</Button>
+            <Modal show={show} onHide={toggle}>
+                <Modal.Header closeButton>
+                    <Modal.Title>เพิ่มรายชื่อ</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form.Label>ชื่อบัญชีผู้ใช้</Form.Label>
+                    { error ? 
+                        (<Form.Control name='user' onChange={handleChange} isInvalid></Form.Control>) :
+                        (<Form.Control name='user' onChange={handleChange}></Form.Control>)
+                    }
+                    <Form.Control.Feedback type='invalid'>{error}</Form.Control.Feedback>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={toggle}>
+                        ยกเลิก
+                    </Button>
+                    <Button variant="primary" onClick={handleSubmit}>
+                        เพิ่มรายชื่อ
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    )
 }
 
 export default AddFriend
