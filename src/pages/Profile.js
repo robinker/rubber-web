@@ -1,18 +1,18 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
-export default function Profile(props) {
+function Profile() {
+    const user = useSelector(state => state.user)
     return (
         <div className="container">
-            <h3>ข้อมูลส่วนตัว</h3>
             <div>
-            <h4>ชื่อ นามสกุล: {props.user.firstname + " " + props.user.lastname} ({props.user.role})</h4>
+            <h4>ชื่อ นามสกุล: {user.firstname + " " + user.lastname} ({user.role})</h4>
                 <p>หมายเลขบัตรประชาชน: 1234567891234</p>
-                { 
-                    props.user.role === 'ผู้ดูแลระบบ' ? null : <p>หมายเลขใบอนุญาติ: {props.user.cert_1} </p>
-                }
+                { user.role === 'ผู้ดูแลระบบ' ? null : <p>หมายเลขใบอนุญาติ: {user.cert_1} </p> }
                 <p>อีเมลล์: example@email.com</p>
             </div>
         </div>
     )
 }
 
+export default Profile
