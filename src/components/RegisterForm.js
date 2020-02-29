@@ -1,8 +1,11 @@
 import React from 'react'
-import { Col, Row, Button, Form } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
+import UserForm from './UserForm'
+import GardenForm from './GardenForm'
 import provinces from '../json/provinces'
 import { Formik, Form as FormIK, Field } from 'formik'
 import * as Yup from 'yup'
+import axios from 'axios'
 
 const RegisterSchema = Yup.object({
     firstname: Yup.string()
@@ -23,6 +26,12 @@ const RegisterSchema = Yup.object({
     birthdate: Yup.date()
         .default(() => new Date())  
         .max(new Date(), 'date errors'),
+    tel: Yup.string()
+        .length(10, 'หมายเลขโทรศัพท์ไม่ถูกต้อง')
+        .test('', '', function(value) {
+            //check citizenId pattern
+            return /\d+/.test(value)
+        }),
     email: Yup.string()
         .email('อีเมลล์ไม่ถูกต้อง')
         .required('กรุณากรอกอีเมลล์'),
@@ -53,172 +62,94 @@ const RegisterSchema = Yup.object({
         }),
 });
 
-const GardenerSchema = RegisterSchema.shape({
+const MiddlemanSchema = RegisterSchema.shape({
+    cert_1: Yup.number()
+})
+
+const GardenerSchema = MiddlemanSchema.shape({
     area: Yup.number()
         .positive('เนื้อที่ไม่ถูกต้อง')
         .moreThan(0, 'เลขติดลบ')
-        .required('กรุณากรอกเนื้อที่สวนยาง')
-    ,
+        .required('กรุณากรอกเนื้อที่สวนยาง'),
     startYear: Yup.number()
         .positive('ปีไม่ถูกต้อง')
-        .min((new Date().getUTCFullYear() + 543 - 50), 'เว่อๆๆๆ')
-        .max((new Date().getUTCFullYear() + 543), 'เจ้าของสวนยางผู้มาก่อนกาล ?')
-        .required('กรุณากรอกปีที่ปลูก')
+        .min((new Date().getUTCFullYear() + 543 - 50), 'ปีไม่ถูกต้อง')
+        .max((new Date().getUTCFullYear() + 543), 'ปีไม่ถูกต้อง')
+        .required('กรุณากรอกปีที่ปลูก'),
+    species: Yup.string()
+        .required('กรุณากรอกชื่อพันธุ์ยาง'),
+    amount: Yup.number()
+        .moreThan(0, 'เท่าไรดี')
+        .required('กรุณากรอกจำนวนต้นยาง')
 })
 
+
+
 function RegisterForm(props) {
+
+    function onSubmit(values) {
+        let payload = {
+            firstname: values.firstname,
+            lastname: values.lastname,
+            citizen_id: values.citizenID,
+            birthdate: values.birthdate,
+            tel: values.tel,
+            email: values.email,
+            address: values.address,
+            amphure: values.amphure,
+            district: values.district,
+            province: values.province,
+            zipcode: values.zipcode,
+            username: values.username,
+            password: values.password,
+            role: props.match.params.role
+        }
+        let garden
+        if(props.match.params.role === 'เกษตรกร') {
+            garden = {
+                area: values.area,
+                startYear: values.startYear,
+                species: values.species,
+                amount: values.amount
+            }
+        }
+        else if(props.match.params.role === 'พ่อค้าคนกลาง') {
+            payload = {
+                ...payload,
+                cert_1: values.cert,
+            }
+        }
+        axios.post('http://localhost:5000/users/add', {
+            payload, garden
+        })
+        .then(res => {
+            if (res.data === 'User added!') {
+                alert('บันทึกข้อมูลสำเร็จ')
+            }
+        })
+        .catch(err => {
+            alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+        })
+    }
 
     return (
         <div className='container'>
             <h2>ข้อมูลสมาชิก</h2>
             <br></br>
-            <Formik validationSchema={props.match.params.role === 'เจ้าของสวนยาง' ? GardenerSchema : RegisterSchema}
+            <Formik validationSchema={ props.match.params.role === 'ผู้ดูแลระบบ' ? RegisterSchema : props.match.params.role === 'เกษตรกร' ? GardenerSchema : MiddlemanSchema}
                 initialValues={{ //กำหนด initialValues
                     birthdate: new Date(),
                     province: provinces[0].province_name,
                 }}
                 onSubmit={values => {
                     //  send data to backend
-                    console.log(values);
+                    onSubmit(values)
                 }}>
                 {({ errors, touched}) => (
                     <FormIK>
-                        <Row>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>ชื่อ</Form.Label>
-                                    <Field name="firstname" id="name" placeholder="ชื่อจริง"  className={`form-control ${touched.firstname ? errors.firstname ? 'is-invalid' : 'is-valid' : ''}`} />
-                                    <Form.Control.Feedback type="invalid"> {errors.firstname} </Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>นามสกุล</Form.Label>
-                                    <Field name="lastname" id="lastname" placeholder="นามสกุลจริง" className={`form-control ${touched.lastname ? errors.lastname ? 'is-invalid' : 'is-valid' : ''}`} />
-                                    <Form.Control.Feedback type="invalid"> {errors.lastname} </Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>หมายเลขบัตรประชาชน</Form.Label>
-                                    <Field name="citizenID" id="citizenID" className={`form-control ${touched.citizenID ? errors.citizenID ? 'is-invalid' : 'is-valid' : ''}`} />
-                                    <Form.Control.Feedback type="invalid"> {errors.citizenID} </Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group>
-                                <Form.Label>วัน/เดือน/ปี เกิด</Form.Label>
-                                    <Field type="date" name="birthdate" id="birthdate" className={`form-control ${touched.birthdate ? errors.birthdate ? 'is-invalid' : 'is-valid' : ''}`} />
-                                    <Form.Control.Feedback type="invalid"> {errors.birthdate === 'date errors' ? 'ข้อมูลไม่ถูกต้อง' : 'กรุณาใส่วัน/เดือน/ปี เกิด'} </Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>โทรศัพท์มือถือ</Form.Label>
-                                    <Form.Control name="tel" id="tel" placeholder="" />
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>อีเมลล์</Form.Label>
-                                    <Field type="email" name="email" id="email" placeholder="example@email.com" className={`form-control ${touched.email ? errors.email ? 'is-invalid' : 'is-valid' : ''}`}/>
-                                    <Form.Control.Feedback type="invalid"> {errors.email} </Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>ที่อยู่</Form.Label>
-                                    <Field name="address" id="address" placeholder="บ้านเลขที่ หมู่ ซอย" className={`form-control ${touched.address ? errors.address ? 'is-invalid' : 'is-valid' : ''}`}/>
-                                    <Form.Control.Feedback type="invalid"> {errors.address} </Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>แขวง/ตำบล</Form.Label>
-                                    <Field name="district" id="district" className={`form-control ${touched.district ? errors.district ? 'is-invalid' : 'is-valid' : ''}`}/>
-                                    <Form.Control.Feedback type="invalid"> {errors.district} </Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>เขต/อำเภอ</Form.Label>
-                                    <Field name="amphure" id="amphure" className={`form-control ${touched.amphure ? errors.amphure ? 'is-invalid' : 'is-valid' : ''}`}/>
-                                    <Form.Control.Feedback type="invalid"> {errors.amphure} </Form.Control.Feedback>
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>จังหวัด</Form.Label>
-                                    <Field as="select" className="form-control" name="province" id="province">
-                                        {
-                                            provinces.map((data, index) => {
-                                                return <option key={index} value={data.province_name.trim()}>{data.province_name}</option>
-                                            })
-                                        }
-                                    </Field>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={3}> 
-                                <Form.Group>
-                                    <Form.Label>รหัสไปรษณีย์</Form.Label>
-                                    <Field name="zipcode" id="zipcode" className={`form-control ${touched.zipcode ? errors.zipcode ? 'is-invalid' : 'is-valid' : ''}`}/>
-                                    <Form.Control.Feedback type="invalid"> {errors.zipcode} </Form.Control.Feedback>
-                                </Form.Group>  
-                            </Col>
-                        </Row>
+                        <UserForm errors={errors} touched={touched}></UserForm>
                         <hr></hr>
-                        {props.match.params.role === 'เจ้าของสวนยาง' ?
-                            <>
-                            <h2>ข้อมูลสวนยาง</h2>
-                                <Row>
-                                    <Col>
-                                        <Form.Group>
-                                            <Form.Label>เนื้อที่สวนยาง (ไร่)</Form.Label>
-                                            <Field type='number' name="area" id="area" placeholder="10"  className={`form-control ${touched.area ? errors.area ? 'is-invalid' : 'is-valid' : ''}`} />
-                                            <Form.Control.Feedback type="invalid"> {errors.area} </Form.Control.Feedback>
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        <Form.Group>
-                                            <Form.Label>ปีที่ปลูก (พ.ศ.)</Form.Label>
-                                            <Field type='number' name="startYear" id="startYear" placeholder="2558" className={`form-control ${touched.startYear ? errors.startYear ? 'is-invalid' : 'is-valid' : ''}`} />
-                                            <Form.Control.Feedback type="invalid"> {errors.startYear} </Form.Control.Feedback>
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col>
-                                        <Form.Group>
-                                            <Form.Label>ชื่อพันธุ์ต้นยาง</Form.Label>
-                                            <Field name="species" id="species" placeholder="RRIC 101"  className={`form-control ${touched.firstname ? errors.firstname ? 'is-invalid' : 'is-valid' : ''}`} />
-                                            <Form.Control.Feedback type="invalid"> {errors.firstname} </Form.Control.Feedback>
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        <Form.Group>
-                                            <Form.Label>จำนวนต้นยาง (ต้น)</Form.Label>
-                                            <Field name="amount" id="amount" placeholder="200" className={`form-control ${touched.lastname ? errors.lastname ? 'is-invalid' : 'is-valid' : ''}`} />
-                                            <Form.Control.Feedback type="invalid"> {errors.lastname} </Form.Control.Feedback>
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
-                                <hr></hr>
-                            </>: null
-                        }
+                        {props.match.params.role === 'เกษตรกร' ? <GardenForm errors={errors} touched={touched}/> : null }
                         <h2>บัญชีผู้ใช้</h2>
                         <br></br>
                         <Form.Group>

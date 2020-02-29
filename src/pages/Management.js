@@ -11,7 +11,7 @@ function Management() {
                     <h3>จัดการข้อมูลสมาชิก</h3>
                 </Col>
                 <DropdownButton id="dropdown-basic-button" title="เพิ่มสมาชิก">
-                    <Link to='/management/profile/add/เจ้าของสวนยาง' className="dropdown-item">เจ้าของสวนยาง</Link>
+                    <Link to='/management/profile/add/เกษตรกร' className="dropdown-item">เจ้าของสวนยาง</Link>
                     <Link to='/management/profile/add/พ่อค้าคนกลาง' className="dropdown-item">พ่อค้าคนกลาง</Link>
                     <Link to='/management/profile/add/ผู้แลระบบ' className="dropdown-item">ผู้แลระบบ</Link>
                 </DropdownButton>

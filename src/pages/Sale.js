@@ -25,18 +25,25 @@ function Sale(props) {
     }
 
     useEffect(() => {
+        const CancelToken = axios.CancelToken
+        const source = CancelToken.source()
+
         axios.get('https://rubber-backend.herokuapp.com/users/getFriends/' + props.userId, {
             headers: {
                 "Authorization": "Bearer " + user.token
-            }
+            }, 
+            cancelToken: source.token
         })
         .then(res => {
             let list = [...res.data]
-            setState({ ...state, friendlist: list, destination: list[list.length - 1] })
+            setState(state => ({ ...state, friendlist: list, destination: list[list.length - 1] }))
         }).catch(err => {
             console.log('Error: ', err)
         })
-    }, [friends])
+        return () => {
+            source.cancel()
+        }
+    }, [friends, props, user.token])
 
     function checkValidate() {
         let volumeError = ''

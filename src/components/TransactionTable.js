@@ -12,8 +12,8 @@ function TransactionTable(props) {
                     <th rowSpan='2'>#</th>  
                     <th rowSpan='2'>วัน/เดือน/ปี</th>  
                     { 
-                        props.header === 'รายการซื้อยาง' ?  <th rowSpan='2'>ชื่อผู้จำหน่าย</th> : 
-                        <th rowSpan='2'>ชื่อผู้ซื้อ</th>
+                        props.header === 'รายการซื้อยาง' ?  <th rowSpan='2' style={{textAlign: "center"}}>ชื่อผู้จำหน่าย</th> : 
+                        <th rowSpan='2' style={{textAlign: "center"}}>ชื่อผู้ซื้อ</th>
                     }
                     <th rowSpan='2'>ใบอนุญาตค้ายางที่</th>
                     <th colSpan='3' style={{textAlign: "center"}}>{props.header}</th>

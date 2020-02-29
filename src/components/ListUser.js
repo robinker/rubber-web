@@ -5,17 +5,25 @@ import axios from 'axios'
 
 function ListUser() {
     const [users, setUsers] = useState([])
+    const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
-        axios.get('https://rubber-backend.herokuapp.com/users/')
+        const CancleToken = axios.CancelToken
+        const source = CancleToken.source()
+        axios.get('https://rubber-backend.herokuapp.com/users/', {cancelToken: source.token})
         .then(res => {
             setUsers(res.data)
+            setLoaded(true)
         })
         .catch(err => {
             console.log('Error: ', err)
         })
+        return (() => {
+            source.cancel()
+        })
     },[])
 
+    if(!loaded) return <h1>loading...</h1>
     return (
         <Table responsive>
             <thead>
