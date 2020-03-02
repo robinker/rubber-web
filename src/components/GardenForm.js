@@ -40,6 +40,20 @@ function GardenForm(props) {
                     </Form.Group>
                 </Col>
             </Row>
+            <Row>
+                <Col>
+                    <Form.Group>
+                        <Form.Label>รูปแบบการผลิต :</Form.Label>
+                        <br></br>
+                        <Form.Check inline type="radio" name='rubberType' value='น้ำยางสด' label="น้ำยางสด" onChange={props.handleCheck} defaultChecked />
+                        <Form.Check inline type="radio" name='rubberType' value='ยางก้อนถ้วย' label="ยางก้อนถ้วย" onChange={props.handleCheck}/>
+                        <Form.Check inline type="radio" name='rubberType' value='ยางแผ่นดิบ' label="ยางแผ่นดิบ" onChange={props.handleCheck}/>
+                        <Form.Check inline type="radio" name='rubberType' value='ยางแผ่นรมควัน' label="ยางแผ่นรมควัน" onChange={props.handleCheck}/>
+                        <Form.Check inline type="radio" name='rubberType' value='ขี้ยาง/เศษยาง' label="ขี้ยาง/เศษยาง" onChange={props.handleCheck}/>
+                        <Form.Check inline type="radio" name='rubberType' value='ยางเครฟ' label="ยางเครฟ" onChange={props.handleCheck}/>
+                    </Form.Group>
+                </Col>
+            </Row>
             <hr></hr>
         </>
     )

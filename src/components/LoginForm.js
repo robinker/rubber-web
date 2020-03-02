@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
-import { Nav, Modal, Button, Alert } from 'react-bootstrap'
+import { Nav, Modal, Button, Alert, Spinner } from 'react-bootstrap'
 import { signIn, getFriend } from '../actions'
 
 function LoginForm() {
@@ -11,6 +11,7 @@ function LoginForm() {
         password: "",
     })
     const [isValid, setValid] = useState(false)
+    const [loaded, setLoaded] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -29,6 +30,7 @@ function LoginForm() {
     }
 
     function handleSubmit(event) {
+        setLoaded(true)
         const { username, password } = state
         axios.post('https://rubber-backend.herokuapp.com/users/login',
             {
@@ -67,12 +69,23 @@ function LoginForm() {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={toggle}>
-                        Cancel
+                    <Button variant="secondary" onClick={toggle} disabled={loaded ? true : false} >
+                        ยกเลิก
                     </Button>
-                    <Button variant="primary" onClick={handleSubmit}>
-                        Login
-                    </Button>
+                    {
+                        !loaded ? 
+                        <Button variant="primary" onClick={handleSubmit}> เข้าสู่ระบบ </Button> : 
+                        <Button variant="primary" disabled>
+                            เข้าสู่ระบบ...
+                            <Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                            />
+                        </Button>
+                    }
                 </Modal.Footer>
             </Modal>
         </>

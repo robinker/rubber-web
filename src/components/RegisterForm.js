@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import UserForm from './UserForm'
 import GardenForm from './GardenForm'
@@ -110,7 +110,8 @@ function RegisterForm(props) {
                 area: values.area,
                 startYear: values.startYear,
                 species: values.species,
-                amount: values.amount
+                amount: values.amount,
+                rubberType: rubberType
             }
         }
         else if(props.match.params.role === 'พ่อค้าคนกลาง') {
@@ -119,6 +120,8 @@ function RegisterForm(props) {
                 cert_1: values.cert,
             }
         }
+        console.log(payload)
+        console.log(garden)
         axios.post('http://localhost:5000/users/add', {
             payload, garden
         })
@@ -131,10 +134,14 @@ function RegisterForm(props) {
             alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
         })
     }
+    const [rubberType, setRubberType] = useState('น้ำยางสด')
+    function handleCheck(event) {
+        setRubberType(event.target.value)
+    }
 
     return (
         <div className='container'>
-            <h2>ข้อมูลสมาชิก</h2>
+            <h2>ข้อมูลสมาชิก ({props.match.params.role})</h2>
             <br></br>
             <Formik validationSchema={ props.match.params.role === 'ผู้ดูแลระบบ' ? RegisterSchema : props.match.params.role === 'เกษตรกร' ? GardenerSchema : MiddlemanSchema}
                 initialValues={{ //กำหนด initialValues
@@ -149,7 +156,7 @@ function RegisterForm(props) {
                     <FormIK>
                         <UserForm errors={errors} touched={touched}></UserForm>
                         <hr></hr>
-                        {props.match.params.role === 'เกษตรกร' ? <GardenForm errors={errors} touched={touched}/> : null }
+                        {props.match.params.role === 'เกษตรกร' ? <GardenForm errors={errors} touched={touched} handleCheck={handleCheck}/> : null }
                         <h2>บัญชีผู้ใช้</h2>
                         <br></br>
                         <Form.Group>
