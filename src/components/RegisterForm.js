@@ -1,89 +1,12 @@
 import React, { useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Breadcrumb, Container, Row, Col, Button } from 'react-bootstrap'
 import UserForm from './UserForm'
 import GardenForm from './GardenForm'
+import AccountForm from './AccountForm'
 import provinces from '../json/provinces'
-import { Formik, Form as FormIK, Field } from 'formik'
-import * as Yup from 'yup'
+import { Formik, Form, FieldArray } from 'formik'
 import axios from 'axios'
-
-const RegisterSchema = Yup.object({
-    firstname: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('กรุณากรอกชื่อ'),
-    lastname: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('กรุณากรอกนามสกุล'),  
-    citizenID: Yup.string()
-        .length(13, 'หมายเลขบัตรประชาชนไม่ถูกต้อง')
-        .required('กรุณากรอกหมายเลขบัตรประชาชน')
-        .test('', 'กรุณาใส่ตัวเลข', function(value) {
-            //check citizenId pattern
-            return /\d+/.test(value)
-        }),
-    birthdate: Yup.date()
-        .default(() => new Date())  
-        .max(new Date(), 'date errors'),
-    tel: Yup.string()
-        .length(10, 'หมายเลขโทรศัพท์ไม่ถูกต้อง')
-        .test('', '', function(value) {
-            //check citizenId pattern
-            return /\d+/.test(value)
-        }),
-    email: Yup.string()
-        .email('อีเมลล์ไม่ถูกต้อง')
-        .required('กรุณากรอกอีเมลล์'),
-    address: Yup.string()
-        .required('กรุณากรอกที่อยู่'),
-    district: Yup.string()
-        .required('กรุณากรอกแขวง/ตำบล'),
-    amphure: Yup.string()
-        .required('กรุณากรอกเขต/อำเภอ'),
-    zipcode: Yup.string()
-        .length(5, 'รหัสไปรษณีย์ไม่ถูกต้อง')
-        .required('กรุณากรอกรหัสไปรษณีย์')
-        .test('', 'กรุณาใส่ตัวเลข', function(value) {
-            //check citizenId pattern
-            return /\d+/.test(value)
-        }),
-    username: Yup.string()
-        .min(4, 'กรุณากรอกอย่างน้อย 4 ตัวอักษร')
-        .required('กรุณากรอกชื่อบัญชีผู้ใช้'),
-    password: Yup.string()
-        .min(4, 'รหัสผ่านต้องมีอย่างน้อย 4 ตัว')
-        .required('กรุณากรอกรหัสผ่าน'),
-    confirmPassword: Yup.string()
-        .required('กรุณากรอกรหัสผ่านยืนยัน')
-        //check password match
-        .test('passwords-match', 'รหัสผ่านไม่ตรงกัน', function (value) {
-            return this.parent.password === value;
-        }),
-});
-
-const MiddlemanSchema = RegisterSchema.shape({
-    cert_1: Yup.number()
-})
-
-const GardenerSchema = MiddlemanSchema.shape({
-    area: Yup.number()
-        .positive('เนื้อที่ไม่ถูกต้อง')
-        .moreThan(0, 'เลขติดลบ')
-        .required('กรุณากรอกเนื้อที่สวนยาง'),
-    startYear: Yup.number()
-        .positive('ปีไม่ถูกต้อง')
-        .min((new Date().getUTCFullYear() + 543 - 50), 'ปีไม่ถูกต้อง')
-        .max((new Date().getUTCFullYear() + 543), 'ปีไม่ถูกต้อง')
-        .required('กรุณากรอกปีที่ปลูก'),
-    species: Yup.string()
-        .required('กรุณากรอกชื่อพันธุ์ยาง'),
-    amount: Yup.number()
-        .moreThan(0, 'เท่าไรดี')
-        .required('กรุณากรอกจำนวนต้นยาง')
-})
-
-
+import { RegisterSchema, MiddlemanSchema, GardenerSchema} from './Schema'
 
 function RegisterForm(props) {
 
@@ -106,12 +29,19 @@ function RegisterForm(props) {
         }
         let garden
         if(props.match.params.role === 'เกษตรกร') {
+            const productList = []
+            products.map(product => {
+                if(product.checked){
+                    productList.push(product.name)
+                }
+                return productList
+            })
             garden = {
                 area: values.area,
                 startYear: values.startYear,
                 species: values.species,
                 amount: values.amount,
-                rubberType: rubberType
+                products: productList
             }
         }
         else if(props.match.params.role === 'พ่อค้าคนกลาง') {
@@ -134,52 +64,84 @@ function RegisterForm(props) {
             alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
         })
     }
-    const [rubberType, setRubberType] = useState('น้ำยางสด')
+
+    const [products, setProducts] = useState([
+        {name:'น้ำยางสด', checked: true}, 
+        {name:'ยางก้อนถ้วย', checked: false}, 
+        {name:'ยางแผ่นดิบ', checked: false}, 
+        {name:'ยางแผ่นรมควัน', checked: false}, 
+        {name:'ขี้ยาง', checked: false}, 
+        {name:'ยางเครฟ', checked: false},
+    ])
+
     function handleCheck(event) {
-        setRubberType(event.target.value)
+        setProducts(products.map((product) => {
+            if(product.name === event.target.value){
+                product.checked = event.target.checked
+            }
+            return product
+        }))
+    }
+
+    const [page, setPage] = useState(1)
+    function nextForm() {
+        setPage(page => page + 1)
+    }
+
+    function previousForm(){
+        setPage(page => page - 1)
     }
 
     return (
-        <div className='container'>
-            <h2>ข้อมูลสมาชิก ({props.match.params.role})</h2>
-            <br></br>
+        <Container>
+            <Breadcrumb>
+                <Breadcrumb.Item active={page===1} onClick={() => setPage(1)}>ข้อมูลผู้ใช้</Breadcrumb.Item>
+                {   props.match.params.role === 'เกษตรกร' ? 
+                    <Breadcrumb.Item active={page===2} onClick={() => setPage(2)}> ข้อมูลสวนยาง </Breadcrumb.Item> : null }
+                <Breadcrumb.Item active={page===3} onClick={() => setPage(3)}> บัญชีผู้ใช้ </Breadcrumb.Item>
+            </Breadcrumb>
             <Formik validationSchema={ props.match.params.role === 'ผู้ดูแลระบบ' ? RegisterSchema : props.match.params.role === 'เกษตรกร' ? GardenerSchema : MiddlemanSchema}
                 initialValues={{ //กำหนด initialValues
                     birthdate: new Date(),
                     province: provinces[0].province_name,
+                    garden: [{ }]
                 }}
-                onSubmit={values => {
-                    //  send data to backend
+                onSubmit={values => { //  send data to backend
                     onSubmit(values)
                 }}>
-                {({ errors, touched}) => (
-                    <FormIK>
-                        <UserForm errors={errors} touched={touched}></UserForm>
-                        <hr></hr>
-                        {props.match.params.role === 'เกษตรกร' ? <GardenForm errors={errors} touched={touched} handleCheck={handleCheck}/> : null }
-                        <h2>บัญชีผู้ใช้</h2>
-                        <br></br>
-                        <Form.Group>
-                            <Form.Label>ชื่อบัญชีผู้ใช้ :</Form.Label>
-                            <Field type="username" name="username" id="username" className={`form-control ${touched.username ? errors.username ? 'is-invalid' : 'is-valid' : ''}`}/>
-                            <Form.Control.Feedback type="invalid"> {errors.username} </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>รหัสผ่าน :</Form.Label>
-                            <Field type="password" name="password" id="password" className={`form-control ${touched.password ? errors.password ? 'is-invalid' : 'is-valid' : ''}`}/>
-                            <Form.Control.Feedback type="invalid"> {errors.password} </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>ยืนยันรหัสผ่าน :</Form.Label>
-                            <Field type="password" name="confirmPassword" id="confirmPassword" className={`form-control ${touched.confirmPassword ? errors.confirmPassword ? 'is-invalid' : 'is-valid' : ''}`}/>
-                            <Form.Control.Feedback type="invalid"> {errors.confirmPassword} </Form.Control.Feedback>
-                        </Form.Group>
+                {({ values, errors, touched}) => (
+                    <Form>
+                        {page === 1 ? <UserForm errors={errors} touched={touched} role={props.match.params.role} next={nextForm}></UserForm> : null }
 
-                        <Button type="submit">ยืนยัน</Button>
-                    </FormIK>
+                        {
+                            props.match.params.role === 'เกษตรกร' && page===2 ? 
+                            <FieldArray name='garden'>
+                                { 
+                                    ({push}) => (
+                                    <>
+                                    {
+                                        values.garden.map((g, index) => {
+                                            return (
+                                                <GardenForm errors={errors} touched={touched} handleCheck={handleCheck} index={index} push={push} key={index}/>
+                                            )
+                                        })
+                                    }
+                                        <Row>
+                                            <Col><Button onClick={previousForm}>ย้อนกลับ</Button></Col>
+                                            <Col><Button onClick={nextForm}>ถัดไป</Button></Col>
+                                        </Row>
+                                    </>
+                                    )
+                                }
+                            </FieldArray> : null
+                        }
+                        {/* <pre>{JSON.stringify(values,null,2)} </pre> */}
+
+                        {page === 3 ? <AccountForm errors={errors} touched={touched} role={props.match.params.role} next={nextForm} back={previousForm}></AccountForm> : null}
+                    </Form>
                 )}
             </Formik>
-        </div>
+        </Container>
     )
 }
 

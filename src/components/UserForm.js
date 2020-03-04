@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Row, Form } from 'react-bootstrap'
+import { Col, Row, Form, Button } from 'react-bootstrap'
 import provinces from '../json/provinces'
 import { Field } from 'formik'
 
@@ -8,6 +8,8 @@ function UserForm(props) {
     const touched = props.touched
     return (
         <>
+            <h2>ข้อมูลสมาชิก ({props.role})</h2>
+            <br></br>
             <Row>
                 <Col>
                     <Form.Group>
@@ -52,7 +54,7 @@ function UserForm(props) {
                 </Col>
                 <Col>
                     <Form.Group>
-                        <Form.Label>อีเมลล์</Form.Label>
+                        <Form.Label>อีเมล</Form.Label>
                         <Field type="email" name="email" id="email" placeholder="example@email.com" className={`form-control ${touched.email ? errors.email ? 'is-invalid' : 'is-valid' : ''}`}/>
                         <Form.Control.Feedback type="invalid"> {errors.email} </Form.Control.Feedback>
                     </Form.Group>
@@ -107,11 +109,12 @@ function UserForm(props) {
                 </Col>
                 <Col> 
                     <Form.Group>
-                        <Form.Label>เลขใบอณุญาติค้ายาง</Form.Label>
+                        <Form.Label>เลขใบอนุญาตค้ายาง</Form.Label>
                         <Field name="cert" id="cert" className='form-control'/>
                     </Form.Group>  
                 </Col>
             </Row>
+            <Button onClick={props.next}>ถัดไป</Button>
         </>
     )
 }
