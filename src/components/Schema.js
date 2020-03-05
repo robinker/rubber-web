@@ -72,7 +72,20 @@ export const GardenerSchema = MiddlemanSchema.shape({
             .required('กรุณากรอกชื่อพันธุ์ยาง'),
         amount: Yup.number()
             .required('กรุณากรอกจำนวนต้นยาง')
-            .moreThan(0, 'เท่าไรดี')
+            .moreThan(0, 'เท่าไรดี'),
+        address: Yup.string()
+            .required('กรุณากรอกที่อยู่'),
+        district: Yup.string()
+            .required('กรุณากรอกแขวง/ตำบล'),
+        amphure: Yup.string()
+            .required('กรุณากรอกเขต/อำเภอ'),
+        zipcode: Yup.string()
+            .length(5, 'รหัสไปรษณีย์ไม่ถูกต้อง')
+            .required('กรุณากรอกรหัสไปรษณีย์')
+            .test('', 'กรุณาใส่ตัวเลข', function(value) {
+                //check citizenId pattern
+                return /\d+/.test(value)
+            }),
     }).required('ต้องการสวน')
     )  
 })
