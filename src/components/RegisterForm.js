@@ -11,7 +11,8 @@ import { RegisterSchema, MiddlemanSchema, GardenerSchema} from './Schema'
 function RegisterForm(props) {
 
     function onSubmit(values) {
-        let payload = {
+        // admin
+        let user = {
             firstname: values.firstname,
             lastname: values.lastname,
             citizen_id: values.citizenID,
@@ -27,20 +28,26 @@ function RegisterForm(props) {
             password: values.password,
             role: props.match.params.role
         }
-        let garden
+
+        let garden = {}
         if(props.match.params.role === 'เกษตรกร') {
+            user = {
+                ...user,
+                cert_1: values.cert
+            }
             garden = values.garden
         }
         else if(props.match.params.role === 'พ่อค้าคนกลาง') {
-            payload = {
-                ...payload,
-                cert_1: values.cert,
+            user = {
+                ...user,
+                cert_1: values.cert
             }
         }
-        console.log(payload)
+        console.log(user)
         console.log(garden)
+        // console.log(test)
         // axios.post('http://localhost:5000/users/add', {
-        //     payload, garden
+        //     user, garden
         // })
         // .then(res => {
         //     if (res.data === 'User added!') {
@@ -54,11 +61,19 @@ function RegisterForm(props) {
 
     const [page, setForm] = useState(1)
     function nextForm() {
-        setForm(page => page + 1)
+        if(props.match.params.role === 'เกษตรกร'){
+            setForm(page => page + 1)
+        } else {
+            setForm(page => page + 2)
+        }
     }
 
     function previousForm(){
-        setForm(page => page - 1)
+        if(props.match.params.role === 'เกษตรกร'){
+            setForm(page => page - 1)
+        } else {
+            setForm(page => page - 2)
+        }
     }
 
     return (
@@ -67,7 +82,7 @@ function RegisterForm(props) {
                 <Breadcrumb.Item active={page===1} onClick={() => setForm(1)}>ข้อมูลผู้ใช้</Breadcrumb.Item>
                 {   props.match.params.role === 'เกษตรกร' ? 
                     <Breadcrumb.Item active={page===2} onClick={() => setForm(2)}> ข้อมูลสวนยาง </Breadcrumb.Item> : null }
-                <Breadcrumb.Item active={page===3} onClick={() => setForm(3)}> บัญชีผู้ใช้ </Breadcrumb.Item>
+                <Breadcrumb.Item active={ page===3} onClick={() => setForm(3)}> บัญชีผู้ใช้ </Breadcrumb.Item>
             </Breadcrumb>
             <Formik validationSchema={ props.match.params.role === 'ผู้ดูแลระบบ' ? RegisterSchema : props.match.params.role === 'เกษตรกร' ? GardenerSchema : MiddlemanSchema}
                 initialValues={{ //กำหนด initialValues

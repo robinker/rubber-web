@@ -76,7 +76,7 @@ function GardenForm(props) {
                 <Col>
                     <Form.Group>
                         <Form.Label>จังหวัด</Form.Label>
-                        <Field as="select" className="form-control" name="province" id="province">
+                        <Field as="select" className="form-control" name={`garden[${props.index}].province`} id="province">
                             {
                                 provinces.map((data, index) => {
                                     return <option key={index} value={data.province_name.trim()}>{data.province_name}</option>
@@ -98,7 +98,7 @@ function GardenForm(props) {
                     <Form.Group>
                         <Form.Label>รูปแบบการผลิต :</Form.Label>
                         <br></br>
-                        <Field name={`garden[${props.index}].products`} index={props.index} options={['น้ำยางสด', 'ยางก้อนถ้วย', 'ยางแผ่นดิบ', 'ยางแผ่นรมควัน', 'ขี้ยาง/เศษยาง', 'ยางเครฟ']} component={CheckboxGroup} />
+                        <Field name={`garden[${props.index}].products`} options={['น้ำยางสด', 'ยางก้อนถ้วย', 'ยางแผ่นดิบ', 'ยางแผ่นรมควัน', 'ขี้ยาง/เศษยาง', 'ยางเครฟ']} component={CheckboxGroup} />
                     </Form.Group>
                 </Col>
             </Row>
@@ -124,17 +124,13 @@ function GardenForm(props) {
 export default GardenForm
 
 function CheckboxGroup(props) {
-
-    const {
-        field: {value}, 
-        options,
-    } = props
-    // console.log(test)
+    
+    const value = props.field.value
+    const options = props.options
+    
     function handleOnChange(value, checked) {
-        const {
-            form: {setFieldValue},
-            field
-        } = props
+        const setFieldValue = props.form.setFieldValue
+        const field = props.field
 
         if(checked) {
             setFieldValue(field.name, field.value.filter(p => p !== value))

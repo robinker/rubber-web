@@ -107,12 +107,14 @@ function UserForm(props) {
                         <Form.Control.Feedback type="invalid"> {errors.zipcode} </Form.Control.Feedback>
                     </Form.Group>  
                 </Col>
-                <Col> 
-                    <Form.Group>
-                        <Form.Label>เลขใบอนุญาตค้ายาง</Form.Label>
-                        <Field name="cert" id="cert" className='form-control'/>
-                    </Form.Group>  
-                </Col>
+                { props.role !== 'ผู้ดูแลระบบ' ? 
+                    <Col> 
+                        <Form.Group>
+                            <Form.Label>เลขใบอนุญาตค้ายาง</Form.Label>
+                            <Field name="cert" id="cert" className='form-control'/>
+                        </Form.Group>  
+                    </Col> : null
+                }
             </Row>
             <Button onClick={props.next}>ถัดไป</Button>
         </>
