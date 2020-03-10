@@ -29,9 +29,9 @@ export const RegisterSchema = Yup.object({
         .email('อีเมลล์ไม่ถูกต้อง'),
     address: Yup.string()
         .required('กรุณากรอกที่อยู่'),
-    district: Yup.string()
+    subdistrict: Yup.string()
         .required('กรุณากรอกแขวง/ตำบล'),
-    amphure: Yup.string()
+    district: Yup.string()
         .required('กรุณากรอกเขต/อำเภอ'),
     zipcode: Yup.string()
         .length(5, 'รหัสไปรษณีย์ไม่ถูกต้อง')
@@ -75,9 +75,9 @@ export const GardenerSchema = MiddlemanSchema.shape({
             .moreThan(0, 'เท่าไรดี'),
         address: Yup.string()
             .required('กรุณากรอกที่อยู่'),
-        district: Yup.string()
+        subdistrict: Yup.string()
             .required('กรุณากรอกแขวง/ตำบล'),
-        amphure: Yup.string()
+        district: Yup.string()
             .required('กรุณากรอกเขต/อำเภอ'),
         zipcode: Yup.string()
             .length(5, 'รหัสไปรษณีย์ไม่ถูกต้อง')

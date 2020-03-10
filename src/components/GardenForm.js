@@ -59,8 +59,8 @@ function GardenForm(props) {
                 <Col>
                     <Form.Group>
                         <Form.Label>แขวง/ตำบล</Form.Label>
-                        <Field name={`garden[${props.index}].district`} id="district" className={`form-control ${isValid(`garden[${props.index}].district`)}`}/>
-                        <Form.Control.Feedback type="invalid"> {errorMessage(`garden[${props.index}].district`)} </Form.Control.Feedback>
+                        <Field name={`garden[${props.index}].subdistrict`} id="subdistrict" className={`form-control ${isValid(`garden[${props.index}].subdistrict`)}`}/>
+                        <Form.Control.Feedback type="invalid"> {errorMessage(`garden[${props.index}].subdistrict`)} </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
             </Row>
@@ -69,14 +69,14 @@ function GardenForm(props) {
                 <Col>
                     <Form.Group>
                         <Form.Label>เขต/อำเภอ</Form.Label>
-                        <Field name={`garden[${props.index}].amphure`} id="amphure" className={`form-control ${isValid(`garden[${props.index}].amphure`)}`}/>
-                        <Form.Control.Feedback type="invalid"> {errorMessage(`garden[${props.index}].amphure`)} </Form.Control.Feedback>
+                        <Field name={`garden[${props.index}].district`} id="district" className={`form-control ${isValid(`garden[${props.index}].district`)}`}/>
+                        <Form.Control.Feedback type="invalid"> {errorMessage(`garden[${props.index}].district`)} </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
                 <Col>
                     <Form.Group>
                         <Form.Label>จังหวัด</Form.Label>
-                        <Field as="select" className="form-control" name={`garden[${props.index}].province`} id="province">
+                        <Field as="select" className="form-control" name={`garden[${props.index}].province`}  id="province">
                             {
                                 provinces.map((data, index) => {
                                     return <option key={index} value={data.province_name.trim()}>{data.province_name}</option>
@@ -109,8 +109,8 @@ function GardenForm(props) {
                             species: "",
                             amount: "",
                             address: "",
+                            subdistrict: "",
                             district: "",
-                            amphure: "",
                             province: provinces[0].province_name,
                             zipcode: "",
                             products: ['น้ำยางสด']})}>เพิ่ม</Button></Col>

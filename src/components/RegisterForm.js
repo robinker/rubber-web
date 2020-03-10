@@ -20,7 +20,7 @@ function RegisterForm(props) {
             tel: values.tel,
             email: values.email,
             address: values.address,
-            amphure: values.amphure,
+            subdistrict: values.subdistrict,
             district: values.district,
             province: values.province,
             zipcode: values.zipcode,
@@ -29,13 +29,13 @@ function RegisterForm(props) {
             role: props.match.params.role
         }
 
-        let garden = {}
+        let gardens = {}
         if(props.match.params.role === 'เกษตรกร') {
             user = {
                 ...user,
                 cert_1: values.cert
             }
-            garden = values.garden
+            gardens = values.garden
         }
         else if(props.match.params.role === 'พ่อค้าคนกลาง') {
             user = {
@@ -44,19 +44,19 @@ function RegisterForm(props) {
             }
         }
         console.log(user)
-        console.log(garden)
+        console.log(gardens)
         // console.log(test)
-        // axios.post('http://localhost:5000/users/add', {
-        //     user, garden
-        // })
-        // .then(res => {
-        //     if (res.data === 'User added!') {
-        //         alert('บันทึกข้อมูลสำเร็จ')
-        //     }
-        // })
-        // .catch(err => {
-        //     alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
-        // })
+        axios.post('http://localhost:5000/users/add', {
+            user, gardens
+        })
+        .then(res => {
+            if (res.data === 'User added!') {
+                alert('บันทึกข้อมูลสำเร็จ')
+            }
+        })
+        .catch(err => {
+            alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+        })
     }
 
     const [page, setForm] = useState(1)
@@ -93,8 +93,8 @@ function RegisterForm(props) {
                     tel: "",
                     email: "",
                     address: "",
+                    subdistrict: "",
                     district: "",
-                    amphure: "",
                     province: provinces[0].province_name,
                     zipcode: "",
                     username: "",
@@ -106,8 +106,8 @@ function RegisterForm(props) {
                             species: "",
                             amount: "",
                             address: "",
+                            subdistrict: "",
                             district: "",
-                            amphure: "",
                             province: provinces[0].province_name,
                             zipcode: "",
                             products: ['น้ำยางสด']
