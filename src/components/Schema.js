@@ -56,36 +56,69 @@ export const RegisterSchema = Yup.object({
 
 export const MiddlemanSchema = RegisterSchema.shape({ cert_1: Yup.number()})
 
+export const GardenSchema = Yup.object({
+    area: Yup.number()
+        .required('กรุณากรอกเนื้อที่สวนยาง')
+        .positive('เนื้อที่ไม่ถูกต้อง')
+        .moreThan(0, 'เนื้อที่ไม่ถูกต้อง'),
+    startYear: Yup.number()
+        .required('กรุณากรอกปีที่ปลูก')
+        .positive('ปีไม่ถูกต้อง')
+        .moreThan(0, 'ปีไม่ถูกต้อง')
+        .min((new Date().getUTCFullYear() + 543 - 50), 'ปีไม่ถูกต้อง')
+        .max((new Date().getUTCFullYear() + 543), 'ปีไม่ถูกต้อง'),
+    species: Yup.string()
+        .required('กรุณากรอกชื่อพันธุ์ยาง'),
+    amount: Yup.number()
+        .required('กรุณากรอกจำนวนต้นยาง')
+        .moreThan(0, 'เท่าไรดี'),
+})
+
 export const GardenerSchema = MiddlemanSchema.shape({
-    garden: Yup.array().of( Yup.object().shape({
-        area: Yup.number()
-            .required('กรุณากรอกเนื้อที่สวนยาง')
-            .positive('เนื้อที่ไม่ถูกต้อง')
-            .moreThan(0, 'เนื้อที่ไม่ถูกต้อง'),
-        startYear: Yup.number()
-            .required('กรุณากรอกปีที่ปลูก')
-            .positive('ปีไม่ถูกต้อง')
-            .moreThan(0, 'ปีไม่ถูกต้อง')
-            .min((new Date().getUTCFullYear() + 543 - 50), 'ปีไม่ถูกต้อง')
-            .max((new Date().getUTCFullYear() + 543), 'ปีไม่ถูกต้อง'),
-        species: Yup.string()
-            .required('กรุณากรอกชื่อพันธุ์ยาง'),
-        amount: Yup.number()
-            .required('กรุณากรอกจำนวนต้นยาง')
-            .moreThan(0, 'เท่าไรดี'),
+    garden: Yup.array().of( GardenSchema.shape({
         address: Yup.string()
-            .required('กรุณากรอกที่อยู่'),
-        subdistrict: Yup.string()
-            .required('กรุณากรอกแขวง/ตำบล'),
-        district: Yup.string()
-            .required('กรุณากรอกเขต/อำเภอ'),
-        zipcode: Yup.string()
-            .length(5, 'รหัสไปรษณีย์ไม่ถูกต้อง')
-            .required('กรุณากรอกรหัสไปรษณีย์')
-            .test('', 'กรุณาใส่ตัวเลข', function(value) {
-                //check citizenId pattern
-                return /\d+/.test(value)
-            }),
-    }).required('ต้องการสวน')
+        .required('กรุณากรอกที่อยู่'),
+    subdistrict: Yup.string()
+        .required('กรุณากรอกแขวง/ตำบล'),
+    district: Yup.string()
+        .required('กรุณากรอกเขต/อำเภอ'),
+    zipcode: Yup.string()
+        .length(5, 'รหัสไปรษณีย์ไม่ถูกต้อง')
+        .required('กรุณากรอกรหัสไปรษณีย์')
+        .test('', 'กรุณาใส่ตัวเลข', function(value) {
+            //check citizenId pattern
+            return /\d+/.test(value)
+        }),
+    })
+    //     Yup.object().shape({
+    //     area: Yup.number()
+    //         .required('กรุณากรอกเนื้อที่สวนยาง')
+    //         .positive('เนื้อที่ไม่ถูกต้อง')
+    //         .moreThan(0, 'เนื้อที่ไม่ถูกต้อง'),
+    //     startYear: Yup.number()
+    //         .required('กรุณากรอกปีที่ปลูก')
+    //         .positive('ปีไม่ถูกต้อง')
+    //         .moreThan(0, 'ปีไม่ถูกต้อง')
+    //         .min((new Date().getUTCFullYear() + 543 - 50), 'ปีไม่ถูกต้อง')
+    //         .max((new Date().getUTCFullYear() + 543), 'ปีไม่ถูกต้อง'),
+    //     species: Yup.string()
+    //         .required('กรุณากรอกชื่อพันธุ์ยาง'),
+    //     amount: Yup.number()
+    //         .required('กรุณากรอกจำนวนต้นยาง')
+    //         .moreThan(0, 'เท่าไรดี'),
+    //     address: Yup.string()
+    //         .required('กรุณากรอกที่อยู่'),
+    //     subdistrict: Yup.string()
+    //         .required('กรุณากรอกแขวง/ตำบล'),
+    //     district: Yup.string()
+    //         .required('กรุณากรอกเขต/อำเภอ'),
+    //     zipcode: Yup.string()
+    //         .length(5, 'รหัสไปรษณีย์ไม่ถูกต้อง')
+    //         .required('กรุณากรอกรหัสไปรษณีย์')
+    //         .test('', 'กรุณาใส่ตัวเลข', function(value) {
+    //             //check citizenId pattern
+    //             return /\d+/.test(value)
+    //         }),
+    // }).required('ต้องการสวน')
     )  
 })

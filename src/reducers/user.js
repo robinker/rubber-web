@@ -2,6 +2,7 @@ const initialState = {
     isLogged: false,
     role: '',
     token: null,
+    gardens:[]
 }
 
 const userReducer = (state = initialState, action) => {
