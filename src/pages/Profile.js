@@ -16,8 +16,8 @@ function Profile() {
             <p> {`${user.address} ตำบล ${user.subdistrict} อำเภอ ${user.district} ${user.zipcode} จังหวัด ${user.province}`} </p>
             {user.role === 'เกษตรกร' ? <h1>ข้อมูลสวนยาง</h1> : null}
             {
-                user.gardens.map((garden, index)=> {
-                    return <React.Fragment key={index}>
+                user.gardens.map((garden, index)=> (
+                    <React.Fragment key={index}>
                         <p> เนื้อที่สวนยาง: {garden.area} ไร่<br></br>
                             ปีที่ปลูก: {garden.startYear} <br></br>
                             ชื่อพันธุ์ยาง: {garden.species} <br></br>
@@ -31,6 +31,8 @@ function Profile() {
                                 return ' ' + product + ', '
                             })
                         }
+                        <br></br>
+                        {garden.address} {garden.district} {garden.subdistrict} {garden.zipcode} {garden.province}
                         </p>
                         <Link to={{ pathname: '/profile/edit/garden',
                             gardenID: garden._id,
@@ -38,8 +40,8 @@ function Profile() {
                         }} 
                         className='btn btn-primary'>อัพเดท</Link>
                         <hr></hr>
-                    </React.Fragment>
-                })
+                    </React.Fragment>)
+                )
             }
         </Container>
     )

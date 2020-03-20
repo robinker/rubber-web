@@ -39,12 +39,13 @@ function LoginForm() {
             },
             { withCredentials: true }
         ).then(res => {
-            dispatch(signIn(res.data.user))
-            dispatch(getFriend(res.data.user.friendlist))
             if (res.data.message === 'Logged In') {
+                dispatch(signIn(res.data.user))
+                dispatch(getFriend(res.data.user.friendlist))
                 toggle()
             } else {
                 setValid(true)
+                setLoaded(false)
             }
         })
         event.preventDefault()

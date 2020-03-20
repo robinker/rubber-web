@@ -1,15 +1,21 @@
 import React, {useEffect, useState} from 'react'
+import { useSelector } from 'react-redux'
 import axios from 'axios'
 
 function View(props) {
 
     const [user, setUser] = useState({})
     const [loaded, setLoaded] = useState(false)
+    const token = useSelector(state => state.user.token)
 
     useEffect(() => {
-        axios.get(`https://rubber-backend.herokuapp.com/users/${props.location.state.userId}/gardens`)
+        axios.get(`http://rubber-backend.herokuapp.com/users/${props.location.state.userId}/gardens`,{
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
         .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             setUser(res.data)
             setLoaded(true)
         })

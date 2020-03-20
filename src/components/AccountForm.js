@@ -27,7 +27,6 @@ function UserForm(props) {
             </Form.Group>
             <Row>
                 <Col><Button onClick={props.back}>ย้อนกลับ</Button></Col>
-                {/* <Col><Button type="submit" disabled={!props.isValid}>ยืนยัน</Button></Col> */}
                 <Col><Button type="submit" disabled={!props.isValid}>ยืนยัน</Button></Col>
             </Row>
         </>

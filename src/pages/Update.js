@@ -1,15 +1,16 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Container, Row, Col,  Form as FormB } from 'react-bootstrap'
+import { Container, Row, Col,  Form as FormB, Button } from 'react-bootstrap'
 import { Formik, Form , Field, getIn} from 'formik'
 import { GardenSchema } from '../components/Schema'
+import axios from 'axios'
 // import provinces from '../json/provinces'
 
 function Update(props) {
 
     const garden = useSelector(state => state.user.gardens[props.location.index])
 
-    function isValid(name, touched){
+    function is_valid(name, touched){
         return getIn(touched, name) ? getIn(props.errors, name) ? 'is-invalid' : 'is-valid' : ''
     }
 
@@ -17,6 +18,22 @@ function Update(props) {
         return getIn(errors, name)
     }
     
+    function submit(data){
+        axios.post(`http://rubber-backend.herokuapp.com/gardens/update/${garden._id}`, {
+            garden: data
+        }).then(res => {
+            if(res.data.message === "Garden Updated!"){
+                alert('อัพเดทข้อมูลสำเร็จ')
+            } else {
+                alert('อัพเดทข้อมูลไม่สำเร็จ')
+            }
+            // console.log(res.data)
+        }).catch(error => {
+            alert('อัพเดทข้อมูลไม่สำเร็จ')
+            console.log(error)
+        })
+    }
+
     return (
         <Container>
             <h2>สวนที่ {props.location.index + 1}</h2>
@@ -34,23 +51,23 @@ function Update(props) {
                     products: [...garden.products]
                 }}
                 onSubmit={values => {
-                    console.log(values)
+                    submit(values)
                 }}
             >
-                {({ values, errors, touched, dirty }) => (
+                {({ errors, touched, dirty, isValid }) => (
                     <Form>
                         <Row>
                             <Col>
                                 <FormB.Group>
                                     <FormB.Label>เนื้อที่สวนยาง (ไร่)</FormB.Label>
-                                    <Field type='number' name='area' id="area" placeholder="10" className={`form-control ${isValid(`area`, touched.area)}`} />
+                                    <Field type='number' name='area' id="area" placeholder="10" className={`form-control ${is_valid(`area`, touched.area)}`} />
                                     <FormB.Control.Feedback type="invalid"> {errorMessage(`area`,errors.area)} </FormB.Control.Feedback>
                                 </FormB.Group>
                             </Col>
                             <Col>
                                 <FormB.Group>
                                     <FormB.Label>ปีที่ปลูก (พ.ศ.)</FormB.Label>
-                                    <Field type='number' name='startYear' id="startYear" placeholder="2558" className={`form-control ${isValid(`startYear`, touched.startYear)}`} />
+                                    <Field type='number' name='startYear' id="startYear" placeholder="2558" className={`form-control ${is_valid(`startYear`, touched.startYear)}`} />
                                     <FormB.Control.Feedback type="invalid"> {errorMessage(`startYear`, errors.startYear)} </FormB.Control.Feedback>
                                 </FormB.Group>
                             </Col>
@@ -59,14 +76,14 @@ function Update(props) {
                             <Col>
                                 <FormB.Group>
                                     <FormB.Label>ชื่อพันธุ์ต้นยาง</FormB.Label>
-                                    <Field name='species' id="species" placeholder="RRIC 101"  className={`form-control ${isValid(`species`, touched.species)}`} />
+                                    <Field name='species' id="species" placeholder="RRIC 101"  className={`form-control ${is_valid(`species`, touched.species)}`} />
                                     <FormB.Control.Feedback type="invalid"> {errorMessage(`species`, errors.species)} </FormB.Control.Feedback>
                                 </FormB.Group>
                             </Col>
                             <Col>
                                 <FormB.Group>
                                     <FormB.Label>จำนวนต้นยาง (ต้น)</FormB.Label>
-                                    <Field name='amount' id="amount" placeholder="200" className={`form-control ${isValid(`amount`, touched.amount)}`} />
+                                    <Field name='amount' id="amount" placeholder="200" className={`form-control ${is_valid(`amount`, touched.amount)}`} />
                                     <FormB.Control.Feedback type="invalid"> {errorMessage(`amount`, errors.amount)} </FormB.Control.Feedback>
                                 </FormB.Group>
                             </Col>
@@ -77,8 +94,9 @@ function Update(props) {
                                 <Col><Field name='products' options={['น้ำยางสด', 'ยางก้อนถ้วย', 'ยางแผ่นดิบ', 'ยางแผ่นรมควัน', 'ขี้ยาง/เศษยาง', 'ยางเครฟ']} component={CheckboxGroup} /></Col>
                             </FormB.Group>
                         </Row>
+                        <Button type='submit' disabled={!(dirty && isValid)}>ยืนยัน </Button>
                     </Form>
-            )}  
+                )}  
             </Formik>
         </Container>
     )
