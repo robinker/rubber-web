@@ -9,7 +9,7 @@ function View(props) {
     const token = useSelector(state => state.user.token)
 
     useEffect(() => {
-        axios.get(`http://rubber-backend.herokuapp.com/users/${props.location.state.userId}/gardens`,{
+        axios.get(`https://rubber-backend.herokuapp.com/users/${props.location.state.userId}/gardens`,{
             headers: {
                 "Authorization": "Bearer " + token
             }
