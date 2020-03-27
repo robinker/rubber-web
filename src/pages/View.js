@@ -7,9 +7,9 @@ function View(props) {
     const [user, setUser] = useState({})
     const [loaded, setLoaded] = useState(false)
     const token = useSelector(state => state.user.token)
-
+    
     useEffect(() => {
-        axios.get(`http://rubber-backend.herokuapp.com/users/${props.location.state.userId}/gardens`,{
+        axios.get(`https://rubber-backend.herokuapp.com/users/${props.location.state.userId}/gardens`,{
             headers: {
                 "Authorization": "Bearer " + token
             }
@@ -19,7 +19,7 @@ function View(props) {
             setUser(res.data)
             setLoaded(true)
         })
-    },[props.location.state.userId])
+    },[props.location.state.userId, token])
     
     return loaded ? (
         <div className="container">

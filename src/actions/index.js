@@ -4,6 +4,14 @@ export const signIn = (res) => {
         payload: res
     }
 }
+
+export const update = (res, index) => {
+    return {
+        type: 'UPDATE',
+        payload: {res, index}
+    }
+}
+
 export const getFriend = (res) => {
     return {
         type: 'GET_FRIENDS',

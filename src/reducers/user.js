@@ -2,7 +2,8 @@ const initialState = {
     isLogged: false,
     role: '',
     token: null,
-    gardens:[]
+    gardens:[],
+    test: []
 }
 
 const userReducer = (state = initialState, action) => {
@@ -11,8 +12,16 @@ const userReducer = (state = initialState, action) => {
             return state = {
                 isLogged: true,
                 ...action.payload,
+                gardens: action.payload.gardens,
                 role: action.payload.role[0]
             }
+            case 'UPDATE' :
+                let gardens = state.gardens
+                gardens[action.payload.index] = action.payload.res
+                return state = {
+                    ...state,
+                    gardens: gardens
+                }
         default:
             return state
     }

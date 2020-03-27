@@ -36,7 +36,8 @@ function Profile() {
                         </p>
                         <Link to={{ pathname: '/profile/edit/garden',
                             gardenID: garden._id,
-                            index: index
+                            index: index,
+                            garden: garden
                         }} 
                         className='btn btn-primary'>อัพเดท</Link>
                         <hr></hr>

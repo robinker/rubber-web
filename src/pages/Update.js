@@ -1,14 +1,15 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Container, Row, Col,  Form as FormB, Button } from 'react-bootstrap'
 import { Formik, Form , Field, getIn} from 'formik'
 import { GardenSchema } from '../components/Schema'
+import { update } from '../actions'
 import axios from 'axios'
-// import provinces from '../json/provinces'
 
 function Update(props) {
 
-    const garden = useSelector(state => state.user.gardens[props.location.index])
+    const garden = props.location.garden
+    const dispatch = useDispatch()
 
     function is_valid(name, touched){
         return getIn(touched, name) ? getIn(props.errors, name) ? 'is-invalid' : 'is-valid' : ''
@@ -23,11 +24,11 @@ function Update(props) {
             garden: data
         }).then(res => {
             if(res.data.message === "Garden Updated!"){
+                dispatch(update(res.data.garden, props.location.index))
                 alert('อัพเดทข้อมูลสำเร็จ')
             } else {
                 alert('อัพเดทข้อมูลไม่สำเร็จ')
             }
-            // console.log(res.data)
         }).catch(error => {
             alert('อัพเดทข้อมูลไม่สำเร็จ')
             console.log(error)
