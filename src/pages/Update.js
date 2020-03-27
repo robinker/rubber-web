@@ -20,7 +20,7 @@ function Update(props) {
     }
     
     function submit(data){
-        axios.post(`http://rubber-backend.herokuapp.com/gardens/update/${garden._id}`, {
+        axios.post(`https://rubber-backend.herokuapp.com/gardens/update/${garden._id}`, {
             garden: data
         }).then(res => {
             if(res.data.message === "Garden Updated!"){
