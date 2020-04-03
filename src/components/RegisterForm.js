@@ -85,12 +85,12 @@ function RegisterForm(props) {
         if(props.match.params.role === 'เกษตรกร') {
             axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/createNewAccount', paramsCreate, config)
             .then(res => {
-                if (res === 'Add Record successfully.') {
+                if (res.status === 'OK') {
                     alert('บันทึกข้อมูลสำเร็จ')
                     
                     axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAdmin, config) 
                     .then(res => {
-                        if (res === 'Add Record successfully.') {
+                        if (res.status === 'OK') {
                             alert('บันทึกข้อมูลสำเร็จ')
                         }
                     })
@@ -100,7 +100,7 @@ function RegisterForm(props) {
                    
                     axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
                     .then(res => {
-                        if (res === 'Add Record successfully.') {
+                        if (res.status === 'OK') {
                             alert('บันทึกข้อมูลสำเร็จ')
                         }
                     })
@@ -116,11 +116,11 @@ function RegisterForm(props) {
         else if(props.match.params.role === 'พ่อค้าคนกลาง') {
             axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/createNewAccount', paramsCreate, config)
             .then(res => {
-                if (res === 'Add Record successfully.') {
+                if (res.status === 'OK') {
                     alert('บันทึกข้อมูลสำเร็จ')
                     axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAdmin, config)
                     .then(res => {
-                        if (res === 'Add Record successfully.') {
+                        if (res.status === 'OK') {
                             alert('บันทึกข้อมูลสำเร็จ')
                         }
                     })
@@ -130,7 +130,7 @@ function RegisterForm(props) {
                     
                     axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToMiddleman, config) 
                     .then(res => {
-                        if (res === 'Add Record successfully.') {
+                        if (res.status === 'OK') {
                             alert('บันทึกข้อมูลสำเร็จ')
                         }
                     })

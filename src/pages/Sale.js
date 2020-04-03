@@ -109,7 +109,7 @@ function Sale(props) {
                       }
                     axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/addRecordToTransaction', params, config)
                     .then(res => {
-                        if (res === 'Add Record successfully.') {
+                        if (res.status === 'OK') {
                             alert('บันทึกข้อมูลสำเร็จ')
                         }
                     })
