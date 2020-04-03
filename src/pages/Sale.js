@@ -95,6 +95,22 @@ function Sale(props) {
                         volumeError: '',
                         priceError: '',
                     })
+                    var params = new URLSearchParams();
+                    params.append('source', props.source);
+                    params.append('rubberType', state.rubberType);
+                    params.append('volume', state.volume);
+                    params.append('price', state.price);
+                    params.append('destination', state.destination);
+                    axios.post('http://13.76.35.161:10050/blockchainTransaction/addRecordToTransaction', {params})
+                    .then(res => {
+                        if (res === 'Add Record successfully.') {
+                            alert('บันทึกข้อมูลสำเร็จ')
+                        }
+                    })
+                    .catch(err => {
+                        alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                    }) 
+                        
                 }
             })
             .catch(err => {

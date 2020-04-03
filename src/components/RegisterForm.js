@@ -36,6 +36,7 @@ function RegisterForm(props) {
                 cert_1: values.cert
             }
             gardens = values.garden
+
         }
         else if(props.match.params.role === 'พ่อค้าคนกลาง') {
             user = {
@@ -46,6 +47,7 @@ function RegisterForm(props) {
         console.log(user)
         console.log(gardens)
         // console.log(test)
+
         axios.post('http://localhost:5000/users/add', {
             user, gardens
         })
@@ -57,6 +59,83 @@ function RegisterForm(props) {
         .catch(err => {
             alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
         })
+
+        var paramsCreate = new URLSearchParams();
+        paramsCreate.append('accountName', values.firstname);
+             
+        var paramShareToAdmin = new URLSearchParams();
+        paramShareToAdmin.append('accountNameShared', values.firstname)
+        paramShareToAdmin.append('shareTo', "O=Admin,L=Bangkok,C=TH")
+        
+        var paramShareToMiddleman = new URLSearchParams();
+        paramShareToMiddleman.append('accountNameShared', values.firstname)
+        paramShareToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
+
+        var paramShareToAgriculturist = new URLSearchParams();
+        paramShareToAgriculturist.append('accountNameShared', values.firstname)
+        paramShareToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
+
+        if(props.match.params.role === 'เกษตรกร') {
+            axios.post('http://13.76.35.161:10040/blockchainTransaction/createNewAccount', {paramsCreate})
+            .then(res => {
+                if (res === 'Add Record successfully.') {
+                    alert('บันทึกข้อมูลสำเร็จ')
+                    
+                    axios.post('http://13.76.35.161:10040/blockchainTransaction/shareAccount', {paramShareToAdmin}) 
+                    .then(res => {
+                        if (res === 'Add Record successfully.') {
+                            alert('บันทึกข้อมูลสำเร็จ')
+                        }
+                    })
+                    .catch(err => {
+                        alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                    }) 
+                   
+                    axios.post('http://13.76.35.161:10040/blockchainTransaction/shareAccount', {paramShareToMiddleman}) 
+                    .then(res => {
+                        if (res === 'Add Record successfully.') {
+                            alert('บันทึกข้อมูลสำเร็จ')
+                        }
+                    })
+                    .catch(err => {
+                        alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                    })  
+                }
+            })
+            .catch(err => {
+                alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+            })    
+        }
+        else if(props.match.params.role === 'พ่อค้าคนกลาง') {
+            axios.post('http://13.76.35.161:10050/blockchainTransaction/createNewAccount', {paramsCreate})
+            .then(res => {
+                if (res === 'Add Record successfully.') {
+                    alert('บันทึกข้อมูลสำเร็จ')
+                    axios.post('http://13.76.35.161:10050/blockchainTransaction/shareAccount', {paramShareToAdmin})
+                    .then(res => {
+                        if (res === 'Add Record successfully.') {
+                            alert('บันทึกข้อมูลสำเร็จ')
+                        }
+                    })
+                    .catch(err => {
+                        alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                    })
+                    
+                    axios.post('http://13.76.35.161:10050/blockchainTransaction/shareAccount', {paramShareToAgriculturist}) 
+                    .then(res => {
+                        if (res === 'Add Record successfully.') {
+                            alert('บันทึกข้อมูลสำเร็จ')
+                        }
+                    })
+                    .catch(err => {
+                        alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                    })  
+                }
+            })
+            .catch(err => {
+                alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+            }) 
+        }
     }
 
     const [page, setForm] = useState(1)
