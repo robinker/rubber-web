@@ -61,18 +61,18 @@ function RegisterForm(props) {
 
 
         var paramsCreate = new URLSearchParams();
-        paramsCreate.append('accountName', props.user.firstname + props.user.lastname);
+        paramsCreate.append('accountName', user.firstname + user.lastname);
              
         var paramShareToAdmin = new URLSearchParams();
-        paramShareToAdmin.append('accountNameShared', props.user.firstname + props.user.lastname)
+        paramShareToAdmin.append('accountNameShared', user.firstname + user.lastname)
         paramShareToAdmin.append('shareTo', "O=Admin,L=Bangkok,C=TH")
 
         var paramShareToAgriculturist = new URLSearchParams();
-        paramShareToAgriculturist.append('accountNameShared', props.user.firstname + props.user.lastname)
+        paramShareToAgriculturist.append('accountNameShared', user.firstname + user.lastname)
         paramShareToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
         
         var paramShareToMiddleman = new URLSearchParams();
-        paramShareToMiddleman.append('accountNameShared', props.user.firstname + props.user.lastname)
+        paramShareToMiddleman.append('accountNameShared', user.firstname + user.lastname)
         paramShareToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
 
         const config = {
