@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import { Breadcrumb, Container, Row, Col, Button } from 'react-bootstrap'
+import { Breadcrumb, Container, Row, Col, Button, Form as FormB } from 'react-bootstrap'
 import UserForm from './UserForm'
 import GardenForm from './GardenForm'
-import AccountForm from './AccountForm'
 import provinces from '../json/provinces'
-import { Formik, Form, FieldArray } from 'formik'
+import { Formik, Form, FieldArray, Field } from 'formik'
 import axios from 'axios'
 import { RegisterSchema, MiddlemanSchema, GardenerSchema} from './Schema'
 
@@ -44,11 +43,11 @@ function RegisterForm(props) {
                 cert_1: values.cert
             }
         }
-        console.log(user)
-        console.log(gardens)
+        // console.log(user)
+        // console.log(gardens)
         // console.log(test)
 
-        axios.post('http://localhost:5000/users/add', {
+        axios.post('https://rubber-backend.herokuapp.com/users/add', {
             user, gardens
         })
         .then(res => {
@@ -228,8 +227,31 @@ function RegisterForm(props) {
                             </FieldArray> : null
                         }
 
-                        {page === 3 ? <AccountForm errors={errors} touched={touched} role={props.match.params.role} 
-                        next={nextForm} back={previousForm} isValid={dirty && isValid}></AccountForm> : null}
+                        {/* {page === 3 ? <AccountForm errors={errors} touched={touched} role={props.match.params.role} 
+                        next={nextForm} back={previousForm} isValid={dirty && isValid}></AccountForm> : null} */}
+                        {page === 3 ? <>
+                            <h2>บัญชีผู้ใช้</h2>
+                            <br></br>
+                            <FormB.Group>
+                                <FormB.Label>ชื่อบัญชีผู้ใช้ :</FormB.Label>
+                                <Field type="username" name="username" id="username" className={`form-control ${touched.username ? errors.username ? 'is-invalid' : 'is-valid' : ''}`}/>
+                                <FormB.Control.Feedback type="invalid"> {errors.username} </FormB.Control.Feedback>
+                            </FormB.Group>
+                            <FormB.Group>
+                                <FormB.Label>รหัสผ่าน :</FormB.Label>
+                                <Field type="password" name="password" id="password" className={`form-control ${touched.password ? errors.password ? 'is-invalid' : 'is-valid' : ''}`}/>
+                                <FormB.Control.Feedback type="invalid"> {errors.password} </FormB.Control.Feedback>
+                            </FormB.Group>
+                            <FormB.Group>
+                                <FormB.Label>ยืนยันรหัสผ่าน :</FormB.Label>
+                                <Field type="password" name="confirmPassword" id="confirmPassword" className={`form-control ${touched.confirmPassword ? errors.confirmPassword ? 'is-invalid' : 'is-valid' : ''}`}/>
+                                <FormB.Control.Feedback type="invalid"> {errors.confirmPassword} </FormB.Control.Feedback>
+                            </FormB.Group>
+                            <Row>
+                                <Col><Button onClick={previousForm}>ย้อนกลับ</Button></Col>
+                                <Col><Button type="submit" disabled={!(dirty && isValid)}>ยืนยัน</Button></Col>
+                            </Row>
+                        </> : null}
                         {/* <pre> {JSON.stringify(values.garden, null, 2)} </pre> */}
                     </Form>
                 )}

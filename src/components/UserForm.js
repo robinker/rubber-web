@@ -72,8 +72,8 @@ function UserForm(props) {
                 <Col>
                     <Form.Group>
                         <Form.Label>แขวง/ตำบล</Form.Label>
-                        <Field name="district" id="district" className={`form-control ${touched.district ? errors.district ? 'is-invalid' : 'is-valid' : ''}`}/>
-                        <Form.Control.Feedback type="invalid"> {errors.district} </Form.Control.Feedback>
+                        <Field name="subdistrict" id="subdistrict" className={`form-control ${touched.subdistrict ? errors.subdistrict ? 'is-invalid' : 'is-valid' : ''}`}/>
+                        <Form.Control.Feedback type="invalid"> {errors.subdistrict} </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
             </Row>
@@ -82,8 +82,8 @@ function UserForm(props) {
                 <Col>
                     <Form.Group>
                         <Form.Label>เขต/อำเภอ</Form.Label>
-                        <Field name="amphure" id="amphure" className={`form-control ${touched.amphure ? errors.amphure ? 'is-invalid' : 'is-valid' : ''}`}/>
-                        <Form.Control.Feedback type="invalid"> {errors.amphure} </Form.Control.Feedback>
+                        <Field name="district" id="district" className={`form-control ${touched.district ? errors.district ? 'is-invalid' : 'is-valid' : ''}`}/>
+                        <Form.Control.Feedback type="invalid"> {errors.district} </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
                 <Col>
