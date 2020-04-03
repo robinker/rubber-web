@@ -60,6 +60,7 @@ function RegisterForm(props) {
             alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
         })
 
+
         var paramsCreate = new URLSearchParams();
         paramsCreate.append('accountName', values.firstname);
              
@@ -75,13 +76,19 @@ function RegisterForm(props) {
         paramShareToAgriculturist.append('accountNameShared', values.firstname)
         paramShareToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
 
+        const config = {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }
+   
         if(props.match.params.role === 'เกษตรกร') {
-            axios.post('http://13.76.35.161:10040/blockchainTransaction/createNewAccount', {paramsCreate})
+            axios.post('http://13.76.35.161:10040/blockchainTransaction/createNewAccount', {paramsCreate}, config)
             .then(res => {
                 if (res === 'Add Record successfully.') {
                     alert('บันทึกข้อมูลสำเร็จ')
                     
-                    axios.post('http://13.76.35.161:10040/blockchainTransaction/shareAccount', {paramShareToAdmin}) 
+                    axios.post('http://13.76.35.161:10040/blockchainTransaction/shareAccount', {paramShareToAdmin},config) 
                     .then(res => {
                         if (res === 'Add Record successfully.') {
                             alert('บันทึกข้อมูลสำเร็จ')
@@ -91,7 +98,7 @@ function RegisterForm(props) {
                         alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
                     }) 
                    
-                    axios.post('http://13.76.35.161:10040/blockchainTransaction/shareAccount', {paramShareToMiddleman}) 
+                    axios.post('http://13.76.35.161:10040/blockchainTransaction/shareAccount', {paramShareToMiddleman},config) 
                     .then(res => {
                         if (res === 'Add Record successfully.') {
                             alert('บันทึกข้อมูลสำเร็จ')
@@ -107,11 +114,11 @@ function RegisterForm(props) {
             })    
         }
         else if(props.match.params.role === 'พ่อค้าคนกลาง') {
-            axios.post('http://13.76.35.161:10050/blockchainTransaction/createNewAccount', {paramsCreate})
+            axios.post('http://13.76.35.161:10050/blockchainTransaction/createNewAccount', {paramsCreate},config)
             .then(res => {
                 if (res === 'Add Record successfully.') {
                     alert('บันทึกข้อมูลสำเร็จ')
-                    axios.post('http://13.76.35.161:10050/blockchainTransaction/shareAccount', {paramShareToAdmin})
+                    axios.post('http://13.76.35.161:10050/blockchainTransaction/shareAccount', {paramShareToAdmin},config)
                     .then(res => {
                         if (res === 'Add Record successfully.') {
                             alert('บันทึกข้อมูลสำเร็จ')
@@ -121,7 +128,7 @@ function RegisterForm(props) {
                         alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
                     })
                     
-                    axios.post('http://13.76.35.161:10050/blockchainTransaction/shareAccount', {paramShareToAgriculturist}) 
+                    axios.post('http://13.76.35.161:10050/blockchainTransaction/shareAccount', {paramShareToAgriculturist},config) 
                     .then(res => {
                         if (res === 'Add Record successfully.') {
                             alert('บันทึกข้อมูลสำเร็จ')

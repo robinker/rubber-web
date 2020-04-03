@@ -101,7 +101,13 @@ function Sale(props) {
                     params.append('volume', state.volume);
                     params.append('price', state.price);
                     params.append('destination', state.destination);
-                    axios.post('http://13.76.35.161:10050/blockchainTransaction/addRecordToTransaction', {params})
+
+                    const config = {
+                        headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                      }
+                    axios.post('http://13.76.35.161:10050/blockchainTransaction/addRecordToTransaction', {params}, config)
                     .then(res => {
                         if (res === 'Add Record successfully.') {
                             alert('บันทึกข้อมูลสำเร็จ')
