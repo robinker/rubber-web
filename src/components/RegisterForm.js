@@ -67,14 +67,14 @@ function RegisterForm(props) {
         var paramShareToAdmin = new URLSearchParams();
         paramShareToAdmin.append('accountNameShared', props.user.firstname + props.user.lastname)
         paramShareToAdmin.append('shareTo', "O=Admin,L=Bangkok,C=TH")
-        
-        var paramShareToMiddleman = new URLSearchParams();
-        paramShareToMiddleman.append('accountNameShared', props.user.firstname + props.user.lastname)
-        paramShareToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
 
         var paramShareToAgriculturist = new URLSearchParams();
         paramShareToAgriculturist.append('accountNameShared', props.user.firstname + props.user.lastname)
         paramShareToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
+        
+        var paramShareToMiddleman = new URLSearchParams();
+        paramShareToMiddleman.append('accountNameShared', props.user.firstname + props.user.lastname)
+        paramShareToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
 
         const config = {
             headers: {
@@ -83,12 +83,12 @@ function RegisterForm(props) {
           }
    
         if(props.match.params.role === 'เกษตรกร') {
-            axios.post('http://13.76.35.161:10040/blockchainTransaction/createNewAccount', {paramsCreate}, { withCredentials: true }, config)
+            axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/createNewAccount', {paramsCreate}, { withCredentials: true }, config)
             .then(res => {
                 if (res === 'Add Record successfully.') {
                     alert('บันทึกข้อมูลสำเร็จ')
                     
-                    axios.post('http://13.76.35.161:10040/blockchainTransaction/shareAccount', {paramShareToAdmin}, { withCredentials: true }, config) 
+                    axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', {paramShareToAdmin}, { withCredentials: true }, config) 
                     .then(res => {
                         if (res === 'Add Record successfully.') {
                             alert('บันทึกข้อมูลสำเร็จ')
@@ -98,7 +98,7 @@ function RegisterForm(props) {
                         alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
                     }) 
                    
-                    axios.post('http://13.76.35.161:10040/blockchainTransaction/shareAccount', {paramShareToMiddleman}, { withCredentials: true }, config) 
+                    axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', {paramShareToAgriculturist}, { withCredentials: true }, config) 
                     .then(res => {
                         if (res === 'Add Record successfully.') {
                             alert('บันทึกข้อมูลสำเร็จ')
@@ -114,11 +114,11 @@ function RegisterForm(props) {
             })    
         }
         else if(props.match.params.role === 'พ่อค้าคนกลาง') {
-            axios.post('http://13.76.35.161:10050/blockchainTransaction/createNewAccount', {paramsCreate}, { withCredentials: true }, config)
+            axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/createNewAccount', {paramsCreate}, { withCredentials: true }, config)
             .then(res => {
                 if (res === 'Add Record successfully.') {
                     alert('บันทึกข้อมูลสำเร็จ')
-                    axios.post('http://13.76.35.161:10050/blockchainTransaction/shareAccount', {paramShareToAdmin}, { withCredentials: true }, config)
+                    axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', {paramShareToAdmin}, { withCredentials: true }, config)
                     .then(res => {
                         if (res === 'Add Record successfully.') {
                             alert('บันทึกข้อมูลสำเร็จ')
@@ -128,7 +128,7 @@ function RegisterForm(props) {
                         alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
                     })
                     
-                    axios.post('http://13.76.35.161:10050/blockchainTransaction/shareAccount', {paramShareToAgriculturist}, { withCredentials: true }, config) 
+                    axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', {paramShareToMiddleman}, { withCredentials: true }, config) 
                     .then(res => {
                         if (res === 'Add Record successfully.') {
                             alert('บันทึกข้อมูลสำเร็จ')
