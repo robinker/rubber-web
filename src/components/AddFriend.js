@@ -32,6 +32,68 @@ function AddFriend(props) {
         ).then(res => {
             if(res.data.message === 'Friend Added'){
                 dispatch(getFriend(props.user.friendlist))
+                var paramShareToAgriculturist = new URLSearchParams();
+                paramShareToAgriculturist.append('accountNameShared', props.user.firstname + props.user.lastname)
+                paramShareToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
+                
+                var paramShareToMiddleman = new URLSearchParams();
+                paramShareToMiddleman.append('accountNameShared', props.user.firstname + props.user.lastname)
+                paramShareToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
+        
+                var paramShareBackToAgriculturist = new URLSearchParams();
+                paramShareBackToAgriculturist.append('accountNameShared',  res.data.friends[res.data.friends.length-1])
+                paramShareBackToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
+                
+                var paramShareBackToMiddleman = new URLSearchParams();
+                paramShareBackToMiddleman.append('accountNameShared',  res.data.friends[res.data.friends.length-1])
+                paramShareBackToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
+        
+                const config = {
+                    headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }
+        
+                if(user.role === 'เกษตรกร') {
+                    axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToMiddleman, config) 
+                    .then(res => {
+                        if (res.status === 'OK') {
+                            alert('บันทึกข้อมูลสำเร็จ')
+                            axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareBackToAgriculturist, config) 
+                            .then(res => {    
+                                if (res.status === 'OK') {
+                                    alert('บันทึกข้อมูลสำเร็จ')
+                                }
+                            })
+                            .catch(err => {
+                                alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                            }) 
+                        }
+                    })
+                    .catch(err => {
+                        alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                    })  
+                }
+                else if(user.role === 'พ่อค้าคนกลาง') {                  
+                    axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
+                    .then(res => {
+                        if (res.status === 'OK') {
+                            alert('บันทึกข้อมูลสำเร็จ')
+                            axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareBackToMiddleman, config) 
+                            .then(res => {    
+                                if (res.status === 'OK') {
+                                    alert('บันทึกข้อมูลสำเร็จ')
+                                }
+                            })
+                            .catch(err => {
+                                alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                            }) 
+                        }
+                    })
+                    .catch(err => {
+                        alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                    }) 
+                }
                 alert('เพิ่มเพื่อนสำเร็จ')
                 toggle()
             } else {
@@ -40,68 +102,6 @@ function AddFriend(props) {
         }).catch(() => {
             setError('ไม่พบบัญชีผู้ใช้')
         })   
-        var paramShareToAgriculturist = new URLSearchParams();
-        paramShareToAgriculturist.append('accountNameShared', props.user.firstname + props.user.lastname)
-        paramShareToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
-        
-        var paramShareToMiddleman = new URLSearchParams();
-        paramShareToMiddleman.append('accountNameShared', props.user.firstname + props.user.lastname)
-        paramShareToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
-
-        var paramShareBackToAgriculturist = new URLSearchParams();
-        paramShareBackToAgriculturist.append('accountNameShared', props.user.firstname + props.user.lastname)
-        paramShareBackToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
-        
-        var paramShareBackToMiddleman = new URLSearchParams();
-        paramShareBackToMiddleman.append('accountNameShared', props.user.firstname + props.user.lastname)
-        paramShareBackToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
-
-        const config = {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }
-
-        if(user.role === 'เกษตรกร') {
-            axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToMiddleman, config) 
-            .then(res => {
-                if (res.status === 'OK') {
-                    alert('บันทึกข้อมูลสำเร็จ')
-                    axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareBackToAgriculturist, config) 
-                    .then(res => {    
-                        if (res.status === 'OK') {
-                            alert('บันทึกข้อมูลสำเร็จ')
-                        }
-                    })
-                    .catch(err => {
-                        alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
-                    }) 
-                }
-            })
-            .catch(err => {
-                alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
-            })  
-        }
-        else if(user.role === 'พ่อค้าคนกลาง') {                  
-            axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
-            .then(res => {
-                if (res.status === 'OK') {
-                    alert('บันทึกข้อมูลสำเร็จ')
-                    axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareBackToMiddleman, config) 
-                    .then(res => {    
-                        if (res.status === 'OK') {
-                            alert('บันทึกข้อมูลสำเร็จ')
-                        }
-                    })
-                    .catch(err => {
-                        alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
-                    }) 
-                }
-            })
-            .catch(err => {
-                alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
-            }) 
-        }
     }
 
     return (
