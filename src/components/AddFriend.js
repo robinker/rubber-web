@@ -41,11 +41,11 @@ function AddFriend(props) {
             setError('ไม่พบบัญชีผู้ใช้')
         })   
         var paramShareToAgriculturist = new URLSearchParams();
-        paramShareToAgriculturist.append('accountNameShared', user.firstname + user.lastname)
+        paramShareToAgriculturist.append('accountNameShared', props.user.firstname + props.user.lastname)
         paramShareToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
         
         var paramShareToMiddleman = new URLSearchParams();
-        paramShareToMiddleman.append('accountNameShared', user.firstname + user.lastname)
+        paramShareToMiddleman.append('accountNameShared', props.user.firstname + props.user.lastname)
         paramShareToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
 
         const config = {
