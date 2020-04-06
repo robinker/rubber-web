@@ -48,6 +48,12 @@ function AddFriend(props) {
         paramShareToMiddleman.append('accountNameShared', user.firstname + user.lastname)
         paramShareToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
 
+        const config = {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+
         if(user.match.params.role === 'เกษตรกร') {
             axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToMiddleman, config) 
             .then(res => {
