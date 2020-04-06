@@ -54,7 +54,7 @@ function AddFriend(props) {
             }
         }
 
-        if(user.match.params.role === 'เกษตรกร') {
+        if(user.role === 'เกษตรกร') {
             axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToMiddleman, config) 
             .then(res => {
                 if (res.status === 'OK') {
@@ -65,7 +65,7 @@ function AddFriend(props) {
                 alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
             })  
         }
-        else if(user.match.params.role === 'พ่อค้าคนกลาง') {                  
+        else if(user.role === 'พ่อค้าคนกลาง') {                  
             axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
             .then(res => {
                 if (res.status === 'OK') {
