@@ -67,14 +67,6 @@ function RegisterForm(props) {
         paramShareToAdmin.append('accountNameShared', user.firstname + user.lastname)
         paramShareToAdmin.append('shareTo', "O=Admin,L=Bangkok,C=TH")
 
-        var paramShareToAgriculturist = new URLSearchParams();
-        paramShareToAgriculturist.append('accountNameShared', user.firstname + user.lastname)
-        paramShareToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
-        
-        var paramShareToMiddleman = new URLSearchParams();
-        paramShareToMiddleman.append('accountNameShared', user.firstname + user.lastname)
-        paramShareToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
-
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -86,9 +78,8 @@ function RegisterForm(props) {
             .then(res => {
                 if (res.status === 'OK') {
                     alert('บันทึกข้อมูลสำเร็จ')
-                    
-                    axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAdmin, config) 
                     .then(res => {
+                        axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAdmin, config) 
                         if (res.status === 'OK') {
                             alert('บันทึกข้อมูลสำเร็จ')
                         }
@@ -96,16 +87,6 @@ function RegisterForm(props) {
                     .catch(err => {
                         alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
                     }) 
-                   
-                    axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToMiddleman, config) 
-                    .then(res => {
-                        if (res.status === 'OK') {
-                            alert('บันทึกข้อมูลสำเร็จ')
-                        }
-                    })
-                    .catch(err => {
-                        alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
-                    })  
                 }
             })
             .catch(err => {
@@ -117,8 +98,8 @@ function RegisterForm(props) {
             .then(res => {
                 if (res.status === 'OK') {
                     alert('บันทึกข้อมูลสำเร็จ')
-                    axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAdmin, config)
                     .then(res => {
+                        axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAdmin, config)
                         if (res.status === 'OK') {
                             alert('บันทึกข้อมูลสำเร็จ')
                         }
@@ -126,16 +107,7 @@ function RegisterForm(props) {
                     .catch(err => {
                         alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
                     })
-                    
-                    axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
-                    .then(res => {
-                        if (res.status === 'OK') {
-                            alert('บันทึกข้อมูลสำเร็จ')
-                        }
-                    })
-                    .catch(err => {
-                        alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
-                    })  
+ 
                 }
             })
             .catch(err => {

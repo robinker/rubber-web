@@ -40,6 +40,36 @@ function AddFriend(props) {
         }).catch(() => {
             setError('ไม่พบบัญชีผู้ใช้')
         })   
+        var paramShareToAgriculturist = new URLSearchParams();
+        paramShareToAgriculturist.append('accountNameShared', user.firstname + user.lastname)
+        paramShareToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
+        
+        var paramShareToMiddleman = new URLSearchParams();
+        paramShareToMiddleman.append('accountNameShared', user.firstname + user.lastname)
+        paramShareToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
+
+        if(user.match.params.role === 'เกษตรกร') {
+            axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToMiddleman, config) 
+            .then(res => {
+                if (res.status === 'OK') {
+                    alert('บันทึกข้อมูลสำเร็จ')
+                }
+            })
+            .catch(err => {
+                alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+            })  
+        }
+        else if(user.match.params.role === 'พ่อค้าคนกลาง') {                  
+            axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
+            .then(res => {
+                if (res.status === 'OK') {
+                    alert('บันทึกข้อมูลสำเร็จ')
+                }
+            })
+            .catch(err => {
+                alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+            }) 
+        }
     }
 
     return (
