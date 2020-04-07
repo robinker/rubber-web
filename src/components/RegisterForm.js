@@ -53,7 +53,7 @@ function RegisterForm(props) {
         .then(res => {
             if (res.data === 'User added!') {
                 var paramsCreate = new URLSearchParams();
-                paramsCreate.append('accountName', user.firstname + user.lastname);
+                paramsCreate.append('accountName', user.firstname + " " + user.lastname);
                      
                 var paramShareToAdmin = new URLSearchParams();
                 paramShareToAdmin.append('accountNameShared', user.firstname + user.lastname)
@@ -66,11 +66,9 @@ function RegisterForm(props) {
                   } 
                 if(props.match.params.role === 'เกษตรกร') {
                     axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/createNewAccount', paramsCreate, config)
-                    console.log(paramsCreate)
                     .then(res => {
                         if (res.data.status === 'OK') {
                             axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAdmin, config) 
-                            console.log(paramShareToAdmin)
                             // alert('บันทึกข้อมูลสำเร็จ')
                             .then(res => {    
                                 if (res.status === 'OK') {
@@ -88,11 +86,9 @@ function RegisterForm(props) {
                 }
                 else if(props.match.params.role === 'พ่อค้าคนกลาง') {
                     axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/createNewAccount', paramsCreate, config)
-                    console.log(paramsCreate)
                     .then(res => {
                         if (res.data.status === 'OK') {
                             axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAdmin, config)
-                            console.log(paramShareToAdmin)
                             // alert('บันทึกข้อมูลสำเร็จ')
                             .then(res => {    
                                 if (res.status === 'OK') {
@@ -115,6 +111,8 @@ function RegisterForm(props) {
         .catch(err => {
             alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
         })
+        console.log(paramsCreate)
+        console.log(paramShareToAdmin)
     }
 
     const [page, setForm] = useState(1)

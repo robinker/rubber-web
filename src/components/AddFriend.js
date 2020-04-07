@@ -59,12 +59,10 @@ function AddFriend(props) {
                 if(props.user.role === 'พ่อค้าคนกลาง') {  
                     if (res.data.role === 'เกษตรกร') {               
                         axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
-                        console.log(paramShareToAgriculturist)
                         .then(res => {
                             if (res.data.status === 'OK') {
                                 // alert('บันทึกข้อมูลสำเร็จ')
                                 axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareBackToMiddleman, config) 
-                                console.log(paramShareBackToMiddleman)
                                 .then(res => {    
                                     if (res.status === 'OK') {
                                         alert('บันทึกข้อมูลสำเร็จ')
@@ -123,12 +121,10 @@ function AddFriend(props) {
                     // }
                     if (res.data.role === 'พ่อค้าคนกลาง') {
                         axios.post('httl://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToMiddleman, config)
-                        console.log(paramShareToMiddleman)
                         .then(res => {
                             if(res.data.status === 'OK') {
                                 // alert('บันทึกข้อมูลสำเร็จ')
                                 axios.post('httl://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareBackToAgriculturist, config)
-                                console.log(paramShareBackToAgriculturist)
                                 .then(res => {    
                                     if (res.status === 'OK') {
                                         alert('บันทึกข้อมูลสำเร็จ')
@@ -151,7 +147,11 @@ function AddFriend(props) {
             }
         }).catch(() => {
             setError('ไม่พบบัญชีผู้ใช้')
-        })   
+        })  
+        console.log(paramShareToAgriculturist) 
+        console.log(paramShareBackToMiddleman)
+        console.log(paramShareToMiddleman)
+        console.log(paramShareBackToAgriculturist)
     }
 
     return (
