@@ -66,12 +66,12 @@ function RegisterForm(props) {
                   } 
                 if(props.match.params.role === 'เกษตรกร') {
                     axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/createNewAccount', paramsCreate, config)
+                    console.log(paramsCreate)
                     .then(res => {
-                        console.log(props.match.params.role)
-                        console.log(res.data.status)
                         if (res.data.status === 'OK') {
                             axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAdmin, config) 
-                            alert('บันทึกข้อมูลสำเร็จ')
+                            console.log(paramShareToAdmin)
+                            // alert('บันทึกข้อมูลสำเร็จ')
                             .then(res => {    
                                 if (res.status === 'OK') {
                                     alert('บันทึกข้อมูลสำเร็จ')
@@ -88,12 +88,12 @@ function RegisterForm(props) {
                 }
                 else if(props.match.params.role === 'พ่อค้าคนกลาง') {
                     axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/createNewAccount', paramsCreate, config)
+                    console.log(paramsCreate)
                     .then(res => {
-                        console.log(props.match.params.role)
-                        console.log(res.data.status)
                         if (res.data.status === 'OK') {
                             axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAdmin, config)
-                            alert('บันทึกข้อมูลสำเร็จ')
+                            console.log(paramShareToAdmin)
+                            // alert('บันทึกข้อมูลสำเร็จ')
                             .then(res => {    
                                 if (res.status === 'OK') {
                                     alert('บันทึกข้อมูลสำเร็จ')
