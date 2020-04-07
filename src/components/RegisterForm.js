@@ -69,10 +69,9 @@ function RegisterForm(props) {
                     .then(res => {
                         console.log(props.match.params.role)
                         console.log(res.data.status)
-                        console.log(res.status)
                         if (res.data.status === 'OK') {
-                            alert('บันทึกข้อมูลสำเร็จ')
                             axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAdmin, config) 
+                            alert('บันทึกข้อมูลสำเร็จ')
                             .then(res => {    
                                 if (res.status === 'OK') {
                                     alert('บันทึกข้อมูลสำเร็จ')
@@ -92,20 +91,19 @@ function RegisterForm(props) {
                     .then(res => {
                         console.log(props.match.params.role)
                         console.log(res.data.status)
-                        console.log(res.status)
                         if (res.data.status === 'OK') {
+                            axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAdmin, config)
                             alert('บันทึกข้อมูลสำเร็จ')
-                            .then(res => {
-                                axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAdmin, config)
+                            .then(res => {    
                                 if (res.status === 'OK') {
                                     alert('บันทึกข้อมูลสำเร็จ')
                                 }
                             })
                             .catch(err => {
                                 alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
-                            })
-         
+                            }) 
                         }
+
                     })
                     .catch(err => {
                         alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')

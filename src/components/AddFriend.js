@@ -53,10 +53,10 @@ function AddFriend(props) {
                       'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 }
-                console.log(user.role)
+                console.log(props.user.role)
+                console.log(res.data.role)
                 console.log(res.data.status)
-                console.log(res.status)
-                if(user.role === 'พ่อค้าคนกลาง') {  
+                if(props.user.role === 'พ่อค้าคนกลาง') {  
                     if (res.data.role === 'เกษตรกร') {               
                         axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
                         .then(res => {
@@ -93,13 +93,16 @@ function AddFriend(props) {
                                 }) 
                             }
                         })
+                        .catch(err => {
+                            alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                        }) 
                     }
                 }
-                else if(user.role === 'เกษตรกร') {
+                else if(props.user.role === 'เกษตรกร') {
                     if(res.data.role === 'เกษตรกร') {
                         axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
                         .then(res => {
-                            if (res.status === 'OK') {
+                            if (res.data.status === 'OK') {
                                 alert('บันทึกข้อมูลสำเร็จ')
                                 axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareBackToAgriculturist, config) 
                                 .then(res => {    
@@ -119,7 +122,7 @@ function AddFriend(props) {
                     else if (res.data.role === 'พ่อค้าคนกลาง') {
                         axios.post('httl://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToMiddleman, config)
                         .then(res => {
-                            if(res.status === 'OK') {
+                            if(res.data.status === 'OK') {
                                 alert('บันทึกข้อมูลสำเร็จ')
                                 axios.post('httl://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareBackToAgriculturist, config)
                                 .then(res => {    
@@ -132,6 +135,9 @@ function AddFriend(props) {
                                 }) 
                             }
                         })
+                        .catch(err => {
+                            alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                        }) 
                     }
                 }
                 alert('เพิ่มเพื่อนสำเร็จ')
