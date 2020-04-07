@@ -33,16 +33,16 @@ function AddFriend(props) {
             if(res.data.message === 'Friend Added'){
                 dispatch(getFriend(props.user.friendlist))
                 var paramShareToAgriculturist = new URLSearchParams();
-                paramShareToAgriculturist.append('accountNameShared', props.user.firstname + props.user.lastname)
+                paramShareToAgriculturist.append('accountNameShared', props.user.firstname + " " + props.user.lastname)
                 paramShareToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
                 
-                var paramShareToMiddleman = new URLSearchParams();
-                paramShareToMiddleman.append('accountNameShared', props.user.firstname + props.user.lastname)
-                paramShareToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
+                // var paramShareToMiddleman = new URLSearchParams();
+                // paramShareToMiddleman.append('accountNameShared', props.user.firstname + props.user.lastname)
+                // paramShareToMiddleman.append('shareTo', "O=Middleman,L=Bangkok,C=TH")
         
-                var paramShareBackToAgriculturist = new URLSearchParams();
-                paramShareBackToAgriculturist.append('accountNameShared',  res.data.friends[res.data.friends.length-1])
-                paramShareBackToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
+                // var paramShareBackToAgriculturist = new URLSearchParams();
+                // paramShareBackToAgriculturist.append('accountNameShared',  res.data.friends[res.data.friends.length-1])
+                // paramShareBackToAgriculturist.append('shareTo', "O=Agriculturist,L=Bangkok,C=TH")
                 
                 var paramShareBackToMiddleman = new URLSearchParams();
                 paramShareBackToMiddleman.append('accountNameShared',  res.data.friends[res.data.friends.length-1])
@@ -98,54 +98,50 @@ function AddFriend(props) {
                     //     }) 
                     // }
                 }
-                else if(props.user.role === 'เกษตรกร') {
-                    // if(res.data.role === 'เกษตรกร') {
-                    //     axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
-                    //     .then(res => {
-                    //         if (res.data.status === 'OK') {
-                    //             // alert('บันทึกข้อมูลสำเร็จ')
-                    //             axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareBackToAgriculturist, config) 
-                    //             .then(res => {    
-                    //                 if (res.status === 'OK') {
-                    //                     alert('บันทึกข้อมูลสำเร็จ')
-                    //                 }
-                    //             })
-                    //             .catch(err => {
-                    //                 alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
-                    //             }) 
-                    //         }
-                    //     })
-                    //     .catch(err => {
-                    //         alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
-                    //     }) 
-                    // }
-                    if (res.data.role === 'พ่อค้าคนกลาง') {
-                        axios.post('httl://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToMiddleman, config)
-                        .then(res => {
-                            if(res.data.status === 'OK') {
-                                // alert('บันทึกข้อมูลสำเร็จ')
-                                axios.post('httl://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareBackToAgriculturist, config)
-                                .then(res => {    
-                                    if (res.status === 'OK') {
-                                        alert('บันทึกข้อมูลสำเร็จ')
-                                    }
-                                })
-                                .catch(err => {
-                                    alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
-                                }) 
-                            }
-                        })
-                        .catch(err => {
-                            alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
-                        }) 
-                    }
-                }
+                // else if(props.user.role === 'เกษตรกร') {
+                //     if(res.data.role === 'เกษตรกร') {
+                //         axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
+                //         .then(res => {
+                //             if (res.data.status === 'OK') {
+                //                 // alert('บันทึกข้อมูลสำเร็จ')
+                //                 axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareBackToAgriculturist, config) 
+                //                 .then(res => {    
+                //                     if (res.status === 'OK') {
+                //                         alert('บันทึกข้อมูลสำเร็จ')
+                //                     }
+                //                 })
+                //                 .catch(err => {
+                //                     alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                //                 }) 
+                //             }
+                //         })
+                //         .catch(err => {
+                //             alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                //         }) 
+                //     }
+                //     if (res.data.role === 'พ่อค้าคนกลาง') {
+                //         axios.post('httl://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToMiddleman, config)
+                //         .then(res => {
+                //             if(res.data.status === 'OK') {
+                //                 // alert('บันทึกข้อมูลสำเร็จ')
+                //                 axios.post('httl://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareBackToAgriculturist, config)
+                //                 .then(res => {    
+                //                     if (res.status === 'OK') {
+                //                         alert('บันทึกข้อมูลสำเร็จ')
+                //                     }
+                //                 })
+                //                 .catch(err => {
+                //                     alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                //                 }) 
+                //             }
+                //         })
+                //         .catch(err => {
+                //             alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
+                //         }) 
+                //     }
+                // }
                 alert('เพิ่มเพื่อนสำเร็จ')
                 toggle()
-                console.log(paramShareToAgriculturist) 
-                console.log(paramShareBackToMiddleman)
-                console.log(paramShareToMiddleman)
-                console.log(paramShareBackToAgriculturist)
             } else {
                 alert('ไม่สามารถเพิ่มเพื่อนซ้ำได้')
             }
