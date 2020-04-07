@@ -57,7 +57,7 @@ function AddFriend(props) {
                     if (res.data.role === 'เกษตรกร') {               
                         axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
                         .then(res => {
-                            if (res.status === 'OK') {
+                            if (res.data.status === 'OK') {
                                 alert('บันทึกข้อมูลสำเร็จ')
                                 axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareBackToMiddleman, config) 
                                 .then(res => {    
@@ -77,7 +77,7 @@ function AddFriend(props) {
                     else if (res.data.role === 'พ่อค้าคนกลาง') {
                         axios.post('httl://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToMiddleman, config)
                         .then(res => {
-                            if(res.status === 'OK') {
+                            if(res.data.status === 'OK') {
                                 alert('บันทึกข้อมูลสำเร็จ')
                                 axios.post('httl://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareBackToMiddleman, config)
                                 .then(res => {    
