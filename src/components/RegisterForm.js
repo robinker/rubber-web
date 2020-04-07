@@ -69,7 +69,6 @@ function RegisterForm(props) {
                     .then(res => {
                         if (res.data.status === 'OK') {
                             axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAdmin, config) 
-                            // alert('บันทึกข้อมูลสำเร็จ')
                             .then(res => {    
                                 if (res.status === 'OK') {
                                     alert('บันทึกข้อมูลสำเร็จ')
@@ -89,7 +88,6 @@ function RegisterForm(props) {
                     .then(res => {
                         if (res.data.status === 'OK') {
                             axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAdmin, config)
-                            // alert('บันทึกข้อมูลสำเร็จ')
                             .then(res => {    
                                 if (res.status === 'OK') {
                                     alert('บันทึกข้อมูลสำเร็จ')
