@@ -64,10 +64,13 @@ function RegisterForm(props) {
                       'Content-Type': 'application/x-www-form-urlencoded'
                     }
                   }
-           
+                console.log(res.data)  
                 if(props.match.params.role === 'เกษตรกร') {
                     axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/createNewAccount', paramsCreate, config)
                     .then(res => {
+                        console.log(res.data.status)
+                        console.log(res.status)
+                        console.log(res.data.message)
                         if (res.data.status === 'OK') {
                             alert('บันทึกข้อมูลสำเร็จ')
                             axios.post('http://13.76.35.161/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAdmin, config) 
@@ -88,6 +91,8 @@ function RegisterForm(props) {
                 else if(props.match.params.role === 'พ่อค้าคนกลาง') {
                     axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/createNewAccount', paramsCreate, config)
                     .then(res => {
+                        console.log(res.data.status)
+                        console.log(res.status)
                         if (res.data.status === 'OK') {
                             alert('บันทึกข้อมูลสำเร็จ')
                             .then(res => {

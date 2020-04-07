@@ -53,6 +53,7 @@ function AddFriend(props) {
                       'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 }
+                console.log(res.data.message)
                 if(user.role === 'พ่อค้าคนกลาง') {  
                     if (res.data.role === 'เกษตรกร') {               
                         axios.post('http://13.76.35.161/api/middleman/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
