@@ -106,13 +106,13 @@ function RegisterForm(props) {
                     }) 
                 }
                 alert('บันทึกข้อมูลสำเร็จ')
+                console.log(paramsCreate)
+                console.log(paramShareToAdmin)
             }
         })
         .catch(err => {
             alert('มีข้อผิดพลาดเกิดขึ้น กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง')
         })
-        console.log(paramsCreate)
-        console.log(paramShareToAdmin)
     }
 
     const [page, setForm] = useState(1)
