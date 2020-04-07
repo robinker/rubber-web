@@ -56,7 +56,7 @@ function RegisterForm(props) {
                 paramsCreate.append('accountName', user.firstname + " " + user.lastname);
                      
                 var paramShareToAdmin = new URLSearchParams();
-                paramShareToAdmin.append('accountNameShared', user.firstname + user.lastname)
+                paramShareToAdmin.append('accountNameShared', user.firstname + " " +  user.lastname)
                 paramShareToAdmin.append('shareTo', "O=Admin,L=Bangkok,C=TH")
         
                 const config = {
@@ -106,8 +106,6 @@ function RegisterForm(props) {
                     }) 
                 }
                 alert('บันทึกข้อมูลสำเร็จ')
-                console.log(paramsCreate)
-                console.log(paramShareToAdmin)
             }
         })
         .catch(err => {
