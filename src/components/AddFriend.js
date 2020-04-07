@@ -142,16 +142,16 @@ function AddFriend(props) {
                 }
                 alert('เพิ่มเพื่อนสำเร็จ')
                 toggle()
+                console.log(paramShareToAgriculturist) 
+                console.log(paramShareBackToMiddleman)
+                console.log(paramShareToMiddleman)
+                console.log(paramShareBackToAgriculturist)
             } else {
                 alert('ไม่สามารถเพิ่มเพื่อนซ้ำได้')
             }
         }).catch(() => {
             setError('ไม่พบบัญชีผู้ใช้')
         })  
-        console.log(paramShareToAgriculturist) 
-        console.log(paramShareBackToMiddleman)
-        console.log(paramShareToMiddleman)
-        console.log(paramShareBackToAgriculturist)
     }
 
     return (
