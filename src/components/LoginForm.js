@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
-import { Nav, Modal, Button, Alert, Spinner } from 'react-bootstrap'
+import { Nav, Modal, Button, Alert, Spinner, InputGroup, Form, Container } from 'react-bootstrap'
 import { signIn, getFriend } from '../actions'
 
 function LoginForm() {
@@ -60,14 +60,24 @@ function LoginForm() {
                 </Modal.Header>
                 <Alert variant="danger" hidden={!isValid} style={{ textAlign: "center" }}> กรุณาตรวจสอบบัญชีผู้ใช้ และรหัสผ่านใหม่อีกครั้ง </Alert>
                 <Modal.Body>
-                    <div className="login-form container">
-                        <div className="form-group">
-                            <input onChange={handleChange} placeholder="username" name="username" className="form-control" />
-                        </div>
-                        <div className="form-group">
-                            <input onChange={handleChange} type="password" placeholder="password" name="password" className="form-control" />
-                        </div>
-                    </div>
+                    <Container>
+                        <Form.Group>
+                            <InputGroup>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text id="basic-addon1"><ion-icon name="person-outline"></ion-icon></InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control placeholder="username" name="username" onChange={handleChange} />
+                            </InputGroup>
+                        </Form.Group>
+                        <Form.Group>
+                            <InputGroup>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text id="basic-addon1"><ion-icon name="lock-closed-outline"></ion-icon></InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control type="password" placeholder="password" name="password" onChange={handleChange} />
+                            </InputGroup>
+                        </Form.Group>
+                    </Container>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={toggle} disabled={loaded ? true : false} >

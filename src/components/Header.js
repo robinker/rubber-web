@@ -66,9 +66,9 @@ export default class AppNavbar extends Component {
                     <Nav.Item>
                         <NavLink to="/transactions" className='nav-link'>รายงานสรุปการซื้อขาย</NavLink>
                     </Nav.Item>
-                    {/* <Nav.Item>
-                        <NavLink to="/" className='nav-link'>ติดต่อเรา</NavLink>
-                    </Nav.Item> */}
+                    <Nav.Item>
+                        <NavLink to="/contact" className='nav-link'>ติดต่อเรา</NavLink>
+                    </Nav.Item>
 
                 </>
             )
