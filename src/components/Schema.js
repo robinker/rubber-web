@@ -2,12 +2,10 @@ import * as Yup from 'yup'
 export const RegisterSchema = Yup.object({
     firstname: Yup.string()
         .required('กรุณากรอกชื่อ')
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!'),
+        .max(50, 'ชื่อยาวเกินไป'),
     lastname: Yup.string()
-        .min(2, 'Too Short!')
         .required('กรุณากรอกนามสกุล')
-        .max(50, 'Too Long!'),  
+        .max(50, 'นามสกุลยาวเกินไป'),
     citizenID: Yup.string()
         .length(13, 'หมายเลขบัตรประชาชนไม่ถูกต้อง')
         .required('กรุณากรอกหมายเลขบัตรประชาชน')
@@ -19,13 +17,14 @@ export const RegisterSchema = Yup.object({
         .default(() => new Date())  
         .max(new Date(), 'date errors'),
     tel: Yup.string()
+        .required('กรุณากรอกหมายเลขโทรศัพท์')
         .length(10, 'หมายเลขโทรศัพท์ไม่ถูกต้อง')
         .test('', '', function(value) {
             //check citizenId pattern
             return /\d+/.test(value)
         }),
     email: Yup.string()
-        .required('กรุณากรอกอีเมลล์')
+        // .required('กรุณากรอกอีเมลล์')
         .email('อีเมลล์ไม่ถูกต้อง'),
     address: Yup.string()
         .required('กรุณากรอกที่อยู่'),
@@ -54,7 +53,7 @@ export const RegisterSchema = Yup.object({
         }),
     });
 
-export const MiddlemanSchema = RegisterSchema.shape({ cert_1: Yup.number()})
+export const MiddlemanSchema = RegisterSchema.shape({ cert: Yup.string().required('กรุณาใส่เลขใบอนุญาต') })
 
 export const GardenSchema = Yup.object({
     area: Yup.number()
@@ -71,7 +70,7 @@ export const GardenSchema = Yup.object({
         .required('กรุณากรอกชื่อพันธุ์ยาง'),
     amount: Yup.number()
         .required('กรุณากรอกจำนวนต้นยาง')
-        .moreThan(0, 'เท่าไรดี'),
+        .moreThan(0, 'จำนวนต้นยางไม่ถูกต้อง'),
 })
 
 export const GardenerSchema = MiddlemanSchema.shape({
@@ -90,35 +89,5 @@ export const GardenerSchema = MiddlemanSchema.shape({
             return /\d+/.test(value)
         }),
     })
-    //     Yup.object().shape({
-    //     area: Yup.number()
-    //         .required('กรุณากรอกเนื้อที่สวนยาง')
-    //         .positive('เนื้อที่ไม่ถูกต้อง')
-    //         .moreThan(0, 'เนื้อที่ไม่ถูกต้อง'),
-    //     startYear: Yup.number()
-    //         .required('กรุณากรอกปีที่ปลูก')
-    //         .positive('ปีไม่ถูกต้อง')
-    //         .moreThan(0, 'ปีไม่ถูกต้อง')
-    //         .min((new Date().getUTCFullYear() + 543 - 50), 'ปีไม่ถูกต้อง')
-    //         .max((new Date().getUTCFullYear() + 543), 'ปีไม่ถูกต้อง'),
-    //     species: Yup.string()
-    //         .required('กรุณากรอกชื่อพันธุ์ยาง'),
-    //     amount: Yup.number()
-    //         .required('กรุณากรอกจำนวนต้นยาง')
-    //         .moreThan(0, 'เท่าไรดี'),
-    //     address: Yup.string()
-    //         .required('กรุณากรอกที่อยู่'),
-    //     subdistrict: Yup.string()
-    //         .required('กรุณากรอกแขวง/ตำบล'),
-    //     district: Yup.string()
-    //         .required('กรุณากรอกเขต/อำเภอ'),
-    //     zipcode: Yup.string()
-    //         .length(5, 'รหัสไปรษณีย์ไม่ถูกต้อง')
-    //         .required('กรุณากรอกรหัสไปรษณีย์')
-    //         .test('', 'กรุณาใส่ตัวเลข', function(value) {
-    //             //check citizenId pattern
-    //             return /\d+/.test(value)
-    //         }),
-    // }).required('ต้องการสวน')
     )  
 })

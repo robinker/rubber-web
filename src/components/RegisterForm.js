@@ -43,9 +43,6 @@ function RegisterForm(props) {
                 cert_1: values.cert
             }
         }
-        // console.log(user)
-        // console.log(gardens)
-        // console.log(test)
 
         axios.post('https://rubber-backend.herokuapp.com/users/add', {
             user, gardens
@@ -149,6 +146,7 @@ function RegisterForm(props) {
                     district: "",
                     province: provinces[0].province_name,
                     zipcode: "",
+                    cert: "",
                     username: "",
                     password: "",
                     confirmPassword: "",
@@ -194,8 +192,6 @@ function RegisterForm(props) {
                             </FieldArray> : null
                         }
 
-                        {/* {page === 3 ? <AccountForm errors={errors} touched={touched} role={props.match.params.role} 
-                        next={nextForm} back={previousForm} isValid={dirty && isValid}></AccountForm> : null} */}
                         {page === 3 ? <>
                             <h2>บัญชีผู้ใช้</h2>
                             <br></br>

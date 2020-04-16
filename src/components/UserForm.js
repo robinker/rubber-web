@@ -110,8 +110,9 @@ function UserForm(props) {
                 { props.role !== 'ผู้ดูแลระบบ' ? 
                     <Col> 
                         <Form.Group>
-                            <Form.Label>เลขใบอนุญาตค้ายาง</Form.Label>
-                            <Field name="cert" id="cert" className='form-control'/>
+                            <Form.Label>เลขใบอนุญาต</Form.Label>
+                            <Field name="cert" id="cert" className={`form-control ${touched.cert ? errors.cert ? 'is-invalid' : 'is-valid' : ''}`}/>
+                            <Form.Control.Feedback type="invalid"> {errors.cert} </Form.Control.Feedback>
                         </Form.Group>  
                     </Col> : null
                 }

@@ -17,9 +17,9 @@ function Search() {
         })
         .then(res => {
             if(res.data === 'OK') {
-                setFeedback('ใบอณุญาตถูกต้อง')
+                setFeedback('ใบอนุญาตถูกต้อง')
             } else {
-                setFeedback('ไม่พบใบอณุญาต')
+                setFeedback('ไม่พบใบอนุญาต')
             }
         })
     }
@@ -32,7 +32,7 @@ function Search() {
                         <Button variant="outline-secondary" onClick={handleSubmit}>ค้นหา</Button>
                     </InputGroup.Append>
                 </InputGroup>
-                <Alert variant={feedback === 'ใบอณุญาตถูกต้อง' ? "success" : "danger"} hidden={feedback === '' ? true : false} style={{textAlign: "center"}}>{feedback}</Alert>
+                <Alert variant={feedback === 'ใบอนุญาตถูกต้อง' ? "success" : "danger"} hidden={feedback === '' ? true : false} style={{textAlign: "center"}}>{feedback}</Alert>
         </Container>
     )
 }
