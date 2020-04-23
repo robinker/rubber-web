@@ -182,7 +182,7 @@ function Transaction(props) {
             }
             <br></br>
             {
-                    props.role !== 'ผู้ดูแลระบบ' ? <>
+                    props.role !== 'ผู้ดูแลระบบ' && props.role !== 'พ่อค้าคนกลาง' ? <>
                 <TotalTable transactions={ transactions.sale}></TotalTable>
                 </> : null
             }

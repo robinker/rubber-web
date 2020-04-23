@@ -80,7 +80,7 @@ function Sale(props) {
             axios.post('https://rubber-backend.herokuapp.com/transactions/add', {
                 source: {
                     name: props.source,
-                    certification: user.cert
+                    certification: user.cert_1
                 },
                 rubberType: state.rubberType,
                 volume: state.volume,
