@@ -27,7 +27,7 @@ function Search() {
     return (
         <Container>
                 <InputGroup>
-                    <Form.Control onChange={handleChange} />
+                    <Form.Control  placeholder="ใส่เลขใบอนุญาต" onChange={handleChange} />
                     <InputGroup.Append>
                         <Button variant="outline-secondary" onClick={handleSubmit}>ค้นหา</Button>
                     </InputGroup.Append>

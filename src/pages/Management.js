@@ -1,5 +1,5 @@
 import React, { useEffect, useState }  from 'react'
-import { Button, Row, Col, InputGroup, DropdownButton, FormControl } from 'react-bootstrap';
+import { Row, Col, DropdownButton, FormControl } from 'react-bootstrap';
 import ListUser from '../components/ListUser';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -47,10 +47,9 @@ function Management() {
                     <Link to='/management/profile/add/ผู้ดูแลระบบ' className="dropdown-item">ผู้แลระบบ</Link>
                 </DropdownButton>
             </Row>
-            <InputGroup className="mb-3">
-                <FormControl placeholder="ค้นหา" onChange={onSearch} />
-                <InputGroup.Append> <Button>ค้นหา</Button> </InputGroup.Append>
-            </InputGroup>
+            <br></br>
+            <FormControl placeholder="ค้นหา" onChange={onSearch} />
+            <br></br>
             <ListUser users={search.length === 0 ? users : search} loaded={loaded}></ListUser>
         </div>
     )

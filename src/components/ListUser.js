@@ -5,22 +5,7 @@ import { Link } from 'react-router-dom'
 function ListUser(props) {
 
     const users = props.users
-    const loaded = props.loaded 
-    // useEffect(() => {
-    //     const CancleToken = axios.CancelToken
-    //     const source = CancleToken.source()
-    //     axios.get('https://rubber-backend.herokuapp.com/users/', {cancelToken: source.token})
-    //     .then(res => {
-    //         setUsers(res.data)
-    //         setLoaded(true)
-    //     })
-    //     .catch(err => {
-    //         console.log('Error: ', err)
-    //     })
-    //     return (() => {
-    //         source.cancel()
-    //     })
-    // },[])
+    const loaded = props.loaded
 
     if(!loaded) return <h1>loading...</h1>
     return (
@@ -29,6 +14,7 @@ function ListUser(props) {
                 <tr>
                     <th>#</th>
                     <th>ชื่อ</th>
+                    <th>สถานะ</th>
                     <th>รายละเอียด</th>
                 </tr>
             </thead>
@@ -38,6 +24,7 @@ function ListUser(props) {
                         return  <tr key={index}> 
                                     <td> {index+1} </td> 
                                     <td> {user.firstname + ' ' + user.lastname} </td> 
+                                    <td> {user.role} </td>
                                     <td> <Link to={{
                                         pathname: '/view/profile/' + user.username,
                                         state: {

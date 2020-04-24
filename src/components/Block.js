@@ -5,7 +5,7 @@ import chainOfBlock from '../assets/chain.png'
 
 function Block(props) {
     return (
-        <Col key={props.index}>
+        <Col>
             <Image
                 src = {block}
                 style={{marginLeft: "5%"}}
