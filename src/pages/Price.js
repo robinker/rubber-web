@@ -20,7 +20,7 @@ function Price() {
         const source = axios.CancelToken.source()
 
         function fetchData() {
-            axios.get('http://localhost:5000/price/')
+            axios.get('https://rubber-backend.herokuapp.com/price/')
             .then(res => {
                 setData(res.data)
             })

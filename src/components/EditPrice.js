@@ -17,7 +17,7 @@ function EditPrice(props) {
         else {
             setIsValid(false)
             setLoaded(true) 
-            axios.post(`http://localhost:5000/price/update/${props.id}`, {
+            axios.post(`https://rubber-backend.herokuapp.com/update/${props.id}`, {
                 price
             },{
                 headers: {
@@ -31,7 +31,7 @@ function EditPrice(props) {
                     setShow(false)
                 }
             }).catch(err => {
-                alert(err)
+                alert("แก้ไขข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง")
             })
         }
     }
