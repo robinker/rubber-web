@@ -3,8 +3,12 @@ import { Navbar,Nav, Image, Container} from 'react-bootstrap';
 import { NavLink } from 'react-router-dom'
 import LoginForm from './LoginForm'
 import logo from '../assets/rubberLogo.png'
+import { useDispatch } from 'react-redux'
+import { logout } from '../actions';
 
 function Header(props) {
+    
+    const dispatch = useDispatch()
 
     const loggedIn = () => {
         return (
@@ -32,9 +36,6 @@ function Header(props) {
                 <Nav.Item>
                     <NavLink to="/search" className='nav-link'>ตรวจสอบใบอนุญาต</NavLink>
                 </Nav.Item>
-                {/* <Nav.Item>
-                    <NavLink to="/" className='nav-link'>รายงานสรุปเนื้อที่สวนยาง</NavLink>
-                </Nav.Item> */}
                 <Nav.Item>
                     <NavLink to="/transactions" className='nav-link'>รายงานสรุปการซื้อขาย</NavLink>
                 </Nav.Item>
@@ -120,8 +121,7 @@ function Header(props) {
                     <Container>
                         <Nav className="justify-content-center">
                             { navItem }
-                            {/* <NavLink to="/" hidden={!this.props.isLogged} className='nav-link'>ออกจากระบบ</NavLink> */}
-                            <a href="/" hidden={!props.isLogged} className='nav-link'>ออกจากระบบ</a>
+                            <NavLink to="exact /" onClick={() => { dispatch(logout()) }} hidden={!props.isLogged} className='nav-link'>ออกจากระบบ</NavLink>
                         </Nav>
                     </Container>
                 </Navbar.Collapse>

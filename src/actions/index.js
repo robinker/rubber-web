@@ -19,6 +19,12 @@ export const getFriend = (res) => {
     }
 }
 
+export const logout = (res) => {
+    return {
+        type: 'LOGOUT'
+    }
+}
+
 export const getData = () => {
     return{
         type: 'getData'

@@ -14,13 +14,20 @@ const userReducer = (state = initialState, action) => {
                 gardens: action.payload.gardens,
                 role: action.payload.role[0]
             }
-            case 'UPDATE' :
-                let gardens = state.gardens
-                gardens[action.payload.index] = action.payload.res
-                return state = {
-                    ...state,
-                    gardens: gardens
-                }
+        case 'UPDATE' :
+            let gardens = state.gardens
+            gardens[action.payload.index] = action.payload.res
+            return state = {
+                ...state,
+                gardens: gardens
+            }
+        case 'LOGOUT':
+            return state = {
+                isLogged: false,
+                role: '',
+                token: null,
+                gardens:[]
+            }
         default:
             return state
     }
