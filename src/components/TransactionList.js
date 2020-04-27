@@ -1,11 +1,19 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Card, Col, Image, Row, Table } from 'react-bootstrap'
 import block from '../assets/block.png'
 import Block from './Block'
+import Pagination from './Pagination'
+import { currentData, getIndex, dataPerPage } from '../pageconfigure'
 
 function TransactionList(props) {
-    return (
-        <Table hover responsive hidden={props.hidden} style={{marginTop: "2em"}}>
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const transactions = currentData(props.transactions, currentPage)
+    const idx = getIndex(currentPage)
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+    return ( <div hidden={props.hidden}>
+        <Table hover responsive  style={{marginTop: "2em"}}>
             <thead>
                 <tr>
                     <th>รายการที่</th>
@@ -14,12 +22,12 @@ function TransactionList(props) {
             </thead>
             <tbody>
             {
-                props.transactions.map((chain, index) => {
+                transactions.map((chain, index) => {
                     let ratio = 100
                     if(chain.length > 4) ratio = chain.length*30
                     return (
                     <tr key={index}>
-                    <td>{ index+1 }</td>
+                    <td>{ idx[index]+1 }</td>
                     <td>
                         <Card style={{overflowX: "scroll"}}>
                             <Card.Body style={{width: `${ratio}%`}}> 
@@ -55,6 +63,8 @@ function TransactionList(props) {
             }
             </tbody>
         </Table>
+        <Pagination dataPerPage={dataPerPage} totalData={props.transactions.length} paginate={paginate}/>
+        </div>
     )
 }
 

@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Table } from 'react-bootstrap'
+import Pagination from './Pagination'
+import { currentData, getIndex, dataPerPage } from '../pageconfigure'
 
 function TransactionTable(props) {
     let sum = 0
     let totalPrice = 0
     let equal = false
-    return (
-        <Table responsive striped bordered hidden={props.hidden}>
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const transactions = currentData(props.transactions, currentPage)
+    const idx = getIndex(currentPage)
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+    return (<div hidden={props.hidden}>
+        <Table responsive striped bordered >
             <thead>
                 <tr>
                     <th rowSpan='2'>#</th>  
@@ -29,23 +37,23 @@ function TransactionTable(props) {
             </thead>
             <tbody>
                 {
-                    props.transactions.map((transaction, index) => {
+                    transactions.map((transaction, index) => {
                         if(!equal){
                             sum = transaction.volume
                             totalPrice = transaction.price
                         }
                         equal = false
                         const date = new Date(transaction.createdAt)
-                        if(index < props.transactions.length-1) {
-                            let date2 = new Date(props.transactions[index+1].createdAt)
+                        if(index < transactions.length-1) {
+                            let date2 = new Date(transactions[index+1].createdAt)
                             if(date.getUTCDate() === date2.getUTCDate() && date.getUTCMonth() === date2.getUTCMonth() && date.getUTCFullYear() === date2.getUTCFullYear()){
                                 equal = true
-                                sum += props.transactions[index+1].volume
-                                totalPrice += props.transactions[index+1].price
+                                sum += transactions[index+1].volume
+                                totalPrice += transactions[index+1].price
                             }
                         }
                         return <tr key={index}>
-                            <td> {index + 1} </td>
+                            <td> {idx[index] + 1} </td>
                             <td> {date.getUTCDate()}/{date.getUTCMonth() + 1}/{date.getFullYear() + 543} </td>
                             {
                                 props.header === 'รายการซื้อยาง' ?  
@@ -66,6 +74,8 @@ function TransactionTable(props) {
             </tbody>
 
         </Table>
+        <Pagination dataPerPage={dataPerPage} totalData={props.transactions.length} paginate={paginate}/>
+        </div>
     )
 }
 
