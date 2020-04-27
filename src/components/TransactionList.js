@@ -5,7 +5,7 @@ import Block from './Block'
 
 function TransactionList(props) {
     return (
-        <Table hover hidden={props.hidden} style={{marginTop: "2em"}}>
+        <Table hover responsive hidden={props.hidden} style={{marginTop: "2em"}}>
             <thead>
                 <tr>
                     <th>รายการที่</th>

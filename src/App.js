@@ -9,6 +9,7 @@ import Sale from './pages/Sale'
 import Search from './pages/Search'
 import Transaction from './pages/Transaction'
 import Contact from './pages/Contact'
+import Price from './pages/Price'
 import RegisterForm from './components/RegisterForm'
 import Header from './components/Header'
 import { connect } from 'react-redux'
@@ -28,8 +29,9 @@ function App(props) {
         <Route path="/management" exact component={Management}/>
         <Route path="/sale"  component={() => <Sale source={props.user.firstname + " " + props.user.lastname} userId={props.user._id}/>} />
         <Route path="/transactions"  component={() => <Transaction firstname={props.user.firstname} lastname= {props.user.lastname} role={props.user.role} />} />
-      </>
-    }
+        </>
+      }
+      <Route path="/price" component={Price} />
       <Route path="/contact" component={Contact} />
     </BrowserRouter>
   );

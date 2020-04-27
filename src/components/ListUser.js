@@ -9,7 +9,7 @@ function ListUser(props) {
 
     if(!loaded) return <h1>loading...</h1>
     return (
-        <Table responsive>
+        <Table responsive hover>
             <thead>
                 <tr>
                     <th>#</th>
