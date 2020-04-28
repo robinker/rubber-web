@@ -42,6 +42,7 @@ function LoginForm() {
             if (res.data.message === 'Logged In') {
                 dispatch(signIn(res.data.user))
                 dispatch(getFriend(res.data.user.friendlist))
+                setLoaded(false)
                 toggle()
             } else {
                 setValid(true)
