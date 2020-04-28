@@ -1,11 +1,11 @@
 import React from 'react'
-import Hightlight from '../components/Hightlight'
+import Highlight from '../components/Highlight'
 import News from '../components/News'
 
 export default function Home() {
     return (
         <div className="container-fluid">
-            <Hightlight></Hightlight>
+            <Highlight></Highlight>
             <div>
                 <h3>News (ข่าวประชาสัมพันธ์)</h3>
             </div>
