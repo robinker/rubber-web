@@ -17,7 +17,7 @@ function EditPrice(props) {
         else {
             setIsValid(false)
             setLoaded(true) 
-            axios.post(`https://rubber-backend.herokuapp.com/update/${props.id}`, {
+            axios.post(`https://rubber-backend.herokuapp.com/price/update/${props.id}`, {
                 price
             },{
                 headers: {
