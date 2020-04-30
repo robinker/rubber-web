@@ -62,10 +62,10 @@ function RegisterForm(props) {
                     }
                   } 
                 if(props.match.params.role === 'เกษตรกร') {
-                    axios.post('http://52.163.240.12/api/agriculturist/blockchainTransaction/createNewAccount', paramsCreate, config)
+                    axios.post('http://rubber-info.southeastasia.cloudapp.azure.com/api/agriculturist/blockchainTransaction/createNewAccount', paramsCreate, config)
                     .then(res => {
                         if (res.data.status === 'OK') {
-                            axios.post('http://52.163.240.12/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAdmin, config) 
+                            axios.post('http://rubber-info.southeastasia.cloudapp.azure.com/api/agriculturist/blockchainTransaction/shareAccount', paramShareToAdmin, config) 
                             .then(res => {    
                                 if (res.status === 'OK') {
                                     alert('บันทึกข้อมูลสำเร็จ')
@@ -81,10 +81,10 @@ function RegisterForm(props) {
                     })    
                 }
                 else if(props.match.params.role === 'พ่อค้าคนกลาง') {
-                    axios.post('http://52.163.240.12/api/middleman/blockchainTransaction/createNewAccount', paramsCreate, config)
+                    axios.post('http://rubber-info.southeastasia.cloudapp.azure.com/api/middleman/blockchainTransaction/createNewAccount', paramsCreate, config)
                     .then(res => {
                         if (res.data.status === 'OK') {
-                            axios.post('http://52.163.240.12/api/middleman/blockchainTransaction/shareAccount', paramShareToAdmin, config)
+                            axios.post('http://rubber-info.southeastasia.cloudapp.azure.com/api/middleman/blockchainTransaction/shareAccount', paramShareToAdmin, config)
                             .then(res => {    
                                 if (res.status === 'OK') {
                                     alert('บันทึกข้อมูลสำเร็จ')

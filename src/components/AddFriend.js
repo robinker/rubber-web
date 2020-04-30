@@ -50,10 +50,10 @@ function AddFriend(props) {
                 console.log(res.data.status)
                 if(props.user.role === 'พ่อค้าคนกลาง') {  
                     if (res.data.role === 'เกษตรกร') {               
-                        axios.post('http://52.163.240.12/api/middleman/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
+                        axios.post('http://rubber-info.southeastasia.cloudapp.azure.com/api/middleman/blockchainTransaction/shareAccount', paramShareToAgriculturist, config) 
                         .then(res => {
                             if (res.data.status === 'OK') {
-                                axios.post('http://52.163.240.12/api/agriculturist/blockchainTransaction/shareAccount', paramShareBackToMiddleman, config) 
+                                axios.post('http://rubber-info.southeastasia.cloudapp.azure.com/api/agriculturist/blockchainTransaction/shareAccount', paramShareBackToMiddleman, config) 
                                 .then(res => {    
                                     if (res.status === 'OK') {
                                         alert('บันทึกข้อมูลสำเร็จ')

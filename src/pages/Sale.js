@@ -107,7 +107,7 @@ function Sale(props) {
                           'Content-Type': 'application/x-www-form-urlencoded'
                         }
                       }
-                    axios.post('http://52.163.240.12/api/middleman/blockchainTransaction/addRecordToTransaction', params, config)
+                    axios.post('http://rubber-info.southeastasia.cloudapp.azure.com/api/middleman/blockchainTransaction/addRecordToTransaction', params, config)
                     .then(res => {
                         if (res.status === 'OK') {
                             alert('บันทึกข้อมูลสำเร็จ')
