@@ -25,7 +25,10 @@ function TransactionTable(props) {
                     }
                     <th rowSpan='2'>ใบอนุญาตค้ายางที่</th>
                     <th colSpan='3' style={{textAlign: "center"}}>{props.header}</th>
-                    <th colSpan='4' style={{textAlign: "center"}}>รวมราคาประจำวันที่ซื้อ</th>
+                    { 
+                        props.header === 'รายการซื้อยาง' ?  <th colSpan='4' style={{textAlign: "center"}}>รวมราคาประจำวันที่ซื้อ</th> : 
+                        <th colSpan='4' style={{textAlign: "center"}}>รวมราคาประจำวันที่ขาย</th>
+                    }
                 </tr>
                 <tr>
                     <th>ชนิดของยาง</th>
